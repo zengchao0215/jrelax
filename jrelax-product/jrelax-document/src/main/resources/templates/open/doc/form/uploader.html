@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件上传</title>
+
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+
+    #required_css
+</head>
+
+<div class="app">
+    <h3>依赖</h3>
+    <p><code>/framework/js/form/uploader.js</code></p>
+    <div class="hr-line-dashed"></div>
+    <h3>上传</h3>
+    <button class="btn" onclick="doUpload(1)">点击上传</button>
+    <h3>上传-类型限制</h3>
+    <button class="btn" onclick="doUpload(2)">点击上传</button>
+
+    <div class="hr-line-dashed"></div>
+    <section class="panel">
+        <div class="panel-heading bg-warning">
+            上传结果
+        </div>
+        <div class="panel-body">
+
+        </div>
+    </section>
+</div>
+<body class="p10">
+#required_js
+<script type="text/javascript">
+    ns.ready(function () {
+        ns.requireJS("/framework/js/form/uploader.js");
+    });
+    function doUpload(type) {
+        switch (type) {
+            case 1:
+                ns.form.uploader.open({
+                    success: function (path, name) {
+                        showResult(path, name);
+                    }
+                });
+                break;
+            case 2:
+                ns.form.uploader.open({
+                    filter: ns.form.uploader.type.image,
+                    success: function (path, name) {
+                        showResult(path, name);
+                    }
+                });
+                break;
+        }
+    }
+    function showResult(path, name) {
+        var html = "path:" + path + "<br/>" + "name:" + name;
+        $(".panel-body").html(html);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">输入框</h1>
+                <p class="lead">不同状态下的输入框的使用方法</p>
+
+                <h2>正常状态</h2>
+                <div class="bs-example">
+                    <input type="text" class="form-control">
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;input type="text" class="form-control"&gt;
+                    </pre>
+                </figure>
+
+                <h2>静态控件</h2>
+                <p>如果需要在表单中将一行纯文本和 <code>label</code> 元素放置于同一行，为 <code>&lt;p&gt;</code> 元素添加 <code>.form-control-static</code> 类即可。</p>
+                <div class="bs-example">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static">email@example.com</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" placeholder="Password">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;form class="form-horizontal"&gt;
+                            &lt;div class="form-group"&gt;
+                                &lt;label class="col-sm-2 control-label"&gt;Email&lt;/label&gt;
+                                &lt;div class="col-sm-10"&gt;
+                                    &lt;p class="form-control-static"&gt;email@example.com&lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="form-group"&gt;
+                                &lt;label class="col-sm-2 control-label"&gt;Password&lt;/label&gt;
+                                &lt;div class="col-sm-10"&gt;
+                                    &lt;input type="password" class="form-control" placeholder="Password"&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/form&gt;
+                    </pre>
+                </figure>
+
+                <h2>焦点、禁用、只读</h2>
+                <div class="bs-example">
+                    <div class="form-group">
+                        <label>焦点状态（需点击查看）</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>禁用状态</label>
+                        <input type="text" class="form-control" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>只读状态</label>
+                        <input type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;!--焦点状态--&gt;
+                        &lt;input type="text" class="form-control"&gt;
+                        &lt;!--禁用状态--&gt;
+                        &lt;input type="text" class="form-control" disabled&gt;
+                        &lt;!--只读状态--&gt;
+                        &lt;input type="text" class="form-control" readonly&gt;
+                    </pre>
+                </figure>
+
+                <h2>辅助说明文本</h2>
+                <div class="bs-example">
+                    <div class="form-group">
+                        <label>Label</label>
+                        <input type="text" class="form-control" placeholder="这是辅助说明文本">
+                    </div>
+                    <div class="form-group">
+                        <label>Label</label>
+                        <input type="text" class="form-control">
+                        <span class="help-block">这是辅助说明文本</span>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;div class="form-group"&gt;
+                            &lt;label&gt;Label&lt;/label&gt;
+                            &lt;input type="text" class="form-control" placeholder="这是辅助说明文本"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label&gt;Label&lt;/label&gt;
+                            &lt;input type="text" class="form-control"&gt;
+                            &lt;span class="help-block"&gt;这是辅助说明文本&lt;/span&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>校验状态</h2>
+                <div class="bs-example">
+                    <div class="form-group has-success">
+                        <label class="control-label">成功状态</label>
+                        <input type="text" class="form-control">
+                        <span class="help-block">辅助说明文本.</span>
+                    </div>
+                    <div class="form-group has-warning">
+                        <label class="control-label">警告状态</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group has-error">
+                        <label class="control-label">错误状态</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="has-success">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="option1">
+                                Checkbox 成功状态
+                            </label>
+                        </div>
+                    </div>
+                    <div class="has-warning">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="option1">
+                                Checkbox 警告状态
+                            </label>
+                        </div>
+                    </div>
+                    <div class="has-error">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="option1">
+                                Checkbox 错误状态
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;div class="form-group has-success"&gt;
+                            &lt;label class="control-label"&gt;成功状态&lt;/label&gt;
+                            &lt;input type="text" class="form-control"&gt;
+                            &lt;span class="help-block"&gt;辅助说明文本.&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group has-warning"&gt;
+                            &lt;label class="control-label"&gt;警告状态&lt;/label&gt;
+                            &lt;input type="text" class="form-control"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group has-error"&gt;
+                            &lt;label class="control-label"&gt;错误状态&lt;/label&gt;
+                            &lt;input type="text" class="form-control"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="has-success"&gt;
+                            &lt;div class="checkbox"&gt;
+                                &lt;label&gt;
+                                    &lt;input type="checkbox" value="option1"&gt;
+                                    Checkbox 成功状态
+                                &lt;/label&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="has-warning"&gt;
+                            &lt;div class="checkbox"&gt;
+                                &lt;label&gt;
+                                    &lt;input type="checkbox" value="option1"&gt;
+                                    Checkbox 警告状态
+                                &lt;/label&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="has-error"&gt;
+                            &lt;div class="checkbox"&gt;
+                                &lt;label&gt;
+                                    &lt;input type="checkbox" value="option1"&gt;
+                                    Checkbox 错误状态
+                                &lt;/label&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>添加额外图标</h2>
+                <div class="bs-example">
+                    <div class="form-group has-success has-feedback">
+                        <label class="control-label">Input with success</label>
+                        <input type="text" class="form-control">
+                        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span class="sr-only">(success)</span>
+                    </div>
+                    <div class="form-group has-warning has-feedback">
+                        <label class="control-label">Input with warning</label>
+                        <input type="text" class="form-control">
+                        <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+                        <span class="sr-only">(warning)</span>
+                    </div>
+                    <div class="form-group has-error has-feedback">
+                        <label class="control-label">Input with error</label>
+                        <input type="text" class="form-control">
+                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        <span class="sr-only">(error)</span>
+                    </div>
+                    <div class="form-group has-success has-feedback">
+                        <label class="control-label">Input group with success</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control">
+                        </div>
+                        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span class="sr-only">(success)</span>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <form class="form-horizontal">
+                        <div class="form-group has-success has-feedback">
+                            <label class="control-label col-sm-3">Input with success</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control">
+                                <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                <span class="sr-only">(success)</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-success has-feedback">
+                            <label class="control-label col-sm-3">Input group with success</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon">@</span>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                                <span class="sr-only">(success)</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;div class="form-group has-success has-feedback"&gt;
+                            &lt;label class="control-label"&gt;Input with success&lt;/label&gt;
+                            &lt;input type="text" class="form-control"&gt;
+                            &lt;span class="glyphicon glyphicon-ok form-control-feedback"&gt;&lt;/span&gt;
+                            &lt;span class="sr-only"&gt;(success)&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group has-warning has-feedback"&gt;
+                            &lt;label class="control-label"&gt;Input with warning&lt;/label&gt;
+                            &lt;input type="text" class="form-control"&gt;
+                            &lt;span class="glyphicon glyphicon-warning-sign form-control-feedback"&gt;&lt;/span&gt;
+                            &lt;span class="sr-only"&gt;(warning)&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group has-error has-feedback"&gt;
+                            &lt;label class="control-label"&gt;Input with error&lt;/label&gt;
+                            &lt;input type="text" class="form-control"&gt;
+                            &lt;span class="glyphicon glyphicon-remove form-control-feedback"&gt;&lt;/span&gt;
+                            &lt;span class="sr-only"&gt;(error)&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group has-success has-feedback"&gt;
+                            &lt;label class="control-label"&gt;Input group with success&lt;/label&gt;
+                            &lt;div class="input-group"&gt;
+                                &lt;span class="input-group-addon"&gt;@&lt;/span&gt;
+                                &lt;input type="text" class="form-control"&gt;
+                            &lt;/div&gt;
+                            &lt;span class="glyphicon glyphicon-ok form-control-feedback"&gt;&lt;/span&gt;
+                            &lt;span class="sr-only"&gt;(success)&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class="hr-line-dashed"&gt;&lt;/div&gt;
+                        &lt;form class="form-horizontal"&gt;
+                            &lt;div class="form-group has-success has-feedback"&gt;
+                                &lt;label class="control-label col-sm-3"&gt;Input with success&lt;/label&gt;
+                                &lt;div class="col-sm-9"&gt;
+                                    &lt;input type="text" class="form-control"&gt;
+                                    &lt;span class="glyphicon glyphicon-ok form-control-feedback"&gt;&lt;/span&gt;
+                                    &lt;span class="sr-only"&gt;(success)&lt;/span&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="form-group has-success has-feedback"&gt;
+                                &lt;label class="control-label col-sm-3"&gt;Input group with success&lt;/label&gt;
+                                &lt;div class="col-sm-9"&gt;
+                                    &lt;div class="input-group"&gt;
+                                        &lt;span class="input-group-addon"&gt;@&lt;/span&gt;
+                                        &lt;input type="text" class="form-control"&gt;
+                                    &lt;/div&gt;
+                                    &lt;span class="glyphicon glyphicon-ok form-control-feedback"&gt;&lt;/span&gt;
+                                    &lt;span class="sr-only"&gt;(success)&lt;/span&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/form&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

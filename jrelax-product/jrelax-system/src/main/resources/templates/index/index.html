@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+</head>
+<body>
+	#loading
+    <div class="app $!layout">
+        <!-- 头部菜单 -->
+        #header_index
+        <section class="layout">
+            <!-- 菜单 -->
+            #sidebar_index
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper no-p">
+                        <div>
+                            <ol id="indexNav" class="breadcrumb no-m bg-white bb">
+                                <li><a href="/index" data-tabs-link class="active">首页</a></li>
+                            </ol>
+                        </div>
+                        <iframe id="indexFrame" src="" frameborder="0" width="100%"></iframe>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </div>
+	#required_js
+	<script type="text/javascript" src="$!basePath/framework/js/index.js"></script>
+	#loading_close
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <!-- meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>
+#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="col-lg-3">
+                            <section class="panel bg-white">
+                                <header class="panel-heading">Inline Form</header>
+                                <div class="panel-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Email address</label>
+                                            <input name="unit" type="text" class="form-control combogrid">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                                   placeholder="Password">
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 本页面脚本 -->
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/combogrid.js");
+
+    ns.ready(function () {
+        $(".combogrid").combogrid({
+            width:800,
+            height: 400,
+            valueField:"id",
+            textField:"manipulateName",
+            url: "$!basePath/system/log/data2",
+            columns:[
+                { label: 'LogId', name: 'id', key: true, hidden:true },
+                { label: '日志类型', name: 'type'},
+                { label: '系统模块', name: 'manipulateName'},
+                { label: '日志内容', name: 'content'},
+                { label:'时间', name: 'time' }
+            ],
+            onSelected:function(data){
+                alert(data.id);
+            }
+        });
+    });
+</script>
+#loading_close
+</body>
+</html>
+

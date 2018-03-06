@@ -1,0 +1,98 @@
+<form id="groupRoleForm" class="parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/system/group/role/do">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">授权</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" name="id" value="$!group.id">
+        <input type="hidden" name="roleIds">
+        <div class="row">
+            <div class="col-lg-10 col-md-10">
+                <table id="dgGroupRole"></table>
+                <div id="dgGroupRolePager"></div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">已选角色</div>
+                    <div class="panel-body">
+                        <ul class="list-group" id="tbSelectedRoles"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/form.js");
+    ns.requireJS("/framework/js/form/validator.js");
+    ns.requireJS("/framework/js/form/checkbox.js");
+    ns.requireJS("/framework/js/view/datagrid.js");
+    ns.ready(function (dialog) {
+        var roleIds = [];
+        #foreach($!role in $!group.roles)
+            roleIds.push('$!role.id');
+        #end
+        dialog.find("#groupRoleForm").ajaxForm({
+            beforeSerialize : function(form , options){
+                form.find("input[name='roleIds']").val(roleIds.toString());
+            },
+            beforeSubmit: function (arr, form , options) {
+                form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("授权成功！");
+                    ns.view.Dialog.close(form, {success: true});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("#ok").button("reset")
+            ;
+            }
+        });
+        var dgGroupRole = dialog.find("#dgGroupRole").jqGrid({
+            url: '$!basePath/system/group/role/data',
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "角色名", name: "name", width: 100},
+                {label: "描述", name: "descript", width: 200},
+                {label: "所属机构", name: "unit.name", width: 100}
+            ],
+            height: 300,
+            pager: "#dgGroupRolePager",
+            pagerpos : "center",
+            multiselect: true,
+            icheckbox: true,
+            postData : {unitId:"$!group.unit.id"},
+            onSelectRow : function(rowid, checked, e){
+                if(checked){
+                    roleIds.push(rowid);
+                }else{
+                    roleIds.remove(roleIds.indexOf(rowid));
+                }
+                showSelected();
+            },
+            gridComplete : function(){
+                $.each(roleIds, function(i, id){
+                    dgGroupRole.setSelection(id, false);
+                });
+                showSelected();
+            }
+        });
+
+        function showSelected(){
+            var table = dialog.find("#tbSelectedRoles");
+            var html = "";
+            $.each(roleIds, function(i, id){
+                var rowData = dgGroupRole.getRowData(id);
+                html += "<li class='list-group-item'>"+rowData.name+"</li>";
+            });
+            table.html(html);
+        }
+
+    });
+</script>

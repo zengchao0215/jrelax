@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">用户选择</h1>
+                <p class="lead">按照不同的方式选择用户，需引入<code>/framework/js/common/user.js</code></p>
+
+                <h2>基本实例</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default" onclick="selectUser()">选择用户</button>
+                    <button class="btn btn-default" onclick="selectUserByUnit()">选择用户（按机构）</button>
+                    <button class="btn btn-default" onclick="selectUserByUnitAndRole()">选择用户（按机构+角色）</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        function selectUser() {
+                            ns.common.user.select({
+                                callback: function (data) {
+                                    alert(JSON.stringify(data));
+                                }
+                            });
+                        }
+
+                        function selectUserByUnit() {
+                            ns.common.user.selectByUnit({
+                                callback: function (data) {
+                                    alert(JSON.stringify(data));
+                                }
+                            });
+                        }
+
+                        function selectUserByUnitAndRole() {
+                            ns.common.user.selectByUnitAndRole({
+                                callback: function (data) {
+                                    alert(JSON.stringify(data));
+                                }
+                            });
+                        }
+                    </pre>
+                </figure>
+
+                <h2>参数</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>multi</td>
+                            <td>bool</td>
+                            <td>是否多选</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>callback</td>
+                            <td>function</td>
+                            <td>选择完成后的回调函数</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/common/user.js");
+
+    function selectUser() {
+        ns.common.user.select({
+            callback: function (data) {
+                alert(JSON.stringify(data));
+            }
+        });
+    }
+
+    function selectUserByUnit() {
+        ns.common.user.selectByUnit({
+            callback: function (data) {
+                alert(JSON.stringify(data));
+            }
+        });
+    }
+
+    function selectUserByUnitAndRole() {
+        ns.common.user.selectByUnitAndRole({
+            callback: function (data) {
+                alert(JSON.stringify(data));
+            }
+        });
+    }
+</script>
+</html>

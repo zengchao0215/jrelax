@@ -1,0 +1,166 @@
+<form id="userAddForm" role="form" class="form-horizontal parsley-form" data-parsley-validate action="$!basePath/system/user/batch/add/do" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">批量添加用户</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="col-lg-2">所属机构</th>
+                        <th class="col-lg-2">角色</th>
+                        <th class="col-lg-2">用户名 <span class="text-danger">*</span></th>
+                        <th class="col-lg-2">姓名</th>
+                        <th class="col-lg-2">密码 <span class="text-danger">*</span></th>
+                        <th class="col-lg-2">邮箱</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    #foreach($index in [1..10])
+                    <tr>
+                        <td>$!index</td>
+                        <td>
+                            #if($foreach.first)
+                            <div class="input-group">
+                                <input id="unitName" type="text" class="form-control" value="$!unit.name" #if($unit) placeholder="$!unit.name" #else placeholder="请选择机构" #end disabled/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" onclick="doSelectUnit(this)">
+                                        <i class="fa fa-sitemap"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <input type="hidden" name="unitId" value="$!unit.id"/>
+                            #else
+                            <div class="input-group">
+                                <input id="unitName" type="text" class="form-control" placeholder="同上" disabled/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" onclick="doSelectUnit(this)">
+                                    <i class="fa fa-sitemap"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <input type="hidden" name="unitId" />
+                            #end
+                        </td>
+                        <td>
+                            <select disabled name="roleIds" data-placeholder="同上" style="width:100%" multiple class="form-control chosen" #if($foreach.first) data-parsley-required="true" data-parsley-placement="bottom" #end>
+                                #foreach($!role in $!roleList)
+                                <option value="$!role.id">$!role.name</option>
+                                #end
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="userName" #if($foreach.first) data-parsley-required="true" data-parsley-placement="bottom" #end maxlength="10">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="realName" maxlength="10">
+                        </td>
+                        <td>
+                            <input type="password" class="form-control" name="password" #if($foreach.first) data-parsley-required="true" data-parsley-placement="bottom" #end placeholder="同上" maxlength="20">
+                        </td>
+                        <td>
+                            <input type="text" name="email" data-parsley-type="email" class="form-control" maxlength="30">
+                        </td>
+                    </tr>
+                    #end
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/form.js",
+        "/framework/js/view/tree.js",
+        "/framework/js/form/select.js",
+        "/framework/js/form/validator.js",
+        "/framework/js/common/unit.js"
+    ]);
+
+    function doSelectUnit(obj) {
+        var tr = $(obj).parents("tr");
+        ns.common.unit.select({
+            multi : true,
+            callback : function(units){
+                var names = [], ids = [];
+                for(var i=0;i<units.length;i++){
+                    names.push(units[i].name);
+                    ids.push(units[i].id);
+                }
+                tr.find("#unitName").val(names.toString());
+                tr.find("input[name='unitId']").val(ids.toString());
+
+                loadRoles(tr, ids[0]);
+            }
+        });
+    }
+
+    //加载角色信息
+    function loadRoles(tr, uid) {
+        //根据获取的机构，获取角色列表
+        jQuery.post("$!basePath/system/user/unitrole/" + uid, {}, function (data) {
+            var roleSelect = tr.find("select[name='roleIds']");
+            if (data.roles.length > 0) {
+                var html = "";
+                for (var i = 0; i < data.roles.length; i++) {
+                    var role = data.roles[i];
+                    html += "<option value='" + role.id + "'>"
+                        + role.name + "</option>";
+                }
+                roleSelect.html(html);
+            } else {
+                roleSelect.html("");
+                Toast.warning("当前机构无角色，请添加角色后再添加用户!");
+            }
+            roleSelect.removeAttr("disabled");
+            roleSelect.trigger("chosen:updated");
+            setTimeout(function () {
+                roleSelect.parent().find("input").focus();
+            }, 200);
+        });
+    }
+
+    ns.ready(function () {
+        var dialog = ns.view.Dialog.getCur($("#userAddForm"));
+        $('#userAddForm').ajaxForm({
+            beforeSubmit: function (arr, $form, options) {
+                var roleIds = $("#userAddForm select[name='roleIds']").val();
+                if (!roleIds) {
+                    Toast.error("至少需要选择一个角色！");
+                    return false;
+                }
+                $form.find("button:submit").button("loading");
+            },
+            success: function (data, statusText, xhr, $form) {
+                if (data.success == true) {
+                    if(data.total == data.successCount)
+                        ns.tip.toast.success("用户增加成功！");
+                    else
+                        ns.tip.toast.success("成功："+data.successCount+"，失败："+(data.total - data.successCount));
+                    dialog.close({isSaved: true});
+                } else {
+                    Toast.error(data.message);
+                }
+                $form.find("button:submit").button("reset");
+            }
+        });
+
+        var unitId = "$!unit.id";
+        if(unitId.length > 0){
+            loadRoles($("#userAddForm table>tbody>tr:first"), unitId);
+        }
+    });
+</script>
+
+#loading_close
+</body>
+</html>

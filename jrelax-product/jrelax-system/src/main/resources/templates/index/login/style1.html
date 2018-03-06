@@ -1,0 +1,270 @@
+<!doctype html>
+<html class="signin no-js" lang="zh_CN">
+
+<head>
+    <!-- meta -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+    <title>${system_login_title}</title>
+    <script>
+        if(top.window != window){
+            top.window.location.href = window.location.href;
+        }
+    </script>
+    #required_css
+</head>
+<body class="">
+    <div class="overlay"></div>
+    <div class="center-wrapper" style="background: url($!basePath/framework/img/login/bg1.jpg) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; ">
+        <div class="center-content">
+            <div class="row no-m">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                    <section class="panel bg-white no-b fadeIn animated">
+                       	<header class="panel-heading no-b text-center">
+                       		<h3>${system_login_title}</h3>
+                       	</header>
+                        <div class="p15">
+                            <form id="loginForm" role="form" action="$!basePath/login/do" method="post">
+                            	<input type="hidden" id="verifycode" name="verifycode">
+                            	<div class="form-group">
+									<input type="text" name="username" class="form-control input-lg mb25" placeholder="用户名或邮箱">
+								</div>
+								<div class="form-group">
+                                	<input type="password" name="password" class="form-control input-lg mb25" placeholder="密码">
+                                </div>
+                                <p id="tip" class="bg-danger p15" style="display:none"></p>
+                                <div class="show">
+##                                    <div class="pull-right">
+##                                        <a href="javascript:;" data-toggle="modal" data-target="#dialogScanFace" onclick="startCam()">人脸识别</a>
+##                                    </div>
+                                    <label class="checkbox">
+                                        <input id="remember" type="checkbox" value="remember-me">记住我
+                                    </label>
+                                </div>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit" data-loading-text="正在登陆...">立即登录</button>
+                            </form>
+                        </div>
+                    </section>
+                    <p class="text-center text-white hide">
+                        Copyright &copy;
+                        <span id="year" class="mr5"></span>
+                        <span>NethSoft Co.,Ltd. All rights reserved 保留所有权利</span>
+                    </p>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+    <!-- 验证码 -->
+    <div id="dialogVeryCode" class="modal fade bs-modal-sm" tabindex="-3" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            	<div class="modal-header">
+                    <h4 class="modal-title" style="color:black;" onclick="startCam()">登录异常，请输入验证码</h4>
+                </div>
+                <div class="modal-body">
+                	<form onsubmit="return verifySubmit();">
+	                    <div class="row">
+	                        <div class="col-xs-2"></div>
+	                        <div class="col-xs-6">
+	                        	<input type="text" id="verifycode" class="form-control input-lg" placeholder="验证码">
+	                        </div>
+	                        <div class="col-xs-4">
+	                        	<a href="javascript:;" onclick="$('#vc').attr('src','$!basePath/open/captcha')" title="点击更换图片"><img id="vc" style="height:46px;"/></a>
+	                        </div>
+	                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="ok" type="button" class="btn btn-primary" onclick="verifySubmit()" data-dismiss="modal">登  录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 人脸识别 -->
+	<div id="dialogScanFace" class="modal fade bs-modal-sm" tabindex="-3" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            	<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" style="color:black;" onclick="startCam()">人脸识别</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                        	<center><video class="hide" id="video" width="400"></video></center>
+                           	<canvas class="hide" id="canvas" width="400"></canvas>
+							<center style="color:black;" id="loading_tip">视频组件正在初始化...</center>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="ok" type="button" class="btn btn-primary" onclick="catchImage()" data-loading-text="正在识别...">识  别</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopCam()">取  消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 必需脚本 -->
+    <script src="$!basePath/framework/plugins/jquery-1.11.1.min.js"></script>
+    <script src="$!basePath/framework/plugins/jquery.form.js"></script>
+    <script src="$!basePath/framework/js/plugins/cookie.js"></script>
+    <script src="$!basePath/framework/plugins/appear/jquery.appear.js"></script>
+	<script src="$!basePath/framework/bootstrap/js/bootstrap.js"></script>
+    
+    <!-- 显示提示脚本 -->
+    <script src="$!basePath/framework/js/plugins/animated.js"></script>
+	
+    <script type="text/javascript">
+    	var video,canvas,context,interval;
+    	$(function(){
+    		$("#loginForm").ajaxForm({
+				beforeSubmit:function(arr, $form, options){
+					var username = $form.find("input[name='username']");
+					if(username.val() == 0){
+				        username.parent().startAnimated("pulse has-error",function(obj){
+				        	obj.removeClass().addClass("form-group has-error");
+				        	obj.find("input").focus();
+				        });
+						return false;
+					}
+					var password = $form.find("input[name='password']");
+					if(password.val() == 0){
+				        password.parent().startAnimated("pulse has-error",function(obj){
+				        	obj.removeClass().addClass("form-group has-error");
+				        	obj.find("input${basePath}").focus();
+				        });
+						return false;
+					}
+					$form.find("button:submit").text("正在登陆...");
+					$form.find("button:submit").attr("disabled", "disabled");
+				},
+				success : function(data, statusText, xhr, $form) {
+					if(data.success == true){
+						if($("#remember").is(":checked")){
+							setCookie("USERNAME", $form.find("input[name='username']").val());
+						}
+						$("#tip").hide();
+						$form.find("button:submit").text("登陆成功，正在跳转首页...");
+						#if($!return_url)
+						window.location.href = "$!return_url";
+						#else
+						window.location.href="$!basePath/index";
+						#end
+					}else{
+						if(data.message == "vc"){
+							$("#dialogVeryCode img").attr("src","$!basePath/open/captcha");
+							$("#dialogVeryCode #verifycode").val("");
+							return $("#dialogVeryCode").modal("show");
+						}
+						$("#loginForm #verifycode").val("");
+						$("#tip").text(data.message);
+						$("#tip").fadeIn();
+						$form.find("button:submit").text("立即登陆");
+						$form.find("button:submit").removeAttr("disabled")
+					}
+	        	}
+			});
+			$("#loginForm input").on("focus", function(){
+				$("#tip").fadeOut();
+				$(this).parent().removeClass("has-error");
+			});
+			var username = getCookie("USERNAME");
+			if(username){
+				$("#loginForm input[name='username']").val(username);
+				$("#loginForm input[type='checkbox']").attr("checked", "checked");
+				$("#loginForm input[name='password']").focus();
+			}else{
+				$("#loginForm input[name='username']").focus();
+			}
+			
+			//开始视频
+			window.addEventListener("DOMContentLoaded", function () {
+				video = document.getElementById("video");
+				canvas = document.getElementById("canvas");
+				context = canvas.getContext("2d");
+			}, false);
+    	});
+    	
+		function stopCam(){
+			clearInterval(interval);
+		}
+		function startCam(){
+			try {
+				if(video.readyState == 4)
+					return;
+				document.createElement("canvas").getContext("2d");       
+				if (navigator.getUserMedia) {
+			        navigator.getUserMedia({video:true}, function (stream) {
+			            video.src = stream;
+			        }, function(){});
+			    } else if (navigator.webkitGetUserMedia) {
+			        navigator.webkitGetUserMedia({video:true}, function (stream) {
+			            video.src = window.webkitURL.createObjectURL(stream);
+			        }, function(){});
+			    }else if(navigator.mozGetUserMedia) { // Firefox-prefixed
+					navigator.mozGetUserMedia(videoObj, function(stream){
+						video.src = window.URL.createObjectURL(stream);
+					}, function(){});
+				}
+				//视频组件初始化完成时
+				video.addEventListener("canplay", function () {
+					video.play();
+					$("#loading_tip").text("");
+					$(video).removeClass("hide");
+					//定时追踪脸部
+					interval = setInterval(catchImage ,2000);
+				}, false);
+			}catch (e) {
+				$("#loading_tip").text("浏览器不支持HTML5 CANVAS");
+			}
+		}
+		function catchImage(){
+			$("#dialogScanFace .rec").remove();
+			canvas.height = $(video).height();
+			context.drawImage(video, 0, 0, $(video).width(),$(video).height());
+			var imageData = canvas.toDataURL();
+			//上传
+			$("#dialogScanFace #ok").button("loading");
+			jQuery.post("$!basePath/signin/face",{img:imageData},function(data){
+				if(data.success == true){
+					if(data.login == true){
+						#if($!return_url)
+						window.location.href = "$!return_url";
+						#else
+						window.location.href="$!basePath/index";
+						#end;
+						return;
+					};
+					//创建DIV
+					var l = $(video).offset().left;
+					var t = $(video).offset().top;
+					
+					var div = $("<div class='rec' style='border:1px solid red; position:absolute;'></div>");
+					div.css("top", t+data.y);
+					div.css("left", l+data.x);
+					div.width(data.w+"px");
+					div.height(data.h+"px");
+					
+					$("#dialogScanFace").append(div);
+				}else{
+					$("#loading_tip").text("识别失败，请确认在系统中采集过您的头像！");
+				}
+				$("#dialogScanFace #ok").button("reset");
+			});
+		}
+		function verifySubmit(){
+			var vc = $("#dialogVeryCode #verifycode").val();
+			$("#dialogVeryCode").modal("hide");
+			$("#loginForm input[name='username']").focus();
+			$("#loginForm #verifycode").val(vc);
+			
+			$("#loginForm").submit();
+			
+			return false;
+		}
+	</script>
+</body>
+
+</html>

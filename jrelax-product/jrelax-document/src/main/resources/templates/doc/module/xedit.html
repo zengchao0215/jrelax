@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">快速编辑</h1>
+                <p class="lead">基于<code>bootstrap-editable</code>实现，需引入 <code>/framework/js/form/editable.js</code></p>
+
+                <h2>基本实例</h2>
+                <p></p>
+                <div class="bs-example">
+                    <a href="javascript:;" data-type="text" data-title="输入新名称" data-pk="$!obj.id" data-placement="right" class="xeditable-name">名称</a>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;a href="javascript:;" data-type="text" data-title="输入新名称" data-pk="$!obj.id" data-placement="right" class="xeditable-name"&gt;名称&lt;/a&gt;
+                        $(".xeditable-name").editable({//名称快捷编辑
+                            url: "$!basePath/doc/grid-data",
+                            validate: function (value) {
+                                if ($.trim(value) == '') {
+                                    return '名称不能为空！';
+                                }
+                            }
+                        });
+                    </pre>
+                </figure>
+
+                <h2>参数</h2>
+                <blockquote>
+                    <p>
+                        参数配置有两种方式：
+                    <ul>
+                        <li>在元素节点上配置data-属性名</li>
+                        <li>初始化时传入</li>
+                    </ul>
+                    </p>
+                </blockquote>
+                <div class="table-responsive">
+                    <h3>配置参数</h3>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>默认值</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>type</td>
+                            <td>string</td>
+                            <td>'text'</td>
+                            <td>input type - text | select | textarea | date</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>null</td>
+                            <td>name of field, required. If not set, will be taken from <b>id</b> attribute.</td>
+                        </tr>
+                        <tr>
+                            <td>pk</td>
+                            <td>string | function</td>
+                            <td>null</td>
+                            <td>primary key of editable object (e.g. record id in database). Can be css selector or function to get id dynamically, e.g.:<br>
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span class="pln">    </span><span class="kwd">return</span><span
+                                        class="pln"> $</span><span class="pun">(</span><span class="str">'#user_id'</span><span class="pun">).</span><span class="pln">text</span><span class="pun">();</span></li><li class="L2"><span class="pun">}</span></li></ol></pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>value</td>
+                            <td>string</td>
+                            <td>element's text</td>
+                            <td>initial value. Should be defined for <i>select</i> type to store id of shown text</td>
+                        </tr>
+                        <tr>
+                            <td>params</td>
+                            <td>object</td>
+                            <td>null</td>
+                            <td>additional params to submit</td>
+                        </tr>
+                        <tr>
+                            <td>url</td>
+                            <td>string</td>
+                            <td>null</td>
+                            <td>url to submit data via ajax. Sending pk, name, value and params</td>
+                        </tr>
+                        <tr>
+                            <td>emptytext</td>
+                            <td>string</td>
+                            <td>'Empty'</td>
+                            <td>text shown on empty elements</td>
+                        </tr>
+                        <tr>
+                            <td>inputclass</td>
+                            <td>string</td>
+                            <td>'span2'</td>
+                            <td>Css class for input - span1 | span2 | span3 | span4</td>
+                        </tr>
+                        <tr>
+                            <td>toggle</td>
+                            <td>string | jQuery</td>
+                            <td>null</td>
+                            <td>element that toggles popover by click. By default element itself. Can be CSS selector or HTML, e.g. <code>data-toggle="#pencil"</code></td>
+                        </tr>
+                        <tr>
+                            <td>send</td>
+                            <td>string</td>
+                            <td>'auto'</td>
+                            <td>strategy for sending data on server - auto | always | never. <br>'auto' = data will be sent only if <strong>pk</strong> defined, otherwise will be stored in element</td>
+                        </tr>
+                        <tr>
+                            <td>placement</td>
+                            <td>string | function</td>
+                            <td>'top'</td>
+                            <td>how to position the popover - top | bottom | left | right</td>
+                        </tr>
+                        <tr>
+                            <td>enablefocus</td>
+                            <td>bool</td>
+                            <td>false</td>
+                            <td>wether to return focus on element after popover is closed. This allows fully keyboard input, but focused links may look not pretty</td>
+                        </tr>
+                        <tr>
+                            <td>autotext</td>
+                            <td>string</td>
+                            <td>'auto'</td>
+                            <td>can be auto | always | never. Allows to automatically set element's text based on it's value. Usefull for <i>select</i> and <i>date</i>. E.g.:
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">id</span><span
+                                        class="pun">=</span><span class="atv">"group"</span><span class="pln"> </span><span class="atn">data-type</span><span class="pun">=</span><span class="atv">"select"</span><span class="pln"> </span><span class="atn">data-value</span><span
+                                        class="pun">=</span><span class="atv">"1"</span><span class="pln"> </span><span class="atn">data-source</span><span class="pun">=</span><span class="atv">"{1: 'User', 2: 'Admin'}"</span><span class="pln"> </span><span
+                                        class="tag">&gt;&lt;/a&gt;</span></li></ol></pre>
+                                Content of element above is empty, but when apply <i>editable</i> it will be set to <i>'User'</i>, because provided value is <code>1</code>
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#group'</span><span class="pun">).</span><span class="pln">editable</span><span class="pun">();</span></li></ol></pre>
+                                <code>auto</code> means text will be set only if element is empty and <i>source</i> defined as object (no extra request).<br>
+                                <code>always|never</code> means always(never) try to set element's text<br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>template</td>
+                            <td>string</td>
+                            <td>depends on type</td>
+                            <td>html template used for input inside popover. Allows to do whatever with input:
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#comments'</span><span class="pun">).</span><span class="pln">editable</span><span class="pun">({</span></li><li
+                                        class="L1"><span class="kwd">template</span><span class="pun">:</span><span class="pln"> </span><span class="str">'&lt;textarea rows="12"&gt;&lt;/textarea&gt;'</span></li><li class="L2"><span class="pun">});</span></li></ol></pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>validate</td>
+                            <td>function | object</td>
+                            <td>null</td>
+                            <td>function for client-side validation. If returns string - means validation not passed and string showed as error.
+                                E.g.:
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">validate</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span
+                                        class="pun">)</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span class="pln">  </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">$</span><span class="pun">.</span><span class="pln">trim</span><span
+                                        class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">''</span><span class="pun">)</span><span class="pln"> </span></li><li class="L2"><span
+                                        class="pln">    </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'This field is required'</span><span class="pun">;</span></li><li class="L3"><span class="pun">}</span></li></ol></pre>
+                                Definition as object is usefull when applying editable to several elements and difference is only in validation. Object structure is <code>name: function</code>, e.g.
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">validate</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span class="pln">    username</span><span
+                                        class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">v</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{...},</span></li><li class="L2"><span class="pln">    fullname</span><span
+                                        class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">v</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{...}</span></li><li class="L3"><span class="pun">}</span></li></ol></pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>success</td>
+                            <td>function</td>
+                            <td>null</td>
+                            <td>called after success submit. If returns string - means error occured and string is shown as error. Parameters equals to <code>$.ajax()</code> success callback. Can be used to deal with json returned from server.
+                                E.g.:
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span
+                                        class="pln">    </span><span class="kwd">if</span><span class="pun">(</span><span class="kwd">typeof</span><span class="pln"> data </span><span class="pun">==</span><span class="pln"> </span><span class="str">'object'</span><span class="pln"> </span><span
+                                        class="pun">&amp;&amp;</span><span class="pln"> </span><span class="pun">!</span><span class="pln">data</span><span class="pun">.</span><span class="pln">success</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span
+                                        class="pln"> data</span><span class="pun">.</span><span class="pln">msg</span><span class="pun">;</span><span class="pln">  </span></li><li class="L2"><span class="pun">}</span></li></ol></pre>
+                                By default any submit request returning http status = 200 considered successful, and status != 200 considered error.
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>error</td>
+                            <td>function</td>
+                            <td>null</td>
+                            <td>called on ajax error when submitting data. If returns string - it will be shown as error message. Parameters equals to <code>$.ajax()</code> error callback. Can be used for special error handling. E.g.:
+                                <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="kwd">function</span><span class="pun">(</span><span class="pln">xhr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span
+                                        class="pln">    </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">xhr</span><span class="pun">.</span><span class="pln">status </span><span class="pun">==</span><span class="pln"> </span><span class="lit">500</span><span
+                                        class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'Internal server error'</span><span class="pun">;</span><span class="pln">  </span></li><li class="L2"><span class="pun">}</span></li></ol></pre>
+                                By default response text will be shown as error message.
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <h3>类型参数</h3>
+                    <h4>Text & Textarea</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>默认值</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>placeholder</td>
+                            <td>string</td>
+                            <td>null</td>
+                            <td>text shown if input is empty</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h3>Select</h3>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>默认值</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>source</td>
+                            <td>string | object</td>
+                            <td>null</td>
+                            <td>source for data in select element. If string - considered url for ajax to load items. Otherwise should be json.
+                                E.g. <code>data-source="groups.php"</code> or <br><code>data-source="{'M': 'male', 'F': 'female'}"</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>prepend</td>
+                            <td>string | object</td>
+                            <td>false</td>
+                            <td>allows to prepend values in select list.<br>E.g. if set <code>prepend: 'Not defined'</code> then new value <code>{'': 'Not defined'}</code> will be automatically inserted at the begining of select list</td>
+                        </tr>
+                        <tr>
+                            <td>loadingError</td>
+                            <td>string</td>
+                            <td>'Error when loading options'</td>
+                            <td>Message shown when options can't be loaded</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Date</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>默认值</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>format</td>
+                            <td>string</td>
+                            <td>yyyy-mm-dd</td>
+                            <td>format used for <strong>submitting date to server</strong>. Combination of d, dd, m, mm, yy, yyyy. </td>
+                        </tr>
+                        <tr>
+                            <td>viewformat</td>
+                            <td>string</td>
+                            <td>equals to <i>format</i></td>
+                            <td>format used for <strong>displaying date</strong>. Combination of d, dd, m, mm, yy, yyyy. </td>
+                        </tr>
+
+                        <tr>
+                            <td>weekStart</td>
+                            <td>integer</td>
+                            <td>0</td>
+                            <td>day of the week start. 0 for Sunday - 6 for Saturday</td>
+                        </tr>
+                        <tr>
+                            <td>startView</td>
+                            <td>string</td>
+                            <td>0, 'month'</td>
+                            <td>The view that the datepicker should show when it is opened. Accepts values of 0 or 'month' for month view (the default), 1 or 'year' for the 12-month overview, and 2 or 'decade' for the 10-year overview. Useful for date-of-birth datepickers</td>
+                        </tr>
+                        <tr>
+                            <td>datepicker</td>
+                            <td>object</td>
+                            <td>null</td>
+                            <td>Full <a href="http://vitalets.github.com/bootstrap-datepicker/" target="_blank">configuration</a> of datepicker. Some most used options from here are dublicated above for convenience</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>方法</h2>
+                <blockquote>
+                    <p>
+                        方法调用方式：<code>$("EL").editable("方法名", 参数)</code>
+                    </p>
+                </blockquote>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-lg-3">名称</th>
+                            <th class="col-lg-4">参数</th>
+                            <th class="col-lg-5">描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr>
+                            <td>show</td>
+                            <td></td>
+                            <td>显示</td>
+                        </tr>
+                        <tr>
+                            <td>hide</td>
+                            <td></td>
+                            <td>隐藏</td>
+                        </tr>
+                        <tr>
+                            <td>option</td>
+                            <td>参数名，参数值</td>
+                            <td>设置参数</td>
+                        </tr>
+                        <tr>
+                            <td>validate</td>
+                            <td></td>
+                            <td>验证</td>
+                        </tr>
+                        <tr>
+                            <td>getValue</td>
+                            <td></td>
+                            <td>获得值</td>
+                        </tr>
+                        <tr>
+                            <td>markAsSaved</td>
+                            <td></td>
+                            <td>标记为已保存</td>
+                        </tr>
+                        <tr>
+                            <td>submit</td>
+                            <td>url，data，success， error</td>
+                            <td>提交</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>事件</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 150px;">名称</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>init</td>
+                            <td>初始化后</td>
+                        </tr>
+                        <tr>
+                            <td>update</td>
+                            <td>更新后触发</td>
+                        </tr>
+                        <tr>
+                            <td>render</td>
+                            <td>渲染后</td>
+                        </tr>
+                        <tr>
+                            <td>shown</td>
+                            <td>显示完成后</td>
+                        </tr>
+                        <tr>
+                            <td>hidden</td>
+                            <td>关闭时</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/form/editable.js");
+    ns.ready(function () {
+        $(".xeditable-name").editable({//名称快捷编辑
+            url: "$!basePath/doc/grid-data",
+            validate: function (value) {
+                if ($.trim(value) === '') {
+                    return '名称不能为空！';
+                }
+            }
+        });
+    });
+</script>
+</html>

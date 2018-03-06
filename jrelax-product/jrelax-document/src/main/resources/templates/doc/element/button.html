@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">按钮</h1>
+                <p class="lead">为 <code>&lt;a&gt;</code>、<code>&lt;button&gt;</code> 或 <code>&lt;input&gt;</code> 元素添加按钮类（button class）即可使用 Bootstrap 提供的样式。</p>
+
+                <h2>基本实例</h2>
+                <div class="bs-example">
+                    <a class="btn btn-default" href="#" role="button">Link</a>
+                    <button class="btn btn-default" type="submit">Button</button>
+                    <input class="btn btn-default" type="button" value="Input">
+                    <input class="btn btn-default" type="submit" value="Submit">
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;a class="btn btn-default" href="#" role="button"&gt;Link&lt;/a&gt;
+                        &lt;button class="btn btn-default" type="submit"&gt;Button&lt;/button&gt;
+                        &lt;input class="btn btn-default" type="button" value="Input"&gt;
+                        &lt;input class="btn btn-default" type="submit" value="Submit"&gt;
+                    </pre>
+                </figure>
+
+                <h2>不同情境</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default" type="button">btn-default</button>
+                    <button class="btn btn-primary" type="button">btn-primary</button>
+                    <button class="btn btn-info" type="button">btn-info</button>
+                    <button class="btn btn-warning" type="button">btn-warning</button>
+                    <button class="btn btn-success" type="button">btn-success</button>
+                    <button class="btn btn-danger" type="button">btn-danger</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;button class="btn btn-default" type="button"&gt;btn-default&lt;/button&gt;
+                        &lt;button class="btn btn-primary" type="button"&gt;btn-primary&lt;/button&gt;
+                        &lt;button class="btn btn-info" type="button"&gt;btn-info&lt;/button&gt;
+                        &lt;button class="btn btn-warning" type="button"&gt;btn-warning&lt;/button&gt;
+                        &lt;button class="btn btn-success" type="button"&gt;btn-success&lt;/button&gt;
+                        &lt;button class="btn btn-danger" type="button"&gt;btn-danger&lt;/button&gt;
+                    </pre>
+                </figure>
+
+                <h2>尺寸</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default btn-lg" type="button">大按钮(btn-lg)</button>
+                    <button class="btn btn-default" type="button">默认尺寸</button>
+                    <button class="btn btn-default btn-sm" type="button">小按钮(btn-sm)</button>
+                    <button class="btn btn-default btn-xs" type="button">超小按钮(btn-xs)</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;button class="btn btn-default btn-lg" type="button"&gt;大按钮(btn-lg)&lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button"&gt;默认尺寸&lt;/button&gt;
+                        &lt;button class="btn btn-default btn-sm" type="button"&gt;小按钮(btn-sm)&lt;/button&gt;
+                        &lt;button class="btn btn-default btn-xs" type="button"&gt;超小按钮(btn-xs)&lt;/button&gt;
+                    </pre>
+                </figure>
+
+                <h2>不同状态</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default" type="button">默认状态</button>
+                    <button class="btn btn-default active" type="button">激活状态</button>
+                    <button class="btn btn-default disabled" type="button">禁用状态</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;button class="btn btn-default" type="button"&gt;默认状态&lt;/button&gt;
+                        &lt;button class="btn btn-default active" type="button"&gt;激活状态&lt;/button&gt;
+                        &lt;button class="btn btn-default disabled" type="button"&gt;禁用状态&lt;/button&gt;
+                    </pre>
+                </figure>
+
+                <h2>其他</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default btn-circle" type="button">
+                        <i class="fa fa-home"></i>
+                    </button>
+
+                    <button class="btn btn-icon-only" type="button">
+                        <i class="fa fa-home"></i>
+                    </button>
+
+                    <button class="btn btn-circle" type="button">
+                        <i class="fa fa-home"></i>
+                    </button>
+
+                    <button class="btn btn-circle btn-dashed" type="button">
+                        <i class="fa fa-home"></i>
+                    </button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;button class="btn btn-default btn-circle" type="button"&gt;
+                            &lt;i class="fa fa-home"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+    
+                        &lt;button class="btn btn-icon-only" type="button"&gt;
+                            &lt;i class="fa fa-home"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+    
+                        &lt;button class="btn btn-circle" type="button"&gt;
+                            &lt;i class="fa fa-home"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+    
+                        &lt;button class="btn btn-circle btn-dashed" type="button"&gt;
+                            &lt;i class="fa fa-home"&gt;&lt;/i&gt;
+                        &lt;/button&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/framework/css/ext/file.css">
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <aside class="sidebar-250 canvas-right">
+                <header class="header navbar clearfix bb pl0 pr0">
+                    <p class="navbar-text"><i class="ti-window mr5"></i> 文件目录</p>
+                    <div class="btn-group pull-right mr10">
+                        <button id="refreshTree" type="button" class="btn btn-sm btn-default btn-outline navbar-btn"><i
+                                class="ti-reload"></i></button>
+                    </div>
+                </header>
+                <div class="content-wrap no-p">
+                    <div class="wrapper no-scroll">
+                        <div class="m5">
+                            <div id="jsTreeFolder"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 内容主体 -->
+            <section class="main-content bg-white">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="toolbar">
+                        <button id="prev" type="button" class="btn btn-primary toolbar-item" disabled="disabled"><i
+                                class="ti-arrow-left"></i></button>
+                        <button id="root" type="button" class="btn btn-primary toolbar-item" data-type="root"><i
+                                class="ti-home"></i></button>
+                        <button id="reload" type="button" class="btn btn-primary toolbar-item" data-type="reload"><i
+                                class="ti-reload"></i></button>
+
+                        <button id="upload" type="button" class="btn btn-primary toolbar-item" data-type="F"><i
+                                class="ti-upload"></i></button>
+                        <button id="download" type="button" class="btn btn-primary toolbar-item" data-type="F"><i
+                            class="ti-basketball"></i></button>
+                        <button id="createFolder" type="button" class="btn btn-primary toolbar-item" data-type="F"><i
+                                class="ti-folder"></i></button>
+                    </div>
+                    <!-- 右按钮区 -->
+                    <div class="btn-group pull-right">
+
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <ol id="nav" class="breadcrumb">
+                                    <li><i class="ti-home"></i> <a href="javascript:;" data-type="root">根目录</a></li>
+                                </ol>
+                                <div class="row" id="fileList">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/view/tree.js",
+        "/framework/js/form/uploader.js"
+    ]);
+
+    ns.ready(function () {
+        var $path = "/", itemClass = "col-lg-2 col-md-2 col-sm-2";
+        $("#jsTreeFolder").jstree({
+            plugins: ["wholerow"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return node.id === "#" ? "$!basePath/system/senior/file/tree" : "$!basePath/system/senior/file/tree?path=" + node.id;
+                    }
+                },
+                multiple: false
+            }
+        }).on("select_node.jstree", function (node, selected) {
+            load(selected.selected[0]);
+        });
+
+        $("#refreshTree").on("click", function(){
+            $.jstree.reference("#jsTreeFolder").refresh();
+        });
+
+        function load(selectPath) {
+            $path = selectPath;
+            var fileList = $("#fileList");
+            ns.showLoadingbar(fileList);
+
+            $.post("$!basePath/system/senior/file/folder", {path: $path}, function (data) {
+                if (data.success === true) {
+                    if (data.data.length === 0) {
+                        fileList.html("<center class='pb15'><img src='" + ns.getBasePath() + "/framework/img/icon/empty.png'/><br><br>此文件夹是空的。</center>");
+                    } else {
+                        fileList.html("");
+                        for (var i = 0; i < data.data.length; i++) {
+                            var file = data.data[i];
+                            var item = "<div class=\"" + itemClass + "\">";
+                            if (file.type === 1) {//文件
+                                var name = file.name, title = file.modifyTime;
+                                if (name.length > 20) {
+                                    title = name;
+                                    name = name.substring(0, 18) + '...';
+                                }
+                                item += "<div class=\"widget\" data-type=\"select\" data-path=\"" + file.path + "\" data-file-size='" + file.size + "' data-file-name='" + file.name + "'>";
+                                var img = ns.getBasePath() + "/framework/img/icon/file.png";
+                                var suffix = getSuffix(file.name);
+                                if (suffix === ".jpg" || suffix === ".jpeg" || suffix === ".png" || suffix === ".gif" || suffix === ".bmp") {
+                                    img = "$!uploadPrefix" + file.path;
+                                } else {
+                                    img = "$!basePath" + file.icon
+                                }
+                                item += "<div class=\"widget-body\" title=\"" + file.size + "\"><img src=\"" + img + "\" height=\"56\"></div>";
+                                item += "<div class=\"widget-footer\" title=\"" + title + "\">" + name + "</div>";
+                            } else if (file.type === 2) {
+                                item += "<div class=\"widget\" data-type=\"load\" data-path=\"" + file.path + "\">";
+                                item += "<div class=\"widget-body\" title=\"" + file.size + "\"><img src=\"" + ns.getBasePath() + "/framework/img/icon/folder.png\" height=\"56\"></div>";
+                                item += "<div class=\"widget-footer\" title=\"" + file.modifyTime + "\">" + file.name + "</div>";
+                            } else if (file.type === 3) {
+                                item += "<div class=\"widget\" data-type=\"load\" data-path=\"" + file.path + "\">";
+                                item += "<div class=\"widget-body\" title=\"" + file.size + "\"><img src=\"" + ns.getBasePath() + "/framework/img/icon/folder2.png\" height=\"56\"></div>";
+                                item += "<div class=\"widget-footer\" title=\"" + file.modifyTime + "\">" + file.name + "</div>";
+                            }
+                            item += "</div>";
+
+                            fileList.append(item);
+                        }
+                    }
+                    init();
+                } else {
+                    alert("加载失败,请稍后重试！");
+                }
+                ns.closeLoadingbar(fileList);
+            });
+
+            if($path === ("$IMG$") || $path === "$FILE$"){
+                $("[data-type='F']").prop("disabled", true);
+            }else{
+                $("[data-type='F']").prop("disabled", false);
+            }
+        }
+
+        function reload() {
+            load($path);
+        }
+
+        function preview(path) {//文件预览
+            alert(path);
+        }
+
+        function prev() {
+            var path = $path;
+            var idx = path.lastIndexOf("/");
+            if (idx === -1)
+                path = "/";
+            else
+                path = path.substring(0, idx);
+            load(path);
+        }
+
+        function root() {
+            if ($path.length > 0) {
+                load("/");
+            }
+        }
+
+        function init() {
+            initNav(this);
+            initEvents(this);
+        }
+
+        //获取后缀名
+        function getSuffix(name) {
+            var idx = name.lastIndexOf(".");
+            if (idx < 0)
+                return "";
+            return name.substring(name.lastIndexOf(".")).toLowerCase();
+        }
+
+        function initEvents() {
+            //select
+            $("[data-type='select']").off("click").on("click", function () {
+                var item = $(this);
+                var path = item.data("path");
+                window.open("$!{uploadPrefix}" + path);
+            });
+            //preview
+            $("[data-type='preview']").off("click").on("click", function () {
+                var path = $(this).data("path");
+                preview(path);
+            });
+            //load
+            $("[data-type='load']").off("click").on("click", function () {
+                var path = $(this).data("path");
+                load(path);
+            });
+            //reload
+            $("[data-type='reload']").off("click").on("click", function () {
+                reload();
+            });
+            //root
+            $("[data-type='root']").off("click").on("click", function () {
+                root();
+            });
+        }
+
+        function initNav() {
+            //初始化返回上一级按钮
+            var btnPrev = $("#prev");
+            if ($path.length === 0) {
+                btnPrev.attr("disabled", "disabled");
+                btnPrev.unbind("click");
+            } else {
+                btnPrev.removeAttr("disabled");
+                btnPrev.unbind("click");
+                btnPrev.bind("click", function () {
+                    prev();
+                });
+            }
+            //初始化导航
+            var nameMap = {
+                "$IMG$": "最新图片",
+                "$FILE$": "最新文件",
+                "file": "文件目录",
+                "image": "图片目录",
+                "temp": "临时目录"
+            };
+            var nav = "<li><i class=\"ti-home\"></i> <a href=\"javascript:;\" data-type='root'>根目录</a></li>";
+            if ($path.length > 0) {
+                var folders = $path.split("/");
+                for (var i = 0; i < folders.length - 1; i++) {
+                    var cPath = "";
+                    for (var j = 0; j <= i; j++) {
+                        cPath += "/" + folders[j];
+                    }
+                    cPath = cPath.substring(1);
+                    if(cPath.length > 0){
+                        var name = folders[i];
+                        if (nameMap[name])
+                            name = nameMap[name];
+                        nav += "<li><a href=\"javascript:;\" data-type='load' data-path=\"" + cPath + "\">" + name + "</a></li>";
+                    }
+                }
+                var name = folders[folders.length - 1];
+
+                if (nameMap[name])
+                    name = nameMap[name];
+                nav += "<li class=\"active\">" + name + "</li>";
+            }
+            $("#nav").html(nav);
+        }
+        load($path);
+
+        //上传文件
+        $("#upload").on("click", function () {
+            ns.form.uploader.open({
+                fileBrowser: false,
+                success: function (path, name) {
+                    load(path.replace(name, ""));
+                }
+            });
+        });
+
+        //网络下载
+        $("#download").on("click", function(){
+           ns.prompt("请输入网络文件地址：", function(url){
+               var bar = ns.view.showProgressbar("正在提交...");
+               ns.post("$!basePath/system/senior/file/download", {dir : $path, url : url}, function(success, data){
+                   ns.tip.toast.success("已添加到下载队列");
+                   bar.close();
+
+                   reload();
+               });
+           }, null, {textarea:true});
+        });
+
+        //新建文件夹
+        $("#createFolder").on("click", function(){
+            ns.prompt("请输入文件夹名称：", function(name){
+                var bar = ns.view.showProgressbar("正在创建...");
+                ns.post("$!basePath/system/senior/file/create/folder", {dir : $path, name : name}, function(success, data){
+                    reload();
+                    bar.close();
+                });
+            });
+        });
+    });
+</script>
+#loading_close
+</body>
+</html>

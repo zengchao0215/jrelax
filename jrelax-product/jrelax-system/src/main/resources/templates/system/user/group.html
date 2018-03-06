@@ -1,0 +1,98 @@
+<form id="userGroupForm" class="parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/system/user/group/do">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">管理用户组</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" name="id" value="$!user.id">
+        <input type="hidden" name="groupIds">
+        <div class="row">
+            <div class="col-lg-10 col-md-10">
+                <table id="dgUserGroup"></table>
+                <div id="dgUserGroupPager"></div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">已选用户组</div>
+                    <div class="panel-body">
+                        <ul class="list-group" id="tbSelectedGroups"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.ready(function () {
+        ns.requireJS("/framework/js/form/form.js");
+        ns.requireJS("/framework/js/form/validator.js");
+        ns.requireJS("/framework/js/form/checkbox.js");
+        ns.requireJS("/framework/js/view/datagrid.js");
+        var dialog = ns.view.Dialog.getCur("#userGroupForm");
+        var groupIds = [];
+        #foreach($!group in $!user.groups)
+            groupIds.push('$!group.id');
+        #end
+        dialog.find("#userGroupForm").ajaxForm({
+            beforeSerialize : function(form , options){
+                form.find("input[name='groupIds']").val(groupIds.toString());
+            },
+            beforeSubmit: function (arr, form , options) {
+                form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("用户组成功！");
+                    ns.view.Dialog.close(form, {success: true});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("#ok").button("reset")
+            ;
+            }
+        });
+        var dgUserGroup = dialog.find("#dgUserGroup").jqGrid({
+            url: '$!basePath/system/user/group/data',
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "用户组名", name: "name", width: 100},
+                {label: "描述", name: "descript", width: 200}
+            ],
+            height: 200,
+            pager: "#dgUserGroupPager",
+            pagerpos : "center",
+            multiselect: true,
+            icheckbox: true,
+            postData : {userId:"$!user.id"},
+            onSelectRow : function(rowid, checked, e){
+                if(checked){
+                    groupIds.push(rowid);
+                }else{
+                    groupIds.remove(groupIds.indexOf(rowid));
+                }
+                showSelected();
+            },
+            gridComplete : function(){
+                $.each(groupIds, function(i, id){
+                    dgUserGroup.setSelection(id, false);
+                });
+                showSelected();
+            }
+        });
+
+        function showSelected(){
+            var table = dialog.find("#tbSelectedGroups");
+            var html = "";
+            $.each(groupIds, function(i, id){
+                var rowData = dgUserGroup.getRowData(id);
+                html += "<li class='list-group-item'>"+rowData.name+"</li>";
+            });
+            table.html(html);
+        }
+
+    });
+</script>

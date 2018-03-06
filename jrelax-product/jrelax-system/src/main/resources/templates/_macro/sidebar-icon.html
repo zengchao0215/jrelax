@@ -1,0 +1,42 @@
+<aside class="sidebar offscreen-left" style="min-height: 500px; width: 100%;">
+    <!-- main navigation -->
+    <nav class="main-navigation" data-height="auto" data-size="6px" data-distance="0" data-rail-visible="true" data-wheel-step="10">
+        <ul class="nav">
+            #foreach($!first in $!list)
+            #if($!first.hasChildren() == false)
+            #if($!velocityCount == 1)
+            <li class="open">
+                <a href="$!{basePath}$!{first.url}" title="$!first.name" icon="$!first.icon" class="active" #if($!{first.newWindow})target="_blank"#else target="contentFrame" #end>
+            #else
+            <li>
+                <a href="$!{basePath}$!{first.url}" title="$!first.name" icon="$!first.icon" #if($!{first.newWindow})target="_blank"#else target="contentFrame" #end>
+            #end
+                    <i class="$!first.icon"></i>
+                    <b>$!first.name</b>
+                    #if($!first.beta)<div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                </a>
+            </li>
+            #else
+            <li>
+                <a href="javascript:;" class="active">
+                    <i class="toggle-accordion"></i>
+                    <i class="$!first.icon"></i>
+                    <b>$!first.name</b>
+                    #if($!first.beta)<div class="badge badge-top bg-warning"><span>新功能</span></div>#end
+                </a>
+                <ul class="sub-menu">
+                    #foreach($!second in $!_thirdRes.get($!first.id))
+                    <li>
+                        <a href="$!{basePath}$!second.url" title="$!second.name" icon="$!second.icon" #if($!{first.newWindow})target="_blank"#else target="contentFrame" #end>
+                            <span>$!second.name</span>
+                            #if($!second.beta)<div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                        </a>
+                    </li>
+                    #end
+                </ul>
+            </li>
+            #end
+            #end
+        </ul>
+    </nav>
+</aside>

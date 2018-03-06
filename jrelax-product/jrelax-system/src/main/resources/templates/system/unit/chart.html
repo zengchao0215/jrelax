@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="$!resPath/framework/plugins/jsmind/jit.css">
+<style>
+    .orgChart{
+        position: relative;
+        width: 99%;
+        height:500px;
+        top:-150px;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">组织架构-结构图</h4>
+</div>
+<div class="modal-body">
+    <div id="unitOrgChart" class="orgChart"></div>
+</div>
+<script src="$!basePath/framework/plugins/jsmind/jit.js"></script>
+<script src="$!basePath/framework/js/util/util.js"></script>
+<script>
+    ns.ready(function(){
+        var data = [];
+        #foreach($obj in $list)
+        data.push({"id": "$!obj.id", "parentId": "$!obj.parentId", "name": "$!{obj.name}", "data": {"level": "$!obj.code"}});
+        #end
+        var json = {
+            id: "-1",
+            name: "组织机构",
+            data: {level: ""},
+            children: ns.util.listToTree(data)
+        }
+        var jit = $jit;
+        var st = new jit.ST({
+            //id of viz container element
+            injectInto: 'unitOrgChart',
+            //set duration for the animation
+            duration: 400,
+            //set animation transition type
+            transition: $jit.Trans.Quart.easeInOut,
+            //set distance between node and its children
+            levelDistance: 50,
+            //显示方向
+            orientation: "top",
+            levelsToShow: 10,
+            //enable panning
+            Navigation: {
+                enable: true,
+                panning: true
+            },
+            //set node and edge styles
+            //set overridable=true for styling individual
+            //nodes or edges
+            Node: {
+                height: 30,
+                width: 120,
+                type: 'square',
+                color: '#aaa',
+                overridable: true
+            },
+
+            Edge: {
+                type: 'bezier',
+                overridable: true
+            },
+            //This method is called on DOM label creation.
+            //Use this method to add event handlers and styles to
+            //your node.
+            onCreateLabel: function (label, node) {
+                label.id = node.id;
+                label.innerHTML = node.name;
+
+                var level = node.data.level;
+                if (level.length === 0){
+                    label.className = "node root";
+                } else
+                    label.className = "node node-" + (level.length / 3);
+
+            }
+        });
+        st.loadJSON(json);
+        st.compute();
+        st.onClick(st.root);
+    });
+</script>

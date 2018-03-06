@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">表单验证</h1>
+                <p class="lead">基于<code>jQuery.parsley.js</code>，需要引入<code>/framework/js/form/validator.js</code></p>
+
+                <p>
+                    配置说明：
+                    <ul>
+                        <li>在form节点上增加 <code>class="parsley-form"</code> 和 <code>data-parsley-validate</code></li>
+                        <li>在表单元素上 <code>参数表（底部）</code> 中的属性</li>
+                        <li>在提交按钮上增加 <code>btn-parsley</code>（可选）</li>
+                    </ul>
+                </p>
+                <div class="bs-example">
+                    <form class="parsley-form" data-parsley-validate action="#" method="get">
+                        <div class="row">
+                            <div class="col-lg-5 col-xs-5">
+                                <div class="form-group">
+                                    <label class="control-label">必填项</label>
+                                    <input type="text" class="form-control" data-parsley-required="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-xs-5">
+                                <div class="form-group">
+                                    <label class="control-label">不可输入空字符</label>
+                                    <input type="text" class="form-control" data-parsley-notblank>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5 col-xs-5">
+                                <div class="form-group">
+                                    <label class="control-label">限制最小值</label>
+                                    <input type="text" class="form-control" data-parsley-min="10" placeholder="不得小于10">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-xs-5">
+                                <div class="form-group">
+                                    <label class="control-label">限制最大值</label>
+                                    <input type="text" class="form-control" data-parsley-max="10" placeholder="不得大于10">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5 col-xs-5">
+                                <div class="form-group">
+                                    <label class="control-label">限制范围值</label>
+                                    <input type="text" class="form-control" data-parsley-range="[10,100]" placeholder="值需在10-100范围内">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5 col-xs-5">
+                                <div class="form-group">
+                                    <label class="control-label">密码</label>
+                                    <input type="text" class="form-control" id="pwd1" data-parsley-required="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-xs-5">
+                                <div class="form-group">
+                                    <label class="control-label">确认密码</label>
+                                    <input type="text" class="form-control" data-parsley-required="true" data-parsley-equalto="#pwd1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label></label>
+                                <div>
+                                    <button class="btn btn-primary btn-parsley" data-loading-text="正在提交...">提 交
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;form class="parsley-form" data-parsley-validate action="#" &gt;
+                            &lt;div class="row"&gt;
+                                &lt;div class="col-lg-5 col-xs-5"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;label class="control-label"&gt;必填项&lt;/label&gt;
+                                        &lt;input type="text" class="form-control" data-parsley-required="true"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="col-lg-5 col-xs-5"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;label class="control-label"&gt;不可输入空字符&lt;/label&gt;
+                                        &lt;input type="text" class="form-control" data-parsley-notblank&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="row"&gt;
+                                &lt;div class="col-lg-5 col-xs-5"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;label class="control-label"&gt;限制最小值&lt;/label&gt;
+                                        &lt;input type="text" class="form-control" data-parsley-min="10" placeholder="不得小于10"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="col-lg-5 col-xs-5"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;label class="control-label"&gt;限制最大值&lt;/label&gt;
+                                        &lt;input type="text" class="form-control" data-parsley-max="10" placeholder="不得大于10"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="row"&gt;
+                                &lt;div class="col-lg-5 col-xs-5"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;label class="control-label"&gt;限制范围值&lt;/label&gt;
+                                        &lt;input type="text" class="form-control" data-parsley-range="[10,100]" placeholder="值需在10-100范围内"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="row"&gt;
+                                &lt;div class="col-lg-5 col-xs-5"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;label class="control-label"&gt;密码&lt;/label&gt;
+                                        &lt;input type="text" class="form-control" id="pwd1" data-parsley-required="true"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="col-lg-5 col-xs-5"&gt;
+                                    &lt;div class="form-group"&gt;
+                                        &lt;label class="control-label"&gt;确认密码&lt;/label&gt;
+                                        &lt;input type="text" class="form-control" data-parsley-required="true" data-parsley-equalto="#pwd1"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="col-lg-12"&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;label&gt;&lt;/label&gt;
+                                    &lt;div&gt;
+                                        &lt;button class="btn btn-primary btn-parsley" data-loading-text="正在提交..."&gt;提 交
+                                        &lt;/button&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/form&gt;
+                    </pre>
+                </figure>
+
+                <h2>参数</h2>
+                <p>配置方式为在节点上配置 <code>data-parsley-参数名="参数值"</code>，参数名见下表</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 20%;">名称</th>
+                            <th style="width: 40%;">属性配置</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><a name="psly-validator-required"></a>必填</td>
+                            <td>
+                                <p>data-parsley-required</p>
+                                <p>data-parsley-required="true"</p>
+                                <p>data-parsley-required="false"</p>
+                            </td>
+                            <td>字段为必填项，如果配置 data-parsley-required="false", 这个字段就不是必填项.</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-email"></a>邮件地址</td>
+                            <td>data-parsley-type="email"</td>
+                            <td>验证数据类型为邮箱地址</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-number"></a>数字</td>
+                            <td>data-parsley-type="number"</td>
+                            <td>必须是数字（包含整数、负数、浮点数）</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-integer"></a>整数</td>
+                            <td>data-parsley-type="integer"</td>
+                            <td>必须是整数（不包含负数、小数）</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-digits"></a>浮点数</td>
+                            <td>data-parsley-type="digits"</td>
+                            <td>必须是浮点数字</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-alphanum"></a>数字或字母</td>
+                            <td>data-parsley-type="alphanum"</td>
+                            <td>必须是数字或者字母</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-url"></a>URL地址</td>
+                            <td>data-parsley-type="url"</td>
+                            <td>必须是一个有效的URL地址，http开头</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-minlength"></a>最小长度</td>
+                            <td>data-parsley-minlength="6"</td>
+                            <td>限制最小长度</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-maxlength"></a>最大长度</td>
+                            <td>data-parsley-maxlength="6"</td>
+                            <td>限制最大长度</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-length"></a>长度</td>
+                            <td>data-parsley-length="[6, 10]"</td>
+                            <td>长度在最小和最大之间</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-min"></a>小于</td>
+                            <td>data-parsley-min="6"</td>
+                            <td>输入的值必须小于等于设定值</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-max"></a>大于</td>
+                            <td>data-parsley-max="6"</td>
+                            <td>输入的值必须大于等于设定值</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-range"></a>值范围</td>
+                            <td>data-parsley-range="[6,10]"</td>
+                            <td>输入的值必须在最大和最小范围内，包含最小和最大值</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-pattern"></a>正则格式</td>
+                            <td>data-parsley-pattern="\d+"</td>
+                            <td>输入值必须符合设定的正则表达式</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-mincheck"></a>最小选择项数</td>
+                            <td>data-parsley-mincheck="3"</td>
+                            <td>最少选择设定值项数</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-maxcheck"></a>最多选择</td>
+                            <td>data-parsley-maxcheck="3"</td>
+                            <td>最多选择设定值项数</td>
+                        </tr>
+                        <tr>
+                            <td>选择数量范围</td>
+                            <td>data-parsley-check="[1, 3]"</td>
+                            <td>选择的项数应该在最小值和最大值之间，包含最小和最大值</td>
+                        </tr>
+                        <tr>
+                            <td><a name="psly-validator-equalto"></a>等于</td>
+                            <td>data-parsley-equalto="#anotherfield"</td>
+                            <td>输入值，与#anotherfield值相同</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/form/validator.js");
+</script>
+</html>

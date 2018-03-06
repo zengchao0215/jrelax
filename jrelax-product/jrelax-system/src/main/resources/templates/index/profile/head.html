@@ -1,0 +1,67 @@
+<!-- 上传头像 -->
+<div class="modal-content">
+	<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" style="color:black;">人脸识别 - 头像上传</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-12">
+            	<center><video id="video" width="400"></video></center>
+               	<canvas class="hide" id="canvas" width="400"></canvas> 
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取  消</button>
+        <button id="dialogUploadFace_ok" type="button" class="btn btn-primary" onclick="catchImage()" data-loading-text="正在上传...">上传头像</button>
+    </div>
+</div>
+<script type="text/javascript">
+	var video,canvas,context;
+	$(function(){
+		//开始视频
+		video = document.getElementById("video");
+	    canvas = document.getElementById("canvas");
+        context = canvas.getContext("2d");
+		startCam();
+	});
+	function startCam(){
+		try {
+			document.createElement("canvas").getContext("2d");       
+			if (navigator.getUserMedia) {
+		        navigator.getUserMedia({video:true}, function (stream) {
+		            video.src = stream;
+		        }, function(){});
+		    } else if (navigator.webkitGetUserMedia) {
+		        navigator.webkitGetUserMedia({video:true}, function (stream) {
+		            video.src = window.webkitURL.createObjectURL(stream);
+		        }, function(){});
+		    }else if(navigator.mozGetUserMedia) { // Firefox-prefixed
+				navigator.mozGetUserMedia(videoObj, function(stream){
+					video.src = window.URL.createObjectURL(stream);
+				}, function(){});
+			}
+			video.play();
+		}catch (e) {
+			alert(e);
+			alert("浏览器不支持HTML5 CANVAS");       
+		}
+	}
+	function catchImage(){
+		canvas.height = $(video).height();
+		context.drawImage(video, 0, 0, $(video).width(),$(video).height());
+		var imageData = canvas.toDataURL();
+		//上传
+		$("#dialogUploadFace_ok").button("loading");
+		jQuery.post("$!basePath/profile/head/do",{img:imageData},function(data){
+			if(data.success == true){
+				Toast.success("头像上传成功！");
+				setTimeout(function(){window.location.reload();},1000);
+			}else{
+				alert("识别失败，请保持头像在视频中央后重新上传！");
+			}
+			$("#dialogUploadFace_ok").button("reset");
+		});
+	}
+</script>

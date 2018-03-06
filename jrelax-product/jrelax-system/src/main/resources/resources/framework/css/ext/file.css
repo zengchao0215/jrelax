@@ -1,0 +1,17 @@
+.widget {
+    height: 120px;
+}
+
+.widget:hover {
+    background: #EEEEEE;
+}
+
+.widget .widget-body, .widget .widget-footer {
+    padding: 5px;
+    text-align: center;
+    word-break: break-all;
+}
+
+.widget img {
+    max-height: 70px;
+}

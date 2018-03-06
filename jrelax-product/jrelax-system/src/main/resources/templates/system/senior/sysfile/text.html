@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>编辑文件 - ${system_admin_title}</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/framework/plugins/codemirror/lib/codemirror.css">
+    <script src="$!basePath/framework/plugins/codemirror/lib/codemirror.js"></script>
+
+    <link rel="stylesheet" href="$!basePath/framework/plugins/codemirror/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="$!basePath/framework/plugins/codemirror/addon/fold/foldgutter.css">
+    <script src="$!basePath/framework/plugins/codemirror/addon/hint/show-hint.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/hint/css-hint.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/hint/html-hint.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/hint/xml-hint.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/fold/foldcode.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/fold/foldgutter.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/fold/brace-fold.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/fold/xml-fold.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/fold/indent-fold.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/fold/markdown-fold.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/fold/comment-fold.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/addon/emmet/emmet.js"></script>
+
+    <!--Java等语言-->
+    #if($type == "text/x-java")
+    <script src="$!basePath/framework/plugins/codemirror/mode/clike/clike.js"></script>
+    #elseif($type == "text/html")
+    <script src="$!basePath/framework/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/mode/css/css.js"></script>
+    <script src="$!basePath/framework/plugins/codemirror/mode/javascript/javascript.js"></script>
+    #elseif($type == "text/css")
+    <script src="$!basePath/framework/plugins/codemirror/mode/css/css.js"></script>
+    #elseif($type == "text/javascript")
+    <script src="$!basePath/framework/plugins/codemirror/mode/javascript/javascript.js"></script>
+    #end
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <section class="layout">
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper no-p">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <textarea id="content">$!content</textarea>
+                                <button id="btnSave" class="btn btn-primary">保存更改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+<script type="text/javascript">
+    var editor = CodeMirror.fromTextArea($("#content")[0], {
+        mode: "$!type",
+        matchBrackets: true,
+        lineNumbers: true,
+        indentUnit: 4,
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+    });
+    emmetCodeMirror(editor);
+
+    //设置高度
+    function fullScreen() {
+        $(".CodeMirror").height($(window).height() - 34);
+    }
+
+    fullScreen();
+    $("#btnSave").on("click", function () {
+        ns.confirm("确定保存更改吗？", function () {
+            jQuery.post("$!basePath/system/senior/sysfile/save", {
+                path: "$!path",
+                content: editor.getValue()
+            }, function (data) {
+                if (data.success == true) {
+                    Toast.success("保存成功！");
+                } else {
+                    Toast.error(data.message);
+                }
+            });
+        });
+    });
+    $(window).resize(function () {
+        fullScreen();
+    });
+    //    });
+</script>
+#loading_close
+</body>
+</html>

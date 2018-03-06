@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    
+    <title>${system_admin_title}</title>
+    <link rel="stylesheet" href="$!basePath/framework/plugins/treetable/jquery.treetable.css">
+	<link rel="stylesheet" href="$!basePath/framework/plugins/treetable/jquery.treetable.theme.bootstrap.css">
+    #required_css
+</head>
+<body>#loading
+    <div class="app $!layout">
+        <section class="layout">
+            <!-- 内容主体 -->
+            <section class="main-content no-b">
+                <div class="content-wrap">
+                   	<div class="wrapper">
+                   		<div class="row">
+                   			<div class="col-lg-12">
+                   				<table id="example-basic-expandable" class="table treetable">
+                   					<tbody>
+                   						<tr data-tt-id="0" class="branch expanded">
+								          <td><span class="indenter" style="padding-left: 0px;"></span>app</td>
+								        </tr>
+								        <tr data-tt-id="1" data-tt-parent-id="0" class="branch expanded">
+								          <td><span class="indenter" style="padding-left: 19px;"></span>controllers</td>
+								        </tr>
+								        <tr data-tt-id="5" data-tt-parent-id="1" class="leaf expanded">
+								          <td><span class="indenter" style="padding-left: 38px;"></span>application_controller.rb</td>
+								        </tr>
+								        <tr data-tt-id="2" data-tt-parent-id="0" class="leaf expanded">
+								          <td><span class="indenter" style="padding-left: 19px;"></span>helpers</td>
+								        </tr>
+								        <tr data-tt-id="3" data-tt-parent-id="0" class="leaf expanded">
+								          <td><span class="indenter" style="padding-left: 19px;"></span>models</td>
+								        </tr>
+								        <tr data-tt-id="4" data-tt-parent-id="0" class="leaf expanded">
+								          <td><span class="indenter" style="padding-left: 19px;"></span>views</td>
+								        </tr>
+									</tbody>
+                   				</table>
+                   			</div>
+                   		</div>
+                	</div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </div>
+    #required_js
+
+    <!-- 页面组件脚本 -->
+    <script type="text/javascript" src="$!basePath/framework/plugins/treetable/jquery.treetable.js"></script>
+    
+    <!-- 本页面脚本 -->
+    <script type="text/javascript">
+		$("#example-basic-expandable").treetable({ expandable: true });
+    </script>
+    
+#loading_close</body>
+</html>

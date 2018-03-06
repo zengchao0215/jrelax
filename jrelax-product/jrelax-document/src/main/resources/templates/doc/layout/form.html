@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">表单布局</h1>
+                <p class="lead">介绍表单布局方式，主要包括：水平排列表单、垂直排列表单、内联表单。原文档请点击<a href="http://v3.bootcss.com/css/#forms" target="_blank">这里</a></p>
+                <h2>水平排列表单</h2>
+                <div class="bs-example">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">邮箱</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" placeholder="邮箱地址">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" placeholder="密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"> 记住我
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">登 录</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;form class="form-horizontal"&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label class="col-sm-2 control-label"&gt;邮箱&lt;/label&gt;
+                            &lt;div class="col-sm-10"&gt;
+                                &lt;input type="email" class="form-control" placeholder="邮箱地址"&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label class="col-sm-2 control-label"&gt;密码&lt;/label&gt;
+                            &lt;div class="col-sm-10"&gt;
+                                &lt;input type="password" class="form-control" placeholder="密码"&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;div class="col-sm-offset-2 col-sm-10"&gt;
+                                &lt;div class="checkbox"&gt;
+                                    &lt;label&gt;
+                                        &lt;input type="checkbox"&gt; 记住我
+                                    &lt;/label&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;div class="col-sm-offset-2 col-sm-10"&gt;
+                                &lt;button type="submit" class="btn btn-default"&gt;登 录&lt;/button&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/form&gt;
+                    </pre>
+                </figure>
+                <blockquote>通过调整label和div的栅格参数来调整列宽</blockquote>
+
+                <h2>垂直排列表单</h2>
+                <div class="bs-example">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Check me out
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;form&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="exampleInputEmail1"&gt;Email address&lt;/label&gt;
+                            &lt;input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="exampleInputPassword1"&gt;Password&lt;/label&gt;
+                            &lt;input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="exampleInputFile"&gt;File input&lt;/label&gt;
+                            &lt;input type="file" id="exampleInputFile"&gt;
+                            &lt;p class="help-block"&gt;Example block-level help text here.&lt;/p&gt;
+                        &lt;/div&gt;
+                        &lt;div class="checkbox"&gt;
+                            &lt;label&gt;
+                                &lt;input type="checkbox"&gt; Check me out
+                            &lt;/label&gt;
+                        &lt;/div&gt;
+                        &lt;button type="submit" class="btn btn-default"&gt;Submit&lt;/button&gt;
+                    &lt;/form&gt;
+                    </pre>
+                </figure>
+
+                <h2>内联表单</h2>
+                <div class="bs-example">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="exampleInputName2">Name</label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail2">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+                        </div>
+                        <button type="submit" class="btn btn-default">Send invitation</button>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;form class="form-inline"&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="exampleInputName2"&gt;Name&lt;/label&gt;
+                            &lt;input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label for="exampleInputEmail2"&gt;Email&lt;/label&gt;
+                            &lt;input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com"&gt;
+                        &lt;/div&gt;
+                        &lt;button type="submit" class="btn btn-default"&gt;Send invitation&lt;/button&gt;
+                    &lt;/form&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

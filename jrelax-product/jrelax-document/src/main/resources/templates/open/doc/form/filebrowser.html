@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文件浏览/选择</title>
+
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+
+    #required_css
+</head>
+
+<div class="app">
+    <h3>依赖</h3>
+    <p><code>/framework/js/view/filebrowser.js</code></p>
+    <div class="hr-line-dashed"></div>
+    <h3>选择</h3>
+    <button class="btn" onclick="doUpload(1)">点击选择</button>
+    <h3>选择-类型限制</h3>
+    <button class="btn" onclick="doUpload(2)">点击选择</button>
+
+    <div class="hr-line-dashed"></div>
+    <section class="panel">
+        <div class="panel-heading bg-warning">
+            选择结果
+        </div>
+        <div class="panel-body">
+
+        </div>
+    </section>
+</div>
+<body class="p10">
+#required_js
+<script type="text/javascript">
+    ns.ready(function () {
+        ns.requireJS("/framework/js/view/filebrowser.js");
+    });
+    function doUpload(type) {
+        switch (type) {
+            case 1:
+                ns.view.filebrowser.open({
+                    onSelect: function (path) {
+                        showResult(path);
+                    }
+                });
+                break;
+            case 2:
+                ns.view.filebrowser.open({
+                    filter: "jpg,jpeg,png",
+                    onSelect: function (path) {
+                        showResult(path);
+                    }
+                });
+                break;
+        }
+    }
+    function showResult(path, name) {
+        var html = "path:" + path;
+        $(".panel-body").html(html);
+    }
+</script>
+</body>
+</html>

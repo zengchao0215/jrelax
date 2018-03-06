@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">选项卡</h1>
+                <p class="lead">选项卡分为两种：静态选项卡和动态选项卡</p>
+
+                <h2>静态选项卡</h2>
+                <div class="bs-example">
+                    <div class="box-tab box-tab-nav content-wrap">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#home3" data-toggle="tab" aria-expanded="true"> <i class="fa fa-home"></i> 主页
+                            </a></li>
+                            <li class=""><a href="#profile3" data-toggle="tab" aria-expanded="false"> <i class="fa fa-plus"></i> 个人中心
+                            </a></li>
+                            <li class=""><a href="#settings3" data-toggle="tab" aria-expanded="false"> <i class="fa fa-close"></i> 设置
+                            </a></li>
+                        </ul>
+                        <div class="tab-content text-center wrapper">
+                            <div class="tab-pane fade active in" id="home3">
+                                <h1 class="text-muted bolder pb25 pt25">1</h1>
+                            </div>
+                            <div class="tab-pane fade" id="profile3">
+                                <h1 class="text-muted bolder pb25 pt25">2</h1>
+                            </div>
+                            <div class="tab-pane fade" id="settings3">
+                                <h1 class="text-muted bolder pb25 pt25">3</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;div class="box-tab box-tab-nav content-wrap"&gt;
+                        &lt;ul class="nav nav-tabs"&gt;
+                            &lt;li class="active"&gt;&lt;a href="#home3" data-toggle="tab" aria-expanded="true"&gt; &lt;i class="fa fa-home"&gt;&lt;/i&gt; 主页
+                            &lt;/a&gt;&lt;/li&gt;
+                            &lt;li class=""&gt;&lt;a href="#profile3" data-toggle="tab" aria-expanded="false"&gt; &lt;i class="fa fa-plus"&gt;&lt;/i&gt; 个人中心
+                            &lt;/a&gt;&lt;/li&gt;
+                            &lt;li class=""&gt;&lt;a href="#settings3" data-toggle="tab" aria-expanded="false"&gt; &lt;i class="fa fa-close"&gt;&lt;/i&gt; 设置
+                            &lt;/a&gt;&lt;/li&gt;
+                        &lt;/ul&gt;
+                        &lt;div class="tab-content text-center wrapper"&gt;
+                            &lt;div class="tab-pane fade active in" id="home3"&gt;
+                                &lt;h1 class="text-muted bolder pb25 pt25"&gt;1&lt;/h1&gt;
+                            &lt;/div&gt;
+                            &lt;div class="tab-pane fade" id="profile3"&gt;
+                                &lt;h1 class="text-muted bolder pb25 pt25"&gt;2&lt;/h1&gt;
+                            &lt;/div&gt;
+                            &lt;div class="tab-pane fade" id="settings3"&gt;
+                                &lt;h1 class="text-muted bolder pb25 pt25"&gt;3&lt;/h1&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>动态选项卡</h2>
+
+
+                <h2>操作框架菜单选项卡</h2>
+                <div class="bs-example">
+                    <button class="btn" onclick="addTab()">添加</button>
+                    <button class="btn" onclick="closeTab()">关闭</button>
+                </div>
+                <script>
+                    var idx;
+                    function addTab(){
+                        idx = top.Tabs.add("http://www.baidu.com", "百度一下", "fa fa-user");
+                    }
+                    function closeTab(){
+                        top.Tabs.kill(idx);
+                    }
+                </script>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        var idx;
+                        function addTab(){
+                            idx = top.Tabs.add("http://www.baidu.com", "百度一下", "fa fa-user");
+                        }
+                        function closeTab(){
+                            top.Tabs.kill(idx);
+                        }
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

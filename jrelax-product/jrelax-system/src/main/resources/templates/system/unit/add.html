@@ -1,0 +1,159 @@
+<form id="unitAddForm" role="form" class="form-horizontal parsley-form" data-parsley-validate action="$!basePath/system/unit/add/do" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">新增组织</h4>
+    </div>
+    <div class="modal-body">
+        <input id="unitRes" type="hidden" name="unitRes" value="$!unitRes">
+        <div class="row mb10">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group has-feedback">
+                    <label for="parentId" class="col-sm-1 control-label">上级组织</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            #if($!isSystemUnit == true)
+                                <input id="parentId" type="text" class="form-control" placeholder="不选择默认为顶级组织" disabled value="$!parentUnit.name"/>
+                            #else
+                                <input id="parentId" type="text" class="form-control" placeholder="必须选择一个上级组织" disabled value="$!parentUnit.name"/>
+                            #end
+                            <span class="input-group-btn">
+                                <button id="btnSelectParent" type="button" class="btn btn-primary" #if($!noUnit) disabled="disabled" #end><i
+                                        class="ti-plus"></i> 选择</button>
+                            </span>
+                        </div>
+                        <input type="hidden" name="parentId" value="$!parentUnit.id">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label for="name" class="col-sm-1 control-label">名称<span class="text-danger">*</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="name" data-parsley-required="true" placeholder="#i18n('system.sys.unit.name')">
+                    </div>
+                    <label for="name" class="col-sm-1 control-label">负责人</label>
+                    <div class="col-sm-5">
+                        <input type="hidden" name="leader.id">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="leader.name" placeholder="负责人" disabled>
+                            <span class="input-group-btn">
+                                <button id="btnSelectLeader" type="button" class="btn btn-primary">
+                                    <i class="ti-plus"></i> 选择</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-1 control-label">#i18n('system.sys.unit.addr')</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="address" class="form-control" placeholder="组织所在地址">
+                        <p class="help-block no-m">例如：安徽省合肥市高新区长江西路001号</p>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label for="contact" class="col-sm-1 control-label">#i18n('system.sys.unit.contact')</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="contact" class="form-control" placeholder="联系人姓名">
+                    </div>
+                    <label for="mobile" class="col-sm-1 control-label">#i18n('system.sys.unit.phone')</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="mobile" class="form-control" placeholder="固定电话、手机号码等">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-1 control-label">电子邮件</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="email" class="form-control" placeholder="格式：xxx@xxx.xx" data-parsley-type="email" data-parsley-trigger="change">
+                    </div>
+                    <label for="web" class="col-sm-1 control-label">网站地址</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="web" class="form-control" placeholder="http://">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label for="enabled" class="col-sm-1 control-label">是否启用</label>
+                    <div class="col-sm-4 switcha">
+                        <div class="mr15">
+                            <input type="checkbox" name="enabled" class="js-switch-blue" checked="checked">
+                        </div>
+                    </div>
+                    #if($!isSystemUnit == true)
+                        <label for="enabled" class="col-sm-1 control-label">系统组织</label>
+                        <div class="col-sm-4 switcha">
+                            <div class="mr15">
+                                <input id="system_unit" type="checkbox" name="system" class="js-switch-blue">
+                            </div>
+                        </div>
+                    #end
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/form.js",
+        "/framework/js/view/toast.js",
+        "/framework/js/view/tree.js",
+        "/framework/js/form/validator.js",
+        "/framework/js/common/unit.js",
+        "/framework/js/common/user.js"
+    ]);
+
+    ns.ready(function (dialog) {
+        var addForm = dialog.find('#unitAddForm');
+        addForm.ajaxForm({
+            beforeSubmit: function (arr, form, options) {
+                form.find("button:submit").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success == true) {
+                    if (form.find("#system_unit").is(":checked") || form.find("#unitRes").val() == "false") {
+                        ns.tip.toast.success("组织增加成功！");
+
+                        dialog.close({
+                            isSaved: true,
+                            parentId : addForm.find("input[name='parentId']").val()
+                        });
+                    } else {
+                        ns.tip.confirm("<h5>组织增加成功！</h5>目前此组织不包含任何菜单功能，是否立即配置组织拥有的菜单？", function () {
+                            window.location.href = "$!basePath/system/unit/res/" + data.id;
+                        });
+                    }
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("button:submit").button("reset");
+            }
+        });
+
+        dialog.find("#btnSelectParent").on("click", function(){
+            ns.common.unit.select({
+                showTopUnit: true,
+                callback: function (units) {
+                    var unit = units[0];
+                    addForm.find("#parentId").val(unit.name);
+                    addForm.find("input[name='parentId']").val(unit.id);
+                }
+            });
+        });
+
+        dialog.find("#btnSelectLeader").on("click", function(){
+            ns.common.user.selectByUnit({
+                callback: function (users) {
+                    var user = users[0];
+                    addForm.find("input[name='leader.name']").val(user.realname);
+                    addForm.find("input[name='leader.id']").val(user.id);
+                }
+            });
+        });
+    });
+
+</script>

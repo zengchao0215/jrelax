@@ -1,0 +1,33 @@
+<div class="modal-body no-p">
+	<div class="row">
+		<div class="col-xs-12">
+			<section class="panel no-b">
+	            <header class="panel-heading clearfix">
+	            	#if($!parentMenu)
+	            	<div class="pull-right">上级菜单：$!parentMenu</div>
+                    #end
+	                <div class="overflow-hidden">
+	                    <a href="javascript:;" class="h4 show no-m pt5"><i class="$!res.icon"></i> $!res.name</a>
+	                </div>
+	            </header>
+	            <div class="list-group">
+	            	<a href="javascript:;" class="list-group-item" title="URL地址">
+	                    <i class="ti-world mr10 text-muted"></i>$!res.url
+	                </a>
+	                <a href="javascript:;" class="list-group-item" title="描述">
+	                    <i class="ti-comment mr10 text-muted"></i>$!res.descript
+	                </a>
+	                <a href="javascript:;" class="list-group-item" title="当前状态">
+	                    <i class="ti-heart mr10 text-muted"></i>#if($!res.enabled)<i class="fa fa-circle text-success ml5">#else <i class="fa fa-circle text-danger ml5">#end</i>
+	                </a>
+	                <a href="javascript:;" class="list-group-item" title="录入系统时间">
+	                    <i class="ti-time mr10 text-muted"></i>$!res.createTime
+	                </a>
+	            </div>
+	        </section>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-primary btn-block" data-dismiss="modal">知道了</button>
+</div>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">Highcharts</h1>
+                <p class="lead">基于<code><a href="https://www.hcharts.cn" target="_blank">Highcharts</a></code>实现，需引入<code>/framework/js/view/charts.js</code></p>
+
+                <h2>基本实例</h2>
+                <div class="bs-example">
+                    <div id="container" style="min-width:800px;height:400px"></div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div id="container" style="min-width:800px;height:400px"&gt;&lt;/div&gt;
+
+                        ns.view.charts.highcharts.init("container", {// 图表初始化函数，其中 container 为图表的容器 div
+                            chart: {
+                                type: 'bar'                           //指定图表的类型，默认是折线图（line）
+                            },
+                            title: {
+                                text: '我的第一个图表'                 //指定图表标题
+                            },
+                            xAxis: {
+                                categories: ['苹果', '香蕉', '橙子']   //指定x轴分组
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'something'                 //指定y轴的标题
+                                }
+                            },
+                            series: [{                                 //指定数据列
+                                name: '小明',                          //数据列名
+                                data: [1, 0, 4]                        //数据
+                            }, {
+                                name: '小红',
+                                data: [5, 7, 3]
+                            }]
+                        });
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/view/charts.js");
+    ns.ready(function(){
+        ns.view.charts.highcharts.init("container", {// 图表初始化函数，其中 container 为图表的容器 div
+            chart: {
+                type: 'bar'                           //指定图表的类型，默认是折线图（line）
+            },
+            title: {
+                text: '我的第一个图表'                 //指定图表标题
+            },
+            xAxis: {
+                categories: ['苹果', '香蕉', '橙子']   //指定x轴分组
+            },
+            yAxis: {
+                title: {
+                    text: 'something'                 //指定y轴的标题
+                }
+            },
+            series: [{                                 //指定数据列
+                name: '小明',                          //数据列名
+                data: [1, 0, 4]                        //数据
+            }, {
+                name: '小红',
+                data: [5, 7, 3]
+            }]
+        });
+    });
+</script>
+</html>

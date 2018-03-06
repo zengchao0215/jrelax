@@ -1,0 +1,29 @@
+<script src="$!basePath/framework/js/form/checkbox.js"></script>
+<script src="$!basePath/framework/js/view/datagrid.js"></script>
+<div class="modal-header no-b">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title"><i class="fa fa-user"></i> 选择角色</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="input-group mb15">
+                <input id="searchText" name="searchText" class="form-control" placeholder="按 登录名、真实姓名、联系方式 搜索">
+                <span class="input-group-btn">
+                    <button id="btnSearch" class="btn btn-default" type="button"><i
+                            class="fa fa-search"></i> 搜索</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table id="dgRoleSelect"></table>
+            <div id="dgRoleSelectPager"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="ok" type="submit" class="btn btn-primary">确认选择</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>

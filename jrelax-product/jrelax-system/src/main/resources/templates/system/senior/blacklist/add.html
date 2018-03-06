@@ -1,0 +1,65 @@
+<form id="blackListAddForm" class="parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/system/senior/black/list/add/do">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">新增规则</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">规则</label>
+                    <input type="text" class="form-control" name="rules" data-parsley-required="true" placeholder="规则">
+                </div>
+                <div class="alert alert-warning">
+                    支持以下规则（按顺序匹配）：
+                    <ul>
+                        <li>单个IP：10.0.0.1</li>
+                        <li>IP段：10.0.0.1 - 10.0.0.299（前后包含）</li>
+                        <li>模糊匹配：10.0* 或者 *.0.299</li>
+                        <li>正则表达式</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">描述</label>
+                    <textarea class="form-control" name="remarks" placeholder="描述"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">启用</label>
+                    <input type="checkbox" class="js-switch-blue" name="enabled" checked="checked">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/form.js");
+    ns.requireJS("/framework/js/form/validator.js");
+    ns.ready(function (dialog) {
+        $("#blackListAddForm").ajaxForm({
+            beforeSubmit: function (arr, $form, options) {
+                $form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, $form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("增加成功！");
+                    ns.view.Dialog.close($form, {isSaved: true});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                $form.find("#ok").button("reset");
+            }
+        });
+    });
+</script>

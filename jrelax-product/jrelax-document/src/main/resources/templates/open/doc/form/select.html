@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提示组件</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<div class="app">
+	<h3>默认样式</h3>
+	<select name="" id="" class="form-control">
+		<option value="">请选择...</option>
+		<option value="1">北京市</option>
+		<option value="2">上海市</option>
+		<option value="3">安徽省</option>
+	</select>
+	<h3>下拉选择 chosen</h3>
+	<select name="" id="" class="form-control select">
+		<option value="">请选择...</option>
+		<option value="1">北京市</option>
+		<option value="2">上海市</option>
+		<option value="3">安徽省</option>
+	</select>
+	<h3>多选下拉 chosen</h3>
+	<select name="" id="" class="form-control select" multiple>
+		<option value="">请选择...</option>
+		<option value="1">北京市</option>
+		<option value="2">上海市</option>
+		<option value="3">安徽省</option>
+	</select>
+</div>
+<body class="p10">
+	#required_js
+	<script type="text/javascript">
+		ns.ready(function(){
+			ns.requireJS("/framework/js/form/select.js");
+		});
+	</script>
+</body>
+</html>

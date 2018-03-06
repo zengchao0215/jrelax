@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>${system_admin_title}</title>
+	<style type="text/css">
+		.jcTab {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<link href="$!basePath/framework/plugins/wbScrollTab/TabPanel.css" rel="stylesheet" type="text/css">
+    #required_css
+    <style>
+        #tab_context_menu{
+            /*border-color:#deecfd;*/
+        }
+        #tab_context_menu .divider{
+            background-color: #deecfd;
+        }
+    </style>
+</head>
+</head>
+<body>
+	#loading
+    <div class="app $!layout">
+        <!-- 头部菜单 -->
+        #header_index
+        <section class="layout">
+            <!-- 菜单 -->
+            #sidebar_index
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper no-p">
+                      	<div id="tab"></div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </div>
+
+    <ul id="tab_context_menu" style="display: none;" class="dropdown-menu shadow" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:;" onclick="Tabs.closeCur()">关闭</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:;" onclick="Tabs.closeAll()">全部关闭</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:;" onclick="Tabs.closeOther()">除此之外全部关闭</a></li>
+        <li class="divider"></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:;" onclick="Tabs.closeLeft()">左侧全部关闭</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:;" onclick="Tabs.closeRight()">右侧全部关闭</a></li>
+        <li class="divider"></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:;" onclick="Tabs.reloadCur()">重新加载</a></li>
+        <li class="divider"></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:;" onclick="Tabs.addToQuickMenu()">添加到快捷菜单</a></li>
+    </ul>
+	#required_js
+	<script type="text/javascript" src="$!basePath/framework/plugins/wbScrollTab/TabPanel.js"></script>
+	<script type="text/javascript" src="$!basePath/framework/js/index.tabs.js"></script>
+	#loading_close
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1>时间选择</h1>
+                <p>基于TimePicker控件，需引入<code>/framework/js/form/time.js</code></p>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-1">时间选择</div>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control time">
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;input type="text" class="form-control time"&gt;
+                    </pre>
+                </figure>
+                <h2>参数</h2>
+                <p>参数配置方式同日期选择控件</p>
+                <ul>
+                    <li>
+                        <p><strong>appendTo</strong><br>
+                            Override where the dropdown is appended.<br>
+                            Takes either a <code>string</code> to use as a selector, a <code>function</code> that gets passed the clicked input element as argument or a jquery <code>object</code> to use directly.<br>
+                            <em>default: "body"</em></p>
+                    </li>
+                    <li>
+                        <p><strong>className</strong><br>
+                            A class name to apply to the HTML element that contains the timepicker dropdown.<br>
+                            <em>default: null</em></p>
+                    </li>
+                    <li>
+                        <p><strong>closeOnWindowScroll</strong><br>
+                            Close the timepicker when the window is scrolled. (Replicates <code>&lt;select&gt;</code> behavior.)<br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>disableTimeRanges</strong><br>
+                            Disable selection of certain time ranges. Input is an array of time pairs, like ```[['3:00am', '4:30am'], ['5:00pm', '8:00pm']]``. The start of the interval will be disabled but the end won't.
+                            <em>default: []</em></p>
+                    </li>
+                    <li>
+                        <p><strong>disableTextInput</strong><br>
+                            Disable typing in the timepicker input box; force users to select from list. <a href="https://github.com/jonthornton/jquery-timepicker/issues/425#issuecomment-133262458">More information here.</a><br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>disableTouchKeyboard</strong><br>
+                            Disable the onscreen keyboard for touch devices. There can be instances where Firefox or Chrome have touch events enabled (such as on Surface tablets but not actually be a touch device. In this case <code>disableTouchKeyboard</code> will prevent the timepicker input field from being focused. <a href="https://github.com/jonthornton/jquery-timepicker/issues/413">More information here.</a><br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>durationTime</strong><br>
+                            The time against which <code>showDuration</code> will compute relative times. If this is a function, its result will be used.<br>
+                            <em>default: minTime</em></p>
+                    </li>
+                    <li>
+                        <p><strong>forceRoundTime</strong><br>
+                            Force update the time to <code>step</code> settings as soon as it loses focus.<br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>lang</strong><br>
+                            Language constants used in the timepicker. Can override the defaults by passing an object with one or more of the following properties: decimal, mins, hr, hrs.<br>
+                            <em>default:</em> <code>{ am: 'am', pm: 'pm', AM: 'AM', PM: 'PM', decimal: '.', mins: 'mins', hr: 'hr', hrs: 'hrs' }</code></p>
+                    </li>
+                    <li>
+                        <p><strong>maxTime</strong><br>
+                            The time that should appear last in the dropdown list. Can be used to limit the range of time options.<br>
+                            <em>default: 24 hours after minTime</em></p>
+                    </li>
+                    <li>
+                        <p><strong>minTime</strong><br>
+                            The time that should appear first in the dropdown list.<br>
+                            <em>default: 12:00am</em></p>
+                    </li>
+                    <li>
+                        <p><strong>noneOption</strong><br>
+                            Adds one or more custom options to the top of the dropdown. Can accept several different value types:<br>
+                            Boolean (<code>true</code>): Adds a "None" option that results in an empty input value<br>
+                            String: Adds an option with a custom label that results in an empty input value<br>
+                            Object: Similar to string, but allows customizing the element's class name and the resulting input value. Can contain <code>label</code>, <code>value</code>, and <code>className</code> properties. <code>value</code> must be a string type.<br>
+                            Array: An array of strings or objects to add multiple non-time options<br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>orientation</strong><br>
+                            By default the timepicker dropdown will be aligned to the bottom right of the input element, or aligned to the top left if there isn't enough room below the input. Force alignment with <code>l</code> (left), <code>r</code> (right), <code>t</code> (top), and <code>b</code> (bottom). Examples: <code>tl</code>, <code>rb</code>.
+                            <em>default: 'l'</em></p>
+                    </li>
+                    <li>
+                        <p><strong>roundingFunction</strong><br>
+                            Function used to compute rounded times. The function will receive time in seconds and a settings object as arguments. The function should handle a null value for seconds.
+                            <em>default: round to nearest step</em></p>
+                    </li>
+                    <li>
+                        <p><strong>scrollDefault</strong><br>
+                            If no time value is selected, set the dropdown scroll position to show the time provided, e.g. "09:00". A time string, Date object, or integer (seconds past midnight) is acceptible, as well as the string <code>'now'</code>.<br>
+                            <em>default: null</em></p>
+                    </li>
+                    <li>
+                        <p><strong>selectOnBlur</strong><br>
+                            Update the input with the currently highlighted time value when the timepicker loses focus.<br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>show2400</strong><br>
+                            Show "24:00" as an option when using 24-hour time format. You must also set <code>timeFormat</code> for this option to work.<br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>showDuration</strong><br>
+                            Shows the relative time for each item in the dropdown. <code>minTime</code> or <code>durationTime</code> must be set.<br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>showOn</strong><br>
+                            Display a timepicker dropdown when the input fires a particular event. Set to null or an empty array to disable automatic display. Setting should be an array of strings.
+                            <em>default: ['focus']</em></p>
+                    </li>
+                    <li>
+                        <p><strong>showOnFocus</strong><br>
+                            DEPRECATED: Display a timepicker dropdown when the input gains focus.<br>
+                            <em>default: true</em></p>
+                    </li>
+                    <li>
+                        <p><strong>step</strong><br>
+                            The amount of time, in minutes, between each item in the dropdown. Alternately, you can specify a function to generate steps dynamically. The function will receive a count integer (0, 1, 2...) and is expected to return a step integer.<br>
+                            <em>default: 30</em></p>
+                    </li>
+                    <li>
+                        <p><strong>stopScrollPropagation</strong><br>
+                            When scrolling on the edge of the picker, it prevent parent containers () to scroll.
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>timeFormat</strong><br>
+                            How times should be displayed in the list and input element. Uses <a href="http://php.net/manual/en/function.date.php">PHP's date() formatting syntax</a>. Characters can be escaped with a preceeding double slash (e.g. <code>H\\hi</code>). Alternatively, you can specify a function instead of a string, to use completely custom time formatting. In this case, the format function receives a Date object and is expected to return a formatted time as a string.
+                            <em>default: 'g:ia'</em></p>
+                    </li>
+                    <li>
+                        <p><strong>typeaheadHighlight</strong><br>
+                            Highlight the nearest corresponding time option as a value is typed into the form input.<br>
+                            <em>default: true</em></p>
+                    </li>
+                    <li>
+                        <p><strong>useSelect</strong><br>
+                            Convert the input to an HTML <code>&lt;SELECT&gt;</code> control. This is ideal for small screen devices, or if you want to prevent the user from entering arbitrary values. This option is not compatible with the following options: <code>appendTo</code>, <code>closeOnWindowScroll</code>, <code>disableTouchKeyboard</code>, <code>forceRoundTime</code>, <code>scrollDefault</code>, <code>selectOnBlur</code>, <code>typeAheadHighlight</code>.<br>
+                            <em>default: false</em></p>
+                    </li>
+                    <li>
+                        <p><strong>wrapHours</strong><br>
+                            If a time greater than 24 hours (27:30, for example) is entered, apply modolo 24 to create a valid time. Setting this to <code>false</code> will cause an input of 27:30 to result in a <code>timeFormatError</code> event.<br>
+                            <em>default: true</em></p>
+                    </li>
+                </ul>
+
+                <h2>方法</h2>
+                <ul>
+                    <li>
+                        <p><strong>getSecondsFromMidnight</strong><br>
+                            Get the time as an integer, expressed as seconds from 12am.</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#getTimeExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>getSecondsFromMidnight<span class="pl-pds">'</span></span>);</pre></div>
+                    </li>
+                    <li>
+                        <p><strong>getTime</strong><br>
+                            Get the time using a Javascript Date object, relative to a Date object (default: today's date).</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#getTimeExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>getTime<span class="pl-pds">'</span></span>);
+ <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#getTimeExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>getTime<span class="pl-pds">'</span></span>, <span class="pl-k">new</span> <span class="pl-en">Date</span>());</pre></div>
+                        <p>You can get the time as a string using jQuery's built-in <code>val()</code> function:</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#getTimeExample<span class="pl-pds">'</span></span>).<span class="pl-en">val</span>();</pre></div>
+                    </li>
+                    <li>
+                        <p><strong>hide</strong><br>
+                            Close the timepicker dropdown.</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#hideExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>hide<span class="pl-pds">'</span></span>);</pre></div>
+                    </li>
+                    <li>
+                        <p><strong>isVisible</strong><br>
+                            Check if the timepicker attached to <em>a specific input</em> is visible. Not compatible with the <code>useSelect</code> option.</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#hideExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>isVisible<span class="pl-pds">'</span></span>);</pre></div>
+                    </li>
+                    <li>
+                        <p><strong>option</strong><br>
+                            Change the settings of an existing timepicker. Calling <code>option</code> on a visible timepicker will cause the picker to be hidden.</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#optionExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>({ <span class="pl-s"><span class="pl-pds">'</span>timeFormat<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>g:ia<span class="pl-pds">'</span></span> }); <span class="pl-c"><span class="pl-c">//</span> initialize the timepicker sometime earlier in your code</span>
+ <span class="pl-k">...</span>
+ <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#optionExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>option<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>minTime<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>2:00am<span class="pl-pds">'</span></span>);
+ <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#optionExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>option<span class="pl-pds">'</span></span>, { <span class="pl-s"><span class="pl-pds">'</span>minTime<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>4:00am<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>timeFormat<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>H:i<span class="pl-pds">'</span></span> });</pre></div>
+                    </li>
+                    <li>
+                        <p><strong>remove</strong><br>
+                            Unbind an existing timepicker element.</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#removeExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>remove<span class="pl-pds">'</span></span>);</pre></div>
+                    </li>
+                    <li>
+                        <p><strong>setTime</strong><br>
+                            Set the time using a Javascript Date object.</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#setTimeExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>setTime<span class="pl-pds">'</span></span>, <span class="pl-k">new</span> <span class="pl-en">Date</span>());</pre></div>
+                    </li>
+                    <li>
+                        <p><strong>show</strong><br>
+                            Display the timepicker dropdown.</p>
+                        <div class="highlight highlight-source-js"><pre> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#showExample<span class="pl-pds">'</span></span>).<span class="pl-en">timepicker</span>(<span class="pl-s"><span class="pl-pds">'</span>show<span class="pl-pds">'</span></span>);</pre></div>
+                    </li>
+                </ul>
+
+                <h2>事件</h2>
+                <ul>
+                    <li>
+                        <p><strong>change</strong><br>
+                            The native <code>onChange</code> event will fire any time the input value is updated, whether by selection from the timepicker list or manual entry into the text input. Your code should bind to <code>change</code> after initializing timepicker, or use <a href="http://api.jquery.com/on/">event delegation</a>.</p>
+                    </li>
+                    <li>
+                        <p><strong>changeTime</strong><br>
+                            Called after a valid time value is entered or selected. See <code>timeFormatError</code> and <code>timeRangeError</code> for error events. Fires before <code>change</code> event.</p>
+                    </li>
+                    <li>
+                        <p><strong>hideTimepicker</strong><br>
+                            Called after the timepicker is closed.</p>
+                    </li>
+                    <li>
+                        <p><strong>selectTime</strong><br>
+                            Called after a time value is selected from the timepicker list. Fires before <code>change</code> event.</p>
+                    </li>
+                    <li>
+                        <p><strong>showTimepicker</strong><br>
+                            Called after the timepicker is shown.</p>
+                    </li>
+                    <li>
+                        <p><strong>timeFormatError</strong><br>
+                            Called if an unparseable time string is manually entered into the timepicker input. Fires before <code>change</code> event.</p>
+                    </li>
+                    <li>
+                        <p><strong>timeRangeError</strong><br>
+                            Called if maxTime and minTime, or disableTimeRanges is set and an invalid time is manually entered into the timepicker input. Fires before <code>change</code> event.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS([
+        "/framework/js/form/time.js"
+    ]);
+</script>
+</html>

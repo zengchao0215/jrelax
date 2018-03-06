@@ -1,0 +1,82 @@
+<div class="modal-body no-p">
+	<div class="row">
+		<div class="col-xs-12">
+			<section class="panel panel-primary no-b">
+	            <header class="panel-heading clearfix">
+	            	<div class="pull-right">创建于：$!role.createTime</div>
+	                <div class="overflow-hidden">
+	                    <a href="javascript:;" class="h4 show no-m pt5"><i class="$!res.icon"></i> $!role.name</a>
+	                    <small>$!role.descript</small>
+	                </div>
+	            </header>
+	            #if($!resList.size()>0)
+	            <table id="menuTreeTable" class="table no-m">
+	                <thead>
+	                    <tr>
+	                        <th class="col-md-4 pd-l-lg">
+	                            <span class="pd-l-sm ml20"></span>菜单名称</th>
+	                        <th class="col-md-3">URL</th>
+	                        <th class="col-md-5">按钮权限</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                #foreach($!obj in $resList)
+	                    <tr data-tt-id="$!obj.id" data-tt-branch="$!obj.hasChildren()">
+	                        <td><span class="pd-l-sm"></span><i class="$!obj.icon mr5"></i> $!obj.name</td>
+	                        <td>$!obj.url</td>
+	                        <td>
+	                        #foreach($!btn in $!obj.privilegeButtons)
+	                        <span class="label label-default">$btn.name</span> 
+	                        #end
+	                        </td>
+	                    </tr>
+	                #end
+	                </tbody>
+	            </table>
+	            #else
+	            <div class="p10">
+	            	<div class="alert alert-warning">
+	                    	该角色无任何菜单权限。
+	                </div>
+	            </div>
+	            #end
+	        </section>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-primary btn-block" data-dismiss="modal">知道了</button>
+</div>
+<script src="$!basePath/framework/js/view/treetable.js"></script>
+<script type="text/javascript">
+ns.ready(function(dialog){
+	var allRes = $!allRes;
+	var menuTreeTable = dialog.find("#menuTreeTable").treetable({
+		expandable: true,
+		onNodeExpand : function(){
+			var node = this;
+			var data = "";
+			var childs = [];
+			$.each(allRes, function(i,n){
+				if(n.parentId == node.id){
+					childs.push(n);
+				}
+			});
+			$.each(childs, function(i,n){
+				var row = "<tr data-tt-id='"+n.id+"' data-tt-parent-id='"+n.parentId+"' data-tt-branch='"+n.hasChildren+"'>";
+				row+="<td><span class='pd-l-sm'></span><i class='"+n.icon+" mr5'></i> "+n.name+"</td>";
+				row+="<td>"+n.url+"</td>";
+				var btns = "";
+				$.each(n.buttons, function(i, btn){
+					btns += "<span class=\"label label-default\">"+btn.name+"</span> ";
+				});
+				row+="<td>"+btns+"</td>";
+				row+="</tr>";
+				data += row;
+			});
+			menuTreeTable.treetable("unloadBranch", node);
+			menuTreeTable.treetable("loadBranch", node, data);
+		}	
+	});
+});
+</script>

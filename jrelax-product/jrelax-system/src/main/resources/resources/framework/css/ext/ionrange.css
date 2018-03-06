@@ -1,0 +1,5 @@
+/*数值范围选择*/
+.irs-from, .irs-single, .irs-to { background: #1582dc }
+.irs-from:after, .irs-single:after, .irs-to:after { border-top-color: #1582dc }
+.irs-max, .irs-min { color: #59595a; background: #eaecf6 }
+.irs-line { border-radius: 2px }

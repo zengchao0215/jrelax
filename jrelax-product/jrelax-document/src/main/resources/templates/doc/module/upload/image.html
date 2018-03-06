@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">上传图片</h1>
+                <p class="lead">
+                    基于上传组件扩展的上传图片组件，主要用于嵌入页面的上传操作。 解决了上传选择、显示、删除等问题
+                    <br>
+                    需引入
+                    <ul>
+                        <li><code>/framework/js/form/uploader.js</code></li>
+                        <li><code>/framework/js/form/tagsinput.js</code></li>
+                        <li><code>/framework/js/form/tagsinput-image.js</code></li>
+                    </ul>
+                </p>
+
+
+                <h2>基本实例</h2>
+                <div class="bs-example">
+                    <input id="image" type="text" name="images">
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;input id="image" type="text" name="images"&gt;
+                        ns.requireJS([
+                            "/framework/js/form/uploader.js",
+                            "/framework/js/form/tagsinput.js",
+                            "/framework/js/form/tagsinput-image.js"
+                        ]);
+
+                        ns.ready(function(){
+                            $("#attach").tagsinputImage({
+                                max : 2,
+                                showOriginal: true,
+                                autoBlockUpload : true
+                            });
+                        });
+                    </pre>
+                </figure>
+
+
+                <h2>参数</h2>
+                <p>参数继承自uploader.js</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>showOriginal</td>
+                            <td>bool</td>
+                            <td>显示原文件名</td>
+                            <td>false</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <blockquote>
+                    备注：选择完文件后，原输入框的值将更改为文件地址，多个用逗号隔开
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS([
+        "/framework/js/form/uploader.js",
+        "/framework/js/form/tagsinput.js",
+        "/framework/js/form/tagsinput-image.js"
+    ]);
+
+    ns.ready(function(){
+        $("#image").tagsinputImage({
+            max : 2,
+            showOriginal: true,
+            autoBlockUpload : true
+        });
+    });
+</script>
+</html>

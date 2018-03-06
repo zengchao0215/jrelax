@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <!-- meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+    <title>${system_admin_title}</title> #required_css
+</head>
+
+<body>
+#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <center>
+                            <h1 class="text-muted">欢迎使用</h1>
+                            <h1 class="text-muted">${system_admin_title}</h1>
+                        </center>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 页面组件脚本 -->
+<script src="$!basePath/framework/plugins/jquery.center.js"></script>
+<script src="$!basePath/framework/js/form/checkbox.js"></script>
+
+<!-- 本页面脚本 -->
+<script type="text/javascript">
+    $(function () {
+        $("center").center({top: "40%"});
+    });
+</script>
+#loading_close
+</body>
+</html>

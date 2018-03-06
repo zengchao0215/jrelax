@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">弹窗式提示</h1>
+                <p class="lead">采用弹窗的方式进行提醒，往往用于一些重要的需要用户重点明确的提示。</p>
+
+                <div class="bs-example">
+                    <button class="btn btn-default" type="button" onclick="ns.alert('This is alert!', function(){alert('ok!')})">alert</button>
+                    <button class="btn btn-default" type="button"
+                            onclick="ns.alert('你知道吗？亲！<br>layer ≠ layui<br><br>layer只是作为Layui的一个弹层模块，由于其用户基数较大，所以常常会有人以为layui是layerui<br><br>layer虽然已被 Layui 收编为内置的弹层模块，但仍然会作为一个独立组件全力维护、升级。<br><br>我们此后的征途是星辰大海 ^_^', function(){alert('ok!')}, {theme:'modal-board'})">
+                        alert-board
+                    </button>
+                    <button class="btn btn-default" type="button" onclick="ns.confirm('Are you OK?', function(){ns.alert('you choose ok!')}, function(){ns.alert('you choose cancel!')})">confirm
+                    </button>
+                    <button class="btn btn-default" type="button" onclick="ns.prompt('输入登录口令，并确认',function(v){ns.alert('Hello '+v)}, function(){ns.alert('you choose cancel!')})">prompt</button>
+                    <button class="btn btn-default" type="button" onclick="ns.prompt('Your password:',function(v){ns.alert('Hello '+v)}, function(){ns.alert('you choose cancel!')},{password:true})">
+                        prompt-pwd
+                    </button>
+                    <button class="btn btn-default" type="button" onclick="ns.prompt('Your Answer:',function(v){ns.alert('Hello '+v)}, function(){ns.alert('you choose cancel!')}, {textarea:true})">
+                        prompt-textarea
+                    </button>
+                    <button class="btn btn-default" type="button" onclick="showImage()">Image</button>
+                    <button class="btn btn-default" type="button" onclick="ns.success('保存成功！')">Success</button>
+                    <button class="btn btn-default" type="button" onclick="ns.error('保存失败！')">Error</button>
+
+                    <hr>
+                    <button class="btn btn-default" type="button" onclick="showConfirm()">Confirm(手动关闭)</button>
+                    <button class="btn btn-default" type="button" onclick="showPrompt()">Prompt(手动关闭)</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;button class="btn btn-default" type="button" onclick="ns.alert('This is alert!', function(){alert('ok!')})"&gt;alert&lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button"
+                                onclick="ns.alert('你知道吗？亲！html', function(){alert('ok!')}, {theme:'modal-board'})"&gt;alert-board&lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button"
+                                onclick="ns.confirm('Are you OK?', function(){ns.alert('you choose ok!')}, function(){ns.alert('you choose cancel!')})"&gt;confirm&lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button"
+                                onclick="ns.prompt('输入登录口令，并确认',function(v){ns.alert('Hello '+v)}, function(){ns.alert('you choose cancel!')})"&gt;prompt&lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button"
+                                onclick="ns.prompt('Your password:',function(v){ns.alert('Hello '+v)}, function(){ns.alert('you choose cancel!')},{password:true})"&gt;prompt-pwd
+                        &lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button"
+                                onclick="ns.prompt('Your Answer:',function(v){ns.alert('Hello '+v)}, function(){ns.alert('you choose cancel!')}, {textarea:true})"&gt;
+                            prompt-textarea
+                        &lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button" onclick="showImage()"&gt;Image&lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button" onclick="ns.success('保存成功！')"&gt;Success&lt;/button&gt;
+                        &lt;button class="btn btn-default" type="button" onclick="ns.error('保存失败！')"&gt;Error&lt;/button&gt;
+                    </pre>
+                    <pre class="brush: javascript">
+                        var images = [
+                            'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+                            'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+                            'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+                            'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+                            'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+                            'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+                            'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg'
+                        ];
+                        function showImage() {
+                            ns.view.showImage(images);
+                        }
+                    </pre>
+                </figure>
+
+                <h2>参数说明</h2>
+                <p>提示内容参数均支持HTML内容</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                参数列表
+                            </th>
+                            <th>
+                                备注
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Alert</th>
+                            <td>提示内容，回调函数（可选），配置项（可选）</td>
+                            <td>自动根据提示内容的长度来决定弹窗的大小</td>
+                        </tr>
+                        <tr>
+                            <th>Alert-Borad</th>
+                            <td>提示内容，回调函数（可选），配置项（可选）</td>
+                            <td>风格借鉴Layui</td>
+                        </tr>
+                        <tr>
+                            <th>Confirm</th>
+                            <td>提示内容，确定回调函数（可选），取消回调函数（可选），配置项（可选）</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Prompt</th>
+                            <td>提示内容，确定回调函数（可选），取消回调函数（可选），配置项（可选）</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Images</th>
+                            <td>单个图片地址／图片地址集合</td>
+                            <td>根据图片数量自动排列</td>
+                        </tr>
+                        <tr>
+                            <th>Success</th>
+                            <td>提示内容</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Error</th>
+                            <td>提示内容</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    var images = [
+        'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+        'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+        'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+        'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+        'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+        'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg',
+        'http://file01.16sucai.com/d/file/2013-11-02/13833828748358.jpg'
+    ];
+
+    function showImage() {
+        ns.view.showImage(images);
+    }
+
+    function showConfirm(){
+        ns.confirm("确定删除吗？", function (view) {
+            view.loading("正在删除...");
+
+            setTimeout(function () {
+                ns.tip.toast.success("删除成功！");
+                view.close();
+            }, 2000);
+            return false;
+        });
+    }
+
+    function showPrompt(){
+        ns.prompt("请输入要添加的数量：", function (val, view) {
+            view.loading("正在添加...");
+
+            setTimeout(function () {
+                ns.tip.toast.error("添加失败，请重试！");
+                view.reset()
+            }, 2000);
+            return false;
+        });
+    }
+</script>
+</html>

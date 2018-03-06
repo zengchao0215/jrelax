@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>格式化输入</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<div class="app">
+	<h3>依赖：<code>/framework/js/form-mask.js</code></h3>
+	<div class="hr-line-dashed"></div>
+	<div class="row">
+		<div class="col-lg-6">
+			<form action="">
+				<div class="form-group">
+					<label>日期</label>
+					<input name="date" type="text" class="form-control" data-mask="9999-99-99" placeholder="年-月-日">
+				</div>
+				<div class="form-group">
+					<label>手机号码</label>
+					<input type="text" class="form-control" data-mask="+86 9*?" placeholder="+86 99999999999">
+				</div>
+				<div class="form-group">
+					<label>固定电话</label>
+					<input type="text" class="form-control" data-mask="9?9" placeholder="">
+				</div>
+				<div class="form-group">
+					<label>百分比</label>
+					<input name="rate" type="text" class="form-control" data-mask="9?9%" placeholder="百分比">
+				</div>
+				<button class="btn btn-default">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+<body class="p10">
+	#required_js
+	<script type="text/javascript">
+		ns.ready(function(){
+			ns.requireJS("/framework/js/form/form-mask.js");
+		});
+	</script>
+</body>
+</html>

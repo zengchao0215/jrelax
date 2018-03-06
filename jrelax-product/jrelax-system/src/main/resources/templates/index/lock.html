@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+<script>
+    if (top.window != window) {
+        top.window.location.href = window.location.href;
+    }
+</script>
+<body class="cover" style="background-image: url('$!basePath/framework/img/login/bg7.jpg')">
+<div class="app $!layout">
+    <section class="layout">
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="main-content" style="background: transparent !important;">
+            <div class="center-wrapper">
+                <div style="padding-top: 10%;">
+                    <div class="row">
+                        <div class="col-lg-4 col-lg-offset-4">
+                            <form id="lockForm" class="parsley-form" data-parsley-validate role="form" method="post"
+                                  action="$!basePath/index/lock/off" autocomplete="off">
+                                <section class="panel no-b">
+                                    <div class="panel-body bg-primary" style="padding-top: 50px;">
+                                        <a href="javascript:;" class="show text-center">
+                                            #if($!head)
+                                            <img src="$!{basePath}$!head" class="avatar avatar-lg img-circle" alt="">
+                                            #else
+                                            <img src="$!basePath/framework/img/avatar.jpg" class="avatar avatar-lg img-circle" alt="">
+                                            #end
+                                        </a>
+                                        <div class="show mt15 mb15 text-center">
+                                            <div class="h5"><b>$!realname</b></div>
+                                            <p class="show">锁定于：$!locktime</p>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer no-p no-b">
+                                        <div class="row">
+                                            <div id="divPwd" class="col-lg-6 col-lg-offset-3 p10">
+                                                <input name="pwd" type="password" autocomplete="new-password" class="form-control" data-parsley-required="true" placeholder="输入密码以解锁。。。" autofocus>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 text-center p10">
+                                                <button id="ok" class="btn btn-primary btn-form-submit" data-loading-text="正在验证..."><i class="fa fa-unlock-alt"></i> 立即解锁</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+#required_js
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/form.js");
+    ns.requireJS("/framework/js/form/validator.js");
+    ns.ready(function () {
+        $("#lockForm").ajaxForm({
+            beforeSubmit: function (arr, $form, options) {
+                $form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, $form) {
+                if (data.success == true) {
+                    $form.find("#ok").text("验证成功，正在跳转...");
+                    window.location.href = "$!basePath/index";
+                } else {
+                    ns.view.animate($("#divPwd"), "shake")
+                    $form.find("#ok").button("reset");
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

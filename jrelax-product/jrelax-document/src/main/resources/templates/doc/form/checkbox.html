@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">复选框/单选框</h1>
+                <p class="lead">基于<code>iCheck</code>对浏览器默认的单选框和复选框进行美化，需引入 <code>/framework/js/form/checkbox.js</code></p>
+
+                <h2>默认样式</h2>
+                <div class="bs-example">
+                    <h4>横向</h4>
+                    <label>
+                        <input type="checkbox"> 选项1
+                    </label>
+                    <label>
+                        <input type="checkbox"> 选项2
+                    </label>
+                    <label>
+                        <input type="checkbox" disabled> 禁用选项
+                    </label>
+                    <div class="hr-line-dashed"></div>
+                    <label>
+                        <input type="radio"> 选项1
+                    </label>
+                    <label>
+                        <input type="radio"> 选项1
+                    </label>
+                    <hr>
+                    <h4>纵向</h4>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> 选项1
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> 选项2
+                        </label>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio"> 选项1
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio"> 选项2
+                        </label>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;h4&gt;横向&lt;/h4&gt;
+                    &lt;label&gt;
+                        &lt;input type="checkbox"&gt; 选项1
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="checkbox"&gt; 选项2
+                    &lt;/label&gt;
+                    &lt;div class="hr-line-dashed"&gt;&lt;/div&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio"&gt; 选项1
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio"&gt; 选项1
+                    &lt;/label&gt;
+                    &lt;hr&gt;
+                    &lt;h4&gt;纵向&lt;/h4&gt;
+                    &lt;div class="checkbox"&gt;
+                        &lt;label&gt;
+                            &lt;input type="checkbox"&gt; 选项1
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class="checkbox"&gt;
+                        &lt;label&gt;
+                            &lt;input type="checkbox"&gt; 选项2
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class="hr-line-dashed"&gt;&lt;/div&gt;
+                    &lt;div class="radio"&gt;
+                        &lt;label&gt;
+                            &lt;input type="radio"&gt; 选项1
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class="radio"&gt;
+                        &lt;label&gt;
+                            &lt;input type="radio"&gt; 选项2
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>美化后样式</h2>
+                <div class="bs-example">
+                    <h4>横向</h4>
+                    <label>
+                        <input type="checkbox" class="checkbox"> 选项1
+                    </label>
+                    <label>
+                        <input type="checkbox" class="checkbox"> 选项2
+                    </label>
+                    <label>
+                        <input type="checkbox" class="checkbox" disabled> 禁用选项
+                    </label>
+                    <div class="hr-line-dashed"></div>
+                    <label>
+                        <input type="radio" class="checkbox"> 选项1
+                    </label>
+                    <label>
+                        <input type="radio" class="checkbox"> 选项1
+                    </label>
+                    <hr>
+                    <h4>纵向</h4>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="checkbox"> 选项1
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="checkbox"> 选项2
+                        </label>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="checkbox"> 选项1
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="checkbox"> 选项2
+                        </label>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;h4&gt;横向&lt;/h4&gt;
+                    &lt;label&gt;
+                        &lt;input type="checkbox" class="checkbox"&gt; 选项1
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="checkbox" class="checkbox"&gt; 选项2
+                    &lt;/label&gt;
+                    &lt;div class="hr-line-dashed"&gt;&lt;/div&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio" class="checkbox"&gt; 选项1
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio" class="checkbox"&gt; 选项1
+                    &lt;/label&gt;
+                    &lt;hr&gt;
+                    &lt;h4&gt;纵向&lt;/h4&gt;
+                    &lt;div class="checkbox"&gt;
+                        &lt;label&gt;
+                            &lt;input type="checkbox" class="checkbox"&gt; 选项1
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class="checkbox"&gt;
+                        &lt;label&gt;
+                            &lt;input type="checkbox" class="checkbox"&gt; 选项2
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class="hr-line-dashed"&gt;&lt;/div&gt;
+                    &lt;div class="radio"&gt;
+                        &lt;label&gt;
+                            &lt;input type="radio" class="checkbox"&gt; 选项1
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class="radio"&gt;
+                        &lt;label&gt;
+                            &lt;input type="radio" class="checkbox"&gt; 选项2
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>块状风格</h2>
+                <div class="bs-example">
+                    <label>
+                        <input type="checkbox" class="checkbox" skin="box-blue" title="选项1">
+                    </label>
+                    <label>
+                        <input type="checkbox" class="checkbox" skin="box-blue" title="<i class='fa fa-user'/> 选项2">
+                    </label>
+                    <div class="hr-line-dashed"></div>
+                    <label>
+                        <input type="radio" name="r2" class="checkbox" skin="box-blue" title="选项1">
+                    </label>
+                    <label>
+                        <input type="radio" name="r2" class="checkbox" skin="box-blue" title="选项2">
+                    </label>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;label&gt;
+                        &lt;input type="checkbox" class="checkbox" skin="box-blue" title="选项1"&gt;
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="checkbox" class="checkbox" skin="box-blue" title="&lt;i class='fa fa-user'/&gt; 选项2"&gt;
+                    &lt;/label&gt;
+                    &lt;div class="hr-line-dashed"&gt;&lt;/div&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio" name="r2" class="checkbox" skin="box-blue" title="选项1"&gt;
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        &lt;input type="radio" name="r2" class="checkbox" skin="box-blue" title="选项2"&gt;
+                    &lt;/label&gt;
+                    </pre>
+                </figure>
+                <p>通过配置skin属性来设置样式，样式包含：</p>
+                <ul>
+                    <li>box-blue</li>
+                    <li>flat-aero,blue,flat,green,grey,orange,purple,red,yellow</li>
+                    <li>futurico-futurico</li>
+                    <li>line-aero,blue,green,grey,line,orange,pink,purple,red,yellow</li>
+                    <li>polaris-polaris</li>
+                    <li>minimal-aero,blue,flat,green,grey,orange,purple,red,yellow</li>
+                    <li>square-aero,blue,flat,green,grey,orange,purple,red,yellow</li>
+                </ul>
+
+                <h2>方法</h2>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                    // 选中
+                    $('input').iCheck('check');
+
+                    // 取消选中
+                    $('input').iCheck('uncheck');
+
+                    // 切换
+                    $('input').iCheck('toggle');
+
+                    // 禁用
+                    $('input').iCheck('disable');
+
+                    // 启用
+                    $('input').iCheck('enable');
+
+                    // change input's state to 'indeterminate'
+                    $('input').iCheck('indeterminate');
+
+                    // remove 'indeterminate' state
+                    $('input').iCheck('determinate');
+
+                    // 更新状态
+                    $('input').iCheck('update');
+
+                    // 恢复默认样式
+                    $('input').iCheck('destroy');
+                    </pre>
+                </figure>
+
+                <h2>事件</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>事件名</th>
+                            <th>触发条件</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ifClicked</td>
+                            <td>点击时</td>
+                        </tr>
+                        <tr>
+                            <td>ifChanged</td>
+                            <td>状态切换时</td>
+                        </tr>
+                        <tr>
+                            <td>ifChecked</td>
+                            <td>选中时</td>
+                        </tr>
+                        <tr>
+                            <td>ifUnchecked</td>
+                            <td>取消选中时</td>
+                        </tr>
+                        <tr>
+                            <td>ifToggled</td>
+                            <td>状态从checked变为其他状态时</td>
+                        </tr>
+                        <tr>
+                            <td>ifDisabled</td>
+                            <td>禁用时</td>
+                        </tr>
+                        <tr>
+                            <td>ifEnabled</td>
+                            <td>启用时</td>
+                        </tr>
+                        <tr>
+                            <td>ifIndeterminate</td>
+                            <td>状态变换为"indeterminate"时</td>
+                        </tr>
+                        <tr>
+                            <td>ifDeterminate</td>
+                            <td>"indeterminate" 状态移除时</td>
+                        </tr>
+                        <tr>
+                            <td>ifCreated</td>
+                            <td>创建完成后触发</td>
+                        </tr>
+                        <tr>
+                            <td>ifDestroyed</td>
+                            <td>销毁时触发</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS([
+        "/framework/js/form/checkbox.js"
+    ]);
+</script>
+</html>

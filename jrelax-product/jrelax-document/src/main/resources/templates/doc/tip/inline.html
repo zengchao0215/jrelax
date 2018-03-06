@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">内联式提示框</h1>
+                <p class="lead">用于提示一些非重点提示内容，此提示框不阻断用户操作，一段时间后会自动消失</p>
+
+                <div class="bs-example">
+                    <h4>屏幕边缘显示</h4>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.alert('This is alert!')">alert</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.success('This is success!')">success</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.info('This is info!')">info</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.warning('This is warning!')">warning</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.error('This is error!')">error</button>
+                    <h4>屏幕中央显示</h4>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.alertCenter('这是一个居中的提示信息！！！！！')">alert</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.successCenter('这是一个成功提示!!!')">success</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.infoCenter('这是一个消息提示!!!')">info</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.warningCenter('这是一个警告信息!!!')">warning</button>
+                    <button class="btn btn-default" type="button" onclick="ns.tip.toast.errorCenter('这是一个错误信息!!!')">error</button>
+                    <h4>popover confirm</h4>
+                    <button class="btn btn-default" type="button" onclick="doFun1(this)">popover</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.alert('This is alert!')"&gt;alert&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.success('This is success!')"&gt;success&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.info('This is info!')"&gt;info&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.warning('This is warning!')"&gt;warning&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.error('This is error!')"&gt;error&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.alertCenter('这是一个居中的提示信息！！！！！')"&gt;alert&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.successCenter('这是一个成功提示!!!')"&gt;success&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.infoCenter('这是一个消息提示!!!')"&gt;info&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.warningCenter('这是一个警告信息!!!')"&gt;warning&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.tip.toast.errorCenter('这是一个错误信息!!!')"&gt;error&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="doFun1(this)"&gt;popover&lt;/button&gt;
+                    function doFun1(btn) {
+                        var id = "1";
+                        ns.tip.confirmPopover(btn, "确定删除吗？", function(){
+                            alert(id);
+                        });
+                    }
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    function doFun1(btn) {
+        var id = "1";
+        ns.tip.confirmPopover(btn, "确定删除吗？", function(){
+            alert(id);
+        });
+    }
+</script>
+</html>

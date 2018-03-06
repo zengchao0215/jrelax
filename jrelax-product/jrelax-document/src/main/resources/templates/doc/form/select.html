@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">下拉选择</h1>
+                <p class="lead">基于<a href="https://github.com/harvesthq/chosen" target="_blank"><code>chosen</code></a>美化下拉列表框，需要引入<code>/framework/js/form/select.js</code></p>
+                <h2>默认样式</h2>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <select class="form-control">
+                                <option value="1">选项1</option>
+                                <option value="2">选项2</option>
+                                <option value="3">选项3</option>
+                                <option value="4">选项4</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;select class="form-control"&gt;
+                            &lt;option value="1"&gt;选项1&lt;/option&gt;
+                            &lt;option value="2"&gt;选项2&lt;/option&gt;
+                            &lt;option value="3"&gt;选项3&lt;/option&gt;
+                            &lt;option value="4"&gt;选项4&lt;/option&gt;
+                        &lt;/select&gt;
+                    </pre>
+                </figure>
+
+                <h2>美化后样式</h2>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <select class="form-control select">
+                                <option value="1">选项1</option>
+                                <option value="2">选项2</option>
+                                <option value="3">选项3</option>
+                                <option value="4">选项4</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;select class="form-control select"&gt;
+                            &lt;option value="1"&gt;选项1&lt;/option&gt;
+                            &lt;option value="2"&gt;选项2&lt;/option&gt;
+                            &lt;option value="3"&gt;选项3&lt;/option&gt;
+                            &lt;option value="4"&gt;选项4&lt;/option&gt;
+                        &lt;/select&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS([
+        "/framework/js/form/select.js"
+    ]);
+</script>
+</html>

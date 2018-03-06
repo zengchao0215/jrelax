@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sidebar</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<body>
+	<div class="app">
+		<section class="layout">
+			<section class="main-content">
+                <div class="content-wrap">
+                	<div class="row">
+                		<div class="col-lg-12">
+							<button class="btn btn-primary" onclick="show1()">Ajax远程加载</button>
+							<button class="btn btn-primary" onclick="show2()">静态加载</button>
+						</div>
+                	</div>
+                </div>
+            </section>
+		</section>
+	</div>
+	<div id="sidebar2" class="sidebar-panel from-right">
+		<div class="sidebar-panel-container shadow">
+			<header class="sidebar-panel-header">
+				<h4>筛选</h4>
+				<a class="sidebar-panel-close text-center"><i class="ti-close"></i> </a>
+			</header>
+			<div class="sidebar-panel-content">
+				<form role="form" onsubmit="return doSearch(this);">
+					<div class="form-group">
+					<label for="userName">用户名</label>
+					<input name="userName" type="text" class="form-control" placeholder="用户名/登录名" autofocus>
+					</div>
+					<div class="form-group">
+					<label for="realName">姓名</label>
+					<input name="realName" type="text" class="form-control" placeholder="姓名">
+					</div>
+					<button type="submit" class="btn btn-default">查询</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function show1(){
+			ns.view.showSidebarRemote("$!basePath/open/tools/sidebar-tmp1", {}, {width:"400px"});
+			//ns.view.showSidebarStatic(".sidebar-panel");
+		}
+		function show2(){
+			ns.view.showSidebarStatic("#sidebar2",{width:"50%"});
+		}
+	</script>
+	#required_js
+</body>
+</html>

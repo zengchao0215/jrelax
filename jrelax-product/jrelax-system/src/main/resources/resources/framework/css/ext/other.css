@@ -1,0 +1,131 @@
+.demo .slider.slider-vertical{height:175px}
+.bs-demo .btn{margin-bottom:5px}
+.demo-button .btn{min-width:115px;margin-bottom:5px;margin-right:5px}
+.demo>.dropdown{float:left}
+.demo>.dropdown>.dropdown-menu{position:static;display:block;margin-bottom:5px}
+.demo-button2 button{margin:0 5px 10px 0}
+
+.mail-list{margin:0 -1px}
+.mail-list .list-group-item{border-radius:0}
+.mail-list .list-group-item:last-child{border-bottom:0}
+
+/*DataTable数据表格*/
+.editable-datatable, table.dataTable, table.dataTable .form-control { width: 100% !important }
+.datatable-top { margin-bottom: 15px }
+.datatable-bottom, .datatable-top { display: table; width: 100% }
+.datatable-bottom .pagination { margin: 0 }
+
+/*isopkg 动态布局*/
+.switcher { display: initial }
+.switcher .feed { border-radius: 2px; overflow: hidden }
+.switcher .thumb img { width: 100% }
+.switcher .panel { position: relative; display: block; border: 0; overflow: hidden }
+.switcher-dash-action { padding: 0; list-style: none; display: inline-block; width: 100% }
+.switcher-dash-action li { width: 50%; float: left; text-align: center }
+.switcher-dash-action li:first-child a { border-radius: 2px 0 0 0 }
+.switcher-dash-action li:last-child a { border-radius: 0 2px 0 0 }
+.switcher-dash-action li.active a { background: #FFF }
+.switcher-dash-action li a { display: block; width: 100%; height: 60px; line-height: 60px; background: #eaecf6; color: #59595a }
+.view-grid .panel { min-height: 200px }
+.view-list { margin: -15px 0 0 }
+.view-list .feed { margin: 0 }
+.view-list .switch-item { position: relative; width: 100%; padding: 0 }
+.view-list .switcher-content { padding: 0 15px }
+.view-list .panel { margin-bottom: 1px; border-radius: 0; padding: 20px 0 }
+.view-list .panel-body { display: inline-block; vertical-align: top; padding: 0 }
+.view-list .thumb { display: inline-block; margin-left: 15px; width: 120px }
+
+/*portfolio*/
+.portfolio-ajax { display: none; position: relative }
+.portfolio-ajax .portfolio-container { padding-top: 50px; background-color: #fff }
+.portfolio-ajax .porfolio-controls { background-color: #fff; height: 50px; z-index: 99999; padding: 15px }
+.portfolio-ajax .porfolio-controls a { width: 33.3333%; display: block; float: left; vertical-align: middle }
+.portfolio-ajax .porfolio-controls a.prev-portfolio-item { text-align: left }
+.portfolio-ajax .porfolio-controls a.next-portfolio-item { text-align: right }
+.portfolio-ajax .porfolio-controls a.close-view { text-align: center }
+.portfolio-ajax .porfolio-controls a.disabled { color: #999 }
+.portfolio-ajax .project-media { text-align: center; margin-bottom: 30px }
+.portfolio-ajax .portfolio-content { padding: 15px }
+.portfolio-ajax.loading .portfolio-container { opacity: 0; filter: alpha(opacity=0) }
+.portfolio-ajax.loaded .gallery-loader { opacity: 0; filter: alpha(opacity=0); display: none }
+@media screen and (min-width:768px) {
+    .portfolio-ajax .portfolio-container { width: 100%; height: 100%; position: absolute; overflow-x: hidden; overflow-y: auto }
+    .portfolio-ajax .porfolio-controls { height: 50px; width: 100% }
+}
+
+/*地图/图表相关*/
+.jvectormap-label { position: absolute; border-radius: 2px; color: #fff; font-family: inherit; font-size: smaller; padding: 3px; font-size: inherit }
+.jvectormap-zoomin, .jvectormap-zoomout { position: absolute; left: 15px; color: #fff; cursor: pointer; font-size: 13px; text-align: center; padding: 5px 7px; border-radius: 2px; width: auto; height: auto; line-height: 1 }
+.jvectormap-zoomin { top: 15px }
+.jvectormap-zoomout { top: 50px }
+.jcrop-holder #preview-pane { display: block; position: absolute; z-index: 999; top: 0; right: -280px; padding: 5px; border: 1px solid #e3e6f3; background-color: #fff; border-radius: 2px; -webkit-box-shadow: 0 0 5px rgba(88, 96, 114, .15); box-shadow: 0 0 5px rgba(88, 96, 114, .15) }
+#preview-pane .preview-container { width: 250px; height: 170px; overflow: hidden }
+.piechart { position: relative; display: inline-block }
+.piechart canvas { position: absolute; top: 0; left: 0 }
+.piechart>span { display: table; width: 100%; height: 100% }
+.piechart>span>span { display: table-cell; vertical-align: middle }
+.piechart .percent { display: block; font-size: 18px; position: relative }
+.piechart .percent:after { content: '%'; font-size: .5em; position: absolute; top: 0 }
+.chart { border: 0; width: 100%; height: 200px }
+.chart-legend.first { padding-top: 80px }
+#map img, .map img { max-width: none !important }
+#map, .map { width: 100%; height: 100%; background: 0 0; min-height: 300px; position: relative }
+#map { min-height: 250px }
+#map .jvectormap-container { min-height: 300px }
+.gm-style-cc { display: none !important }
+#map_canvas { width: 100%; height: 400px }
+
+/*tooltip*/
+#jqstooltip { display: table; border-radius: 2px; padding: 15px }
+#tooltip { position: absolute; display: none; padding: 5px 10px; border: 0; line-height: 1 }
+#tooltip:before { content: ''; display: block; position: absolute; top: 4px; right: 100%; width: 0; height: 0; border-style: solid; border-width: 6px }
+
+
+.post-media { width: 100%; position: relative; margin: 15px 0 }
+.post-comments .avatar { max-width: 48px; border-radius: 50% }
+.post-comments .comment { overflow: hidden }
+.post-comments .comment-meta { margin-bottom: 5px }
+.post-comments .comment-author a, .post-comments .comment-meta a { color: #1a1a1a }
+.user-meta { list-style: none; padding: 0 }
+.user-meta li { padding: 5px 0 }
+
+.drop-cap { float: left; font-size: 75px; line-height: 60px; padding-top: 4px; padding-right: 8px; font-family: Georgia }
+.drop-cap.boxed { padding: 10px; margin: 0 5px 5px 0; border-radius: 2px }
+
+
+/*未确定用途*/
+.external-events { border-bottom: 1px solid #e3e6f3; padding: 0 0 20px 0 }
+.external-event, .fc-event { border: transparent; cursor: default; text-align: center; font-weight: 400; font-size: 13px }
+.external-events .external-event { cursor: move; display: inline-block; margin: 0 5px 10px 0 }
+.external-event:hover { cursor: move }
+.fc-event-draggable, a.fc-event { cursor: pointer }
+.fc-header { display: none; visibility: hidden }
+.fc-content { margin: 0 -1px }
+.fc-event { border: 1px solid #2e353d; background-color: #2e353d; color: #fff }
+.fc-event { cursor: default; line-height: inherit; padding: .2em .6em .3em }
+.morris-hover { position: absolute; z-index: 1000 }
+.morris-hover.morris-default-style { border-radius: 2px; padding: 6px; color: #fff; font-size: 12px; text-align: center }
+.morris-hover.morris-default-style .morris-hover-row-label { font-weight: 700; margin: .25em 0 }
+.morris-hover.morris-default-style .morris-hover-point { white-space: nowrap; margin: .1em 0 }
+.services .service { margin: 0 30px 25px; text-align: center }
+.service-icon { margin: 0 auto 15px; width: 60px; line-height: 60px; font-size: 30px; color: #d6d6d6; border-radius: 50% }
+.service-icon.bg-color { color: #fff }
+.service-icon.huge { width: 100px; line-height: 100px; background-color: #eaecf6 }
+.service-icon.left { float: left; margin: 0 }
+.cd-main-content { text-align: center }
+.cd-main-content h1 { font-size: 20px; font-size: 1.25rem; color: #64788c; padding: 4em 0 }
+.cd-main-content .cd-btn { position: relative; display: inline-block; padding: 1em 2em; background-color: #89ba2c; color: #fff; font-weight: 700; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; border-radius: 50em; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 0 5px rgba(0, 0, 0, .1); -webkit-transition: all .2s; -moz-transition: all .2s; transition: all .2s }
+.no-touch .cd-main-content .cd-btn:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 0 20px rgba(0, 0, 0, .3) }
+@media only screen and (min-width:1170px) {
+    .cd-main-content h1 { font-size: 32px; font-size: 2rem }
+}
+.imgpost-heading, .photobox-heading { position: relative; height: 150px; padding: 0 }
+.imgpost-heading .bxslider, .photobox-heading .bxslider { margin: 0; padding: 0 }
+.imgpost-heading .bx-viewport, .imgpost-heading .bx-wrapper, .imgpost-heading .bxslider, .imgpost-heading .bxslider li, .photobox-heading .bx-viewport, .photobox-heading .bx-wrapper, .photobox-heading .bxslider, .photobox-heading .bxslider li { height: 100% }
+.imgpost-heading .cover, .photobox-heading .cover { -webkit-background-size: cover; background-size: cover; background-repeat: no-repeat; background-position: center; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: block; border-radius: 4px 4px 0 0 }
+.photobox-heading { background: #fff url(../img/cover.jpg) no-repeat center center; -webkit-background-size: cover; background-size: cover }
+.photobox { min-height: 150px; padding: 0; border: 0; position: relative; overflow: hidden }
+.photobox .thumb { float: right; margin-right: 15px; margin-top: 15px; cursor: pointer }
+.photobox .centered-hero { position: absolute; top: 50%; width: 100%; margin-top: -13px; color: #fff }
+.photobox .centered-hero .title { color: #fff; font-size: 18px }
+.photobox .photobox-body { padding: 15px; background-color: #fff; position: relative; bottom: 0 }

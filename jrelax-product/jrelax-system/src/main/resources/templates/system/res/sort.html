@@ -1,0 +1,53 @@
+<style>
+	.dd-item .dd-handle{
+		border: 0px;
+		border-bottom: 1px solid #f1f4f9;
+		border-radius: 0px;
+		margin: 0;
+		padding: 14px;
+	}
+	.dd-item:last-child>.dd-handle{
+		border-bottom: 0px;
+	}
+</style>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	<h4 class="modal-title">菜单排序</h4>
+	<small>上下拖动改变菜单排序，左右拖动改变菜单层级</small>
+</div>
+<div class="modal-body no-p">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="cf nestable-lists">
+				<div class="dd" id="nestable_sort">
+					$!html
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button id="ok" type="button" class="btn btn-primary" onclick="doSortMenu()" data-loading-text="正在排序...">确 定</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+</div>
+<script src="$!basePath/framework/plugins/jquery.nestable.js"></script>
+<script type="text/javascript">
+	$("#nestable_sort").nestable().nestable("collapseAll");
+	var dialog = ns.view.Dialog.getCur("#nestable_sort");
+	function doSortMenu() {
+		var r = $('#nestable_sort').nestable('serialize');
+		var sortData = JSON.stringify(r);    //改变排序之后的数据
+		var btn = dialog.find("#ok");
+		btn.button("loading");
+		jQuery.post("$!basePath/system/res/sort/do", {data: sortData}, function (data) {
+			if (data.success == true) {
+				Toast.success("菜单排序成功!");
+			} else {
+				Toast.error(data.message);
+			}
+			//重置按钮状态，关闭提示框
+			btn.button("reset");
+			dialog.close({isSorted:true});
+		});
+	}
+</script>

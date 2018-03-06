@@ -1,0 +1,10 @@
+input,textarea {
+	padding: 5px;
+	border: 1px solid #e3e6f3;
+}
+
+fieldset,#jfContent {
+	border: 0px;
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}

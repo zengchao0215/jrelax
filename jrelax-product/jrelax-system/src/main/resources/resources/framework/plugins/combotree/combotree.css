@@ -1,0 +1,8 @@
+.combotree-treeview{
+    display: none;
+    border-top:0px;
+    overflow: auto;
+    position: absolute;
+    background: white;
+    z-index: 99999;
+}

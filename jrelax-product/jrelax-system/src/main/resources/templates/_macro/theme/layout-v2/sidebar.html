@@ -1,0 +1,62 @@
+#foreach($!first in $!_firstRes)
+    #if($!first.hasChildren() == true)
+    <aside class="sidebar offscreen-left sidebar-second" id="sidebar_first_$!first.id" style="display: none;">
+        <nav class="main-navigation" data-height="auto" data-size="6px" data-distance="0" data-rail-visible="true" data-wheel-step="10">
+            <p class="nav-title">$!first.name</p>
+            <ul class="nav">
+                #foreach($!second in $!_secondRes.get($!first.id))
+                    #if($!second.hasChildren() == false)
+                        <li>
+                            <a href="$!{basePath}$!second.url" title="$!second.name" data-tabs-link icon="$!second.icon" #if($!{second.newWindow})target="_blank"#end>
+                                <span><i class="$!second.icon"></i> $!second.name</span>
+                                #if($!second.beta)
+                                    <div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                            </a>
+                        </li>
+                    #else
+                        <li>
+                            <a href="javascript:;">
+                                <i class="toggle-accordion"></i>
+                                <span><i class="$!second.icon"></i> $!second.name</span>
+                                #if($!second.beta)
+                                    <div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                            </a>
+                            <ul class="sub-menu">
+                                #foreach($!third in $!_thirdRes.get($!second.id))
+                                #if($!third.hasChildren() == false)
+                                <li>
+                                    <a href="$!{basePath}$!third.url" title="$!third.name" data-tabs-link icon="$!third.icon" #if($!{third.newWindow})target="_blank"#end>
+                                                        <span><i class="$!third.icon"></i> $!third.name #if($!third.beta)
+                                                            <div class="badge badge-top bg-danger"><span>新功能</span></div>#end</span>
+                                    </a>
+                                </li>
+                                #else
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="toggle-accordion"></i>
+                                        <span><i class="$!third.icon"></i> $!third.name</span>
+                                        #if($!third.beta)
+                                        <div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                                    </a>
+                                    <ul class="sub-menu">
+                                        #foreach($!four in $!_fourRes.get($!third.id))
+                                        <li>
+                                            <a href="$!{basePath}$!four.url" title="$!four.name" data-tabs-link icon="$!four.icon" #if($!{four.newWindow})target="_blank"#end>
+                                                            <span><i class="$!four.icon"></i> $!four.name #if($!four.beta)
+                                                                <div class="badge badge-top bg-danger"><span>新功能</span></div>#end</span>
+                                            </a>
+                                        </li>
+                                        #end
+                                    </ul>
+                                </li>
+                                #end
+                                #end
+                            </ul>
+                        </li>
+                    #end
+                #end
+            </ul>
+        </nav>
+    </aside>
+    #end
+#end

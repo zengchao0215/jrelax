@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+<title>${system_admin_title} Document</title> #required_css
+
+</head>
+<body>
+	#loading
+	<div class="app $!layout">
+		<!-- 头部菜单 -->
+		#header_index
+		<section class="layout">
+			<aside class="sidebar-200 offscreen-left p5">
+				<div id="jsTreeMenu" class="hide">
+					<ul>
+						<li>
+							<a href="doc/p/md">概述</a>
+						</li>
+						<li>布局组件
+							<ul>
+								<li><a href="doc/p/layout-table">表格布局</a></li>
+								<li><a href="doc/p/layout-grid">栅格布局</a></li>
+								<li><a href="doc/p/layout-form">表单布局</a></li>
+							</ul>
+						</li>
+						<li>视图组件
+							<ul>
+								<li><a href="doc/p/view-tips">提示组件</a></li>
+								<li><a href="doc/p/view-tabs">选项卡</a></li>
+								<li><a href="doc/p/view-tree">树菜单</a></li>
+								<li><a href="doc/p/view-dropmenu">下拉菜单</a></li>
+								<li><a href="doc/p/view-treetable">树表格</a></li>
+								<li><a href="doc/p/view-sidebar-index">Sidebar侧滑栏</a></li>
+								<li><a href="doc/p/view-table-sortable">表格排序 <sup>废弃</sup></a></li>
+								<li><a href="doc/p/view-table-jqgrid">jqGrid</a></li>
+							</ul>
+						</li>
+						<li>表单组件
+							<ul>
+								<li><a href="doc/p/form-select">单选下拉</a></li>
+								<li><a href="doc/p/form-mutiselect">多选下拉</a></li>
+								<li><a href="doc/p/form-combotree">下拉树</a></li>
+								<li><a href="doc/p/form-combogrid">下拉表格</a></li>
+								<li><a href="doc/p/form-checkbox">单选按钮 checkbox</a></li>
+								<li><a href="doc/p/form-datetime">日期时间</a></li>
+								<li><a href="doc/p/form-validator">表单验证</a></li>
+								<li><a href="doc/p/form-uploader">文件上传</a></li>
+								<li><a href="doc/p/form-filebrowser">文件浏览/选择</a></li>
+								<li><a href="doc/p/form-summernote">富文本编辑器</a></li>
+								<li><a href="doc/p/form-mask">格式化输入</a></li>
+							</ul>
+						</li>
+						<li>扩展组件
+							<ul>
+								<li><a href="doc/p/other-autocomplete">下拉框自动补全</a></li>
+								<li><a href="doc/p/other-enjoyhint">Enjoyhint界面引导</a></li>
+								<li><a href="doc/p/other-editable">快捷编辑组件</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</aside>
+			<!-- 内容主体 -->
+			<section class="main-content">
+				<div class="content-wrap">
+					<div class="wrapper no-p">
+						<iframe id="frameright2" name="frameright" src="" frameborder="0"></iframe>
+					</div>
+				</div>
+				<a class="exit-offscreen"></a>
+			</section>
+		</section>
+	</div>
+	#required_js
+
+	<!-- 页面组件脚本 -->
+
+	<!-- 本页面脚本 -->
+	<script src="$!basePath/framework/js/view/tree.js"></script>
+	<script type="text/javascript">
+		function initTreeView() {
+			$("#jsTreeMenu").jstree({
+				plugins : [ "wholerow" ],
+				core : {
+					multiple : false,
+					themes : {
+						icons : false
+					}
+				}
+			}).on("select_node.jstree", function(node, selected) {
+				var id = selected.selected;
+				id = id + "_anchor";
+				var url = $("#" + id).attr("href");
+				if(url != "#")
+					$("#frameright2").attr("src", url);
+			}).on("ready.jstree", function(node,jstree){
+				var id = $(node.target).find("li:first").attr("id");
+				if(id)
+					jstree.instance.select_node(id);
+				$("#jsTreeMenu").removeClass("hide");
+			});;
+		}
+		$(function() {
+			initTreeView();
+
+			//初始化iframe高度
+			$("#frameright2").width($("#frameright2").parent().width() + "px");
+			$("#frameright2").height($("#frameright2").parent().height() + "px");
+		});
+	</script>
+
+	#loading_close
+</body>
+</html>

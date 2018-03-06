@@ -1,0 +1,28 @@
+.node {
+    width: 120px;
+    height: 30px;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px 10px;
+    background: #ffffff;
+    border: 1px solid #979797;
+    color: #636363;
+    border-radius: 3px;
+}
+
+.node.root{
+    background: #f4f4f4;
+    border: 1px solid #979797;
+    color: #636363;
+}
+.node.node-1{
+    background: #eff4fa;
+    border: 1px solid #b9d4f1;
+    color: #364147;
+}
+
+.node.node-2{
+    background: #edf6f1;
+    border: 1px solid #8ca995;
+    color: #364147;
+}

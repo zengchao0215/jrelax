@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+
+
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="toolbar">
+                        <button class="btn btn-primary toolbar-item" onclick="doUploadPlugin()"><i class="fa fa-cloud-upload"></i> 上传新插件</button>
+                    </div>
+                    <div class="pull-right toolbar">
+                        <a class="btn btn-primary toolbar-item" href="$!basePath/system/plugin"><i class="ti-reload"></i> 刷新</a>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <table id="userTable" class="table no-m">
+                                    <thead>
+                                    <tr>
+                                        <td></td>
+                                        <th class="col-md-5 pd-l-lg">
+                                            <span class="pd-l-sm"></span>插件名称
+                                        </th>
+                                        <th class="col-md-2">启动时加载</th>
+                                        <th class="col-md-2">#i18n('system.common.status')</th>
+                                        <th class="col-md-3">#i18n('system.common.op')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    #if($!list.size() == 0)
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="alert alert-warning">
+                                                系统中未扫描到插件！
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    #else
+                                        #foreach($!map in $!pluginMap.entrySet())
+                                        <tr style="cursor: pointer;" onclick="doToggle(this, '$!map.key')">
+                                            <td colspan="7" class="bg-default"><i class="fa fa-folder-open"></i> $!map.key</td>
+                                        </tr>
+                                            #foreach($!obj in $!map.value)
+                                            <tr group="$!map.key">
+                                                <td></td>
+                                                <td><span class="fa fa-puzzle-piece pd-l-sm mr10"></span>$!obj.name</td>
+                                                <td>#if($!obj.loadOnStartup)是#else否#end</td>
+                                                #if($!PluginPool.containsKey($!obj.className))
+                                                <td><span class="label label-success">已启用</span></td>
+                                                <td>
+                                                    <button class="btn btn-default btn-xs" data-loading-text="正在卸载..." onclick="unregister(this,'$!obj.className')">
+                                                        <i class="ti-unlink"></i> 禁 用
+                                                    </button>
+                                                    #if($!obj.hasProperty())
+                                                        <button class="btn btn-primary btn-xs" onclick="doConfig('$!obj.className')">
+                                                            <i class="ti-plug"></i> 配置参数
+                                                        </button>
+                                                    #end
+                                                #else
+                                                <td><span class="label label-default">未启用</span></td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-xs" data-loading-text="正在安装..." onclick="register(this,'$!obj.className')">
+                                                        <i class="ti-plug"></i> 启 用
+                                                    </button>
+                                                #end
+                                                </td>
+                                            </tr>
+                                            #end
+                                        #end
+                                    #end
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 本页面脚本 -->
+<script src="$!basePath/framework/js/view/toast.js"></script>
+<script src="$!basePath/framework/js/form/uploader.js"></script>
+<script type="text/javascript">
+    function unregister(btn, cls) {
+        $(btn).button("loading");
+        jQuery.post("$!basePath/system/plugin/unregister", {className: cls}, function (data) {
+            if (data.success == true) {
+                window.location.href = "$!basePath/system/plugin";
+            } else {
+                Toast.error(data.message);
+                $(btn).button("reset");
+            }
+        });
+    }
+    function register(btn, cls) {
+        $(btn).button("loading");
+        jQuery.post("$!basePath/system/plugin/register", {className: cls}, function (data) {
+            if (data.success == true) {
+                window.location.href = "$!basePath/system/plugin";
+            } else {
+                Toast.error(data.message);
+                $(btn).button("reset");
+            }
+        });
+    }
+
+    function doUploadPlugin() {
+        ns.form.uploader.open({
+            title : "上传新插件",
+            filter : "jar",
+            savePath : "$!savePath",
+            autoName : false,
+            success: function (path, name) {
+                ns.post("$!basePath/system/plugin/load",{path:name}, function (success, data) {
+                    if(success){
+                        window.location.reload();
+                    }else{
+                        ns.tip.toast.error(data.message);
+                    }
+                });
+            },
+            error : function(msg){
+                ns.alert(msg);
+            }
+        });
+    }
+
+    function doToggle(tr, group){
+        var childTr = $("tr[group='"+group+"']");
+        if(childTr.is(":visible")){
+            $(tr).find("i").attr("class", "fa fa-folder");
+            childTr.hide();
+        }else{
+            $(tr).find("i").attr("class", "fa fa-folder-open");
+            childTr.show();
+        }
+    }
+
+    function doConfig(cls){
+        ns.view.showModal("$!basePath/system/plugin/config?className="+cls);
+    }
+</script>
+#loading_close
+</body>
+</html>

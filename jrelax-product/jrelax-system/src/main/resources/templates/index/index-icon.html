@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="renderer" content="webkit">
+		<!-- 移除邮箱、电话号码检测 -->
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<!-- 删除苹果默认的工具栏和菜单栏 -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<!-- uc强制竖屏 -->  
+		<meta name="screen-orientation" content="portrait">  
+		<!-- QQ强制竖屏 -->  
+		<meta name="x5-orientation" content="portrait">  
+		<!-- UC强制全屏 -->  
+		<meta name="full-screen" content="yes">  
+		<!-- QQ强制全屏 -->  
+		<meta name="x5-fullscreen" content="true">  
+		<!-- UC应用模式 -->  
+		<meta name="browsermode" content="application">  
+		<!-- QQ应用模式 -->  
+		<meta name="x5-page-mode" content="app">  
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="shortcut icon" href="$!basePath/framework/img/logo.png">
+		<link rel="stylesheet" type="text/css" href="$!basePath/framework/css/index/icon/css/style.css" />
+		<title>${system_admin_title}</title>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="top">
+				<div id="logo">
+					<img class="logo" src="$!basePath/framework/css/index/icon/img/logo.png">
+					<!--<img class="logo" src="$!basePath/framework/img/logo.png">-->
+					<h1>${system_admin_title}</h1>
+				</div>
+			</div>
+			<div id="main">
+			<!-- 外网访问地址 -->
+				<div id="app" class="app animated fadeIn">
+					<ul>
+						#foreach($!first in $!_firstRes)
+						#if($!first.hasChildren() == false)
+						<li>
+							<a href="$!{basePath}$!{first.url}"><img class="shake" src="$!basePath/framework/css/index/icon/img/$!{first.icon}.png" /><strong>$!first.name</strong></a>
+						</li>
+						#else
+						<li>
+							<a href="$!basePath/index/menu/icon/$!first.id"><img class="shake" src="$!basePath/framework/css/index/icon/img/$!{first.icon}.png" /><strong>$!first.name</strong></a>
+						</li>
+						#end
+						#end
+						<!--<li>-->
+							<!--<a href="https://yun.wrdan.com" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/iCloud-Drive.png" /><strong>我的云盘</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="http://y.wrdan.com/" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Music.png" /><strong>聆听音乐</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="http://dsm.wrdan.com:81/photo" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Photos.png" /><strong>流金岁月</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="https://dsm.wrdan.com/video/" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Videos.png" /><strong>欣赏影片</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="http://yuancheng.xunlei.com/" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Thunder.png" /><strong>远程迅雷</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="http://aria.wrdan.com" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Downloads.png" /><strong>Aria2管理</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="http://tr.wrdan.com" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Transmission.png" /><strong>Transmission</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="https://dsm.wrdan.com" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Settings.png" /><strong>DSM管理</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="https://soft.wrdan.com" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/FileExplorer.png" /><strong>管理文件</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="https://lede.wrdan.com" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Router.png" /><strong>管理路由器</strong></a>-->
+						<!--</li>-->
+						<!--<li>-->
+							<!--<a href="https://qd.wrdan.com" target="_blank"><img class="shake" src="$!basePath/framework/css/index/icon/img/Mark.png" /><strong>签到系统</strong></a>-->
+						<!--</li>-->
+					</ul>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+		<div id="footer">
+			<div class="footer-contents">
+				<div class="links">
+					<div class="line">
+						<span class="copyright">Copyright © 2017 XXX Inc. 保留所有权利。</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="$!basePath/framework/plugins/jquery-1.11.1.min.js"></script>
+
+		<script type="text/javascript">
+			function showLoading(){
+				var height = document.documentElement.clientHeight;
+				var loader = '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' + height + 'px;top:0; opacity:0.3; filter: alpha(opacity=30); background-color:#000;z-index:10000;"><div class="coffee_cup"></div></div>';
+				$("body").append(loader);
+			}
+			function closeLoading(){
+				$("#loadingDiv").hide();
+			}
+			document.onreadystatechange = completeLoading;
+			showLoading();
+			function completeLoading(){
+				if(document.readyState=="complete"){
+					closeLoading();
+				}
+			}
+
+		</script>
+	</body>
+
+</html>

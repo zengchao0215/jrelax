@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper" style="padding:0px 5px 0px 5px;">
+                        <iframe src="$!basePath/druid" frameborder="0" width="100%"></iframe>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+<script type="text/javascript">
+    $(function () {
+        $("iframe").css("height", $(".wrapper").height() - 5);
+    });
+</script>
+#loading_close
+</body>
+</html>

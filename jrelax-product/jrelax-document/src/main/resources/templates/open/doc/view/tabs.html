@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tabs</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="box-tab no-b">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="active"><a href="#c1" data-toggle="tab">所有采购单</a></li>
+					<li><a href="#c2" data-toggle="tab">等待发货</a></li>
+					<li><a href="#c3" data-toggle="tab">待确认收货</a></li>
+					<li><a href="#c4" data-toggle="tab">退款中</a></li>
+					<li><a href="#c5" data-toggle="tab">等待付款</a></li>
+					<li><a href="#c6" data-toggle="tab">已发货</a></li>
+					<li><a href="#c7" data-toggle="tab">采购成功</a></li>
+					<li><a href="#c8" data-toggle="tab">已关闭</a></li>
+					<li><a href="#c9" data-toggle="tab">维权中</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade active in" id="c1">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="panel no-m">
+									<div class="panel-body">
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">成交时间:</label>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">采购单编号:</label> <input class="form-control"></input>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">支付类型：</label> <select name="" id="" class="form-control">
+													<option value="0">所有</option>
+													<option value="1">在线支付</option>
+													<option value="2">货到付款</option>
+													<option value="3">银行汇款</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">分销商:</label> <input class="form-control"></input>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">订单编号:</label> <input class="form-control"></input>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">采购单类型：</label> <select name="" id="" class="form-control">
+													<option value="0">所有</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">产品名称:</label> <input class="form-control"></input>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">收货人:</label> <input class="form-control"></input>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="form-group no-m">
+												<label for="">&nbsp;</label>
+												<input type="button" class="btn btn-default form-control" value="搜索" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="hr-line-dashed"></div>
+						<div class="row">
+							<div class="col-lg-12">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>商品</th>
+											<th>零售价</th>
+											<th>采购价</th>
+											<th>数量</th>
+											<th>#i18n('system.common.op')</th>
+											<th>分销商</th>
+											<th>实收款</th>
+											<th>采购状态/#i18n('system.common.op')</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="bg-default">
+											<td colspan="8">
+												<div class="pull-left">
+													<span class="label label-primary">分销</span>
+													分销流水号：212500 订单编号：921516111531445 收货人：未免
+												</div>
+												<div class="pull-right">
+													成交时间：2016-02-03 线下转账
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="pull-left">
+													<img src="http://static.oschina.net/uploads/space/2013/0304/160442_8Fw6_179699.png" alt="" />
+												</div>
+												<div class="pull-left p15">
+													特步供应商特步品牌-士教<br />
+													颜色分类：白色<br />
+													商家编码：
+												</div>
+											</td>
+											<td>122.00</td>
+											<td>122.00</td>
+											<td>1</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr class="bg-default">
+											<td colspan="8">
+												<div class="pull-left">
+													<span class="label label-danger">经销</span>
+													分销流水号：212500 订单编号：921516111531445 收货人：未免
+												</div>
+												<div class="pull-right">
+													成交时间：2016-02-03 线下转账
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="8">
+												最新留言:退款说明：退款说明：退款说明
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade active" id="c2">
+						<div class="row">
+							<div class="col-lg-12">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>商品</th>
+											<th>零售价</th>
+											<th>采购价</th>
+											<th>数量</th>
+											<th>#i18n('system.common.op')</th>
+											<th>分销商</th>
+											<th>实收款</th>
+											<th>采购状态/#i18n('system.common.op')</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="bg-default">
+											<td colspan="8">
+												<div class="pull-left">
+													<span class="label label-primary">分销</span>
+													分销流水号：212500 订单编号：921516111531445 收货人：未免
+												</div>
+												<div class="pull-right">
+													成交时间：2016-02-03 线下转账
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="pull-left">
+													<img src="http://static.oschina.net/uploads/space/2013/0304/160442_8Fw6_179699.png" alt="" />
+												</div>
+												<div class="pull-left p15">
+													特步供应商特步品牌-士教<br />
+													颜色分类：白色<br />
+													商家编码：
+												</div>
+											</td>
+											<td>122.00</td>
+											<td>122.00</td>
+											<td>1</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr class="bg-default">
+											<td colspan="8">
+												<div class="pull-left">
+													<span class="label label-danger">经销</span>
+													分销流水号：212500 订单编号：921516111531445 收货人：未免
+												</div>
+												<div class="pull-right">
+													成交时间：2016-02-03 线下转账
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="8">
+												最新留言:退款说明：退款说明：退款说明
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade active" id="c3"></div>
+					<div class="tab-pane fade active" id="c4"></div>
+					<div class="tab-pane fade active" id="c5"></div>
+					<div class="tab-pane fade active" id="c6"></div>
+					<div class="tab-pane fade active" id="c7"></div>
+					<div class="tab-pane fade active" id="c8"></div>
+					<div class="tab-pane fade active" id="c9"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	#required_js
+</body>
+</html>

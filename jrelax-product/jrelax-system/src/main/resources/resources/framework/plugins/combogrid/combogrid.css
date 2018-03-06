@@ -1,0 +1,12 @@
+.combogrid-gridview{
+    display: none;
+    border-top:0px;
+    overflow: auto;
+    position: absolute;
+    background: white;
+    z-index: 9999;
+}
+.combogrid-gridview-pager{
+    position: absolute;
+    bottom: 0;
+}

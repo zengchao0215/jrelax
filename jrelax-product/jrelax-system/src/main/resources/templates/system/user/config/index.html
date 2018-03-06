@@ -1,0 +1,55 @@
+<form id="configForm" class="parsley-form form-horizontal" data-parsley-validate role="form" method="post" action="$!basePath/system/user/config/save">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">系统设置</h4>
+    </div>
+    <div class="modal-body no-p">
+        <div class="bg-white" style="box-shadow: none;">
+            <ul class="nav nav-tabs" role="tablist" id="propertyTab">
+                <li class="active"><a href="#config_system" data-toggle="tab"><i class="fa fa-cog"></i> 系统</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active in p15" id="config_system">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">默认分页条数</label>
+                        <div class="col-sm-6">
+                            <select name="system.page.rows" class="form-control">
+                                <option value="10" #ifSelected($!configMap.get("system.page.rows"), 10) >10</option>
+                                <option value="15" #ifSelected($!configMap.get("system.page.rows"), 15) >15</option>
+                                <option value="20" #ifSelected($!configMap.get("system.page.rows"), 20) >20</option>
+                                <option value="50" #ifSelected($!configMap.get("system.page.rows"), 50) >50</option>
+                                <option value="100" #ifSelected($!configMap.get("system.page.rows"), 100) >100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">保存设置</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/form.js",
+        "/framework/js/form/validator.js",
+        "/framework/js/form/select.js"
+    ]);
+    ns.ready(function (dialog) {
+        dialog.find("#configForm").ajaxForm({
+            beforeSubmit: function (arr, form , options) {
+                form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("配置已保存！");
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("#ok").button("reset");
+            }
+        });
+    });
+</script>

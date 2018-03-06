@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提示组件</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<div class="app">
+	<h3>依赖：<code>/framework/js/checkbox.js</code></h3>
+	<div class="hr-line-dashed"></div>
+	<h3>单选按钮 icheck</h3>
+	<section class="panel bg-white">
+		<div class="panel-body">
+			<input type="checkbox" name="a1" class="icheck">
+			<input type="checkbox" name="a1" class="icheck" checked>
+			<input type="checkbox" name="a1" class="icheck" disabled>
+			<input type="checkbox" name="a1" class="icheck" disabled checked>
+		</div>
+	</section>
+	<h3>全选/反选</h3>
+	<section class="panel bg-white">
+		<div class="panel-body">
+			<button class="btn" onclick="alert(ns.form.check('.table').getChecks())">获取选中</button>
+			<button class="btn" onclick="ns.form.check('.table').checkAll()">全选</button>
+			<button class="btn" onclick="ns.form.check('.table').uncheckAll()">全不选</button>
+			<button class="btn" onclick="ns.form.check('.table').reverseCheck()">反选</button>
+			<table class="table">
+				<thead>
+				<tr>
+					<th>
+						<input type="checkbox" data-check-all="data-check-item" class="icheck">
+					</th>
+					<th>Name</th>
+				</tr>
+				</thead>
+				<tbody>
+				#foreach($!obj in [1..10])
+				<tr>
+					<td>
+						<input type="checkbox" data-check-item class="icheck" value="c_$!obj">
+					</td>
+					<td>
+						$!obj
+					</td>
+				</tr>
+				#end
+				</tbody>
+			</table>
+		</div>
+	</section>
+</div>
+<body class="p10">
+	#required_js
+	<script type="text/javascript">
+		ns.ready(function(){
+			ns.requireJS("/framework/js/form/checkbox.js");
+
+			//ns.form.monitorCheck(".table");
+		});
+	</script>
+</body>
+</html>

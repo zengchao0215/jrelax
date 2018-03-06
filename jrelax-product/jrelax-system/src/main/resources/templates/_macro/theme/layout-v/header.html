@@ -1,0 +1,40 @@
+<ul class="nav navbar-nav vertical nav-menus">
+    <li></li>
+  #foreach($!first in $!_firstRes)
+    #if($!first.hasChildren() == false)
+        <li data-first-res>
+            <a href="$!{basePath}$!{first.url}" title="$!first.name" data-tabs-link icon="$!first.icon" #if($!{first.newWindow})target="_blank"#end>
+                <i class="$!first.icon"></i>
+                <span>$!first.name</span>
+            </a>
+        </li>
+    #else
+        <li data-first-res>
+            <a href="javascript:;" data-toggle="dropdown" aria-expanded="true"><i class="$!first.icon"></i> <span>$!first.name</span> #if($!first.hasChildren() == true)&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i>#end</a>
+            <ul class="dropdown-menu animated fadeIn">
+              #foreach($!second in $!_secondRes.get($!first.id))
+                #if($!second.hasChildren() == false)
+                    <li><a href="$!{basePath}$!{second.url}" title="$!second.name" data-tabs-link icon="$!second.icon" #if($!{second.newWindow})target="_blank"#end><i class="$!second.icon"></i> $!second.name</a></li>
+                #else
+                    <li>
+                        <a href="javascript:;" data-toggle="dropdown" aria-expanded="true">
+                            <span><i class="$!second.icon"></i> $!second.name</span>
+                            <i class="ti-angle-right pull-right"></i>
+                        </a>
+                        <ul class="dropdown-menu animated fadeIn">
+                          #foreach($!third in $!_thirdRes.get($!second.id))
+                              <li>
+                                  <a href="$!{basePath}$!third.url" title="$!third.name" data-tabs-link icon="$!third.icon" #if($!{third.newWindow})target="_blank"#end #if($thirdName=="$!third.name")class="active"#end>
+                                      <span><i class="$!third.icon"></i> $!third.name</span>
+                                  </a>
+                              </li>
+                          #end
+                        </ul>
+                    </li>
+                #end
+              #end
+            </ul>
+        </li>
+    #end
+  #end
+</ul>

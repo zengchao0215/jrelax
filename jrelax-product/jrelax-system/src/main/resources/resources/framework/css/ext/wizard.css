@@ -1,0 +1,24 @@
+.wizard { position: relative; overflow: hidden; border-bottom: 1px solid #eaecf6; background-color: #eaecf6; border-radius: 2px 2px 0 }
+.wizard ul { margin: 0; padding: 0; list-style: none }
+.wizard ul li { position: relative; margin: 0; padding-left: 30px; padding-right: 15px; height: 40px; line-height: 40px; background: 0 0; cursor: default; float: left; white-space: nowrap }
+.wizard ul li:before { position: absolute; top: 0; right: -14px; z-index: 9; display: block; border: 21px solid transparent; border-right: 0; border-left: 14px solid #eaecf6; content: "" }
+.wizard ul li:after { position: absolute; top: -1px; right: -15px; z-index: 1; display: block; border: 22px solid transparent; border-right: 0; border-left: 15px solid #cdd2ea; content: "" }
+.wizard ul li .badge { margin-right: 8px }
+.wizard ul li.complete { background: #eaecf6 }
+.wizard ul li.complete .badge { background: #15db81 }
+.wizard ul li.complete:before { border-left: 14px solid #eaecf6 }
+.wizard ul li.complete:hover { background: #e7eff8; cursor: pointer }
+.wizard ul li.complete:hover:before { border-left: 14px solid #e7eff8 }
+.wizard ul li.active { background: #fff; color: #1582dc }
+.wizard ul li.active:before { border-left: 14px solid #fff; right: -14px }
+.wizard ul li.active:after { right: -15px }
+.wizard ul li:first-child { padding-left: 20px; border-radius: 2px 0 0 }
+.wizard ul.previous-disabled li.complete { cursor: default }
+.wizard ul.previous-disabled li.complete:hover { background: #f3f4f5 }
+.wizard ul.previous-disabled li.complete:hover:before { border-left-color: #f3f4f5 }
+.wizard .actions { position: absolute; right: 0; float: right; padding-top: 6px; padding-right: 15px; padding-left: 15px; vertical-align: middle; line-height: 37px }
+.wizard .actions a { margin-right: 8px; font-size: 12px; line-height: 45px }
+.step-content { padding: 15px }
+.step-content .step-pane { display: none }
+.step-content .active { display: block }
+.step-content .active .btn-group .active { display: inline-block }

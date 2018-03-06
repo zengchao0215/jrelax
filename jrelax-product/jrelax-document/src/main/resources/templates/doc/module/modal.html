@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">弹窗</h1>
+                <p class="lead">基于Bootstrap的modal实现的弹窗</p>
+
+                <h2>基本实例</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default" onclick="showModal1()">静态内容</button>
+                    <button class="btn btn-default" onclick="showModal2()">远程加载</button>
+                    <button class="btn btn-default" onclick="showModal3()">iframe加载</button>
+                    <h3>不同大小的弹窗</h3>
+                    <button class="btn btn-default" onclick="showModal4('modal-lg')">modal-lg</button>
+                    <button class="btn btn-default" onclick="showModal4('modal-md')">modal-md(默认)</button>
+                    <button class="btn btn-default" onclick="showModal4('modal-sm')">modal-sm</button>
+                    <h3>不同皮肤的弹窗</h3>
+                    <button class="btn btn-default" onclick="showModal8('')">默认</button>
+                    <button class="btn btn-default" onclick="showModal8('modal-primary')">modal-primary</button>
+                    <button class="btn btn-default" onclick="showModal8('modal-danger')">modal-danger</button>
+                    <button class="btn btn-default" onclick="showModal8('modal-info')">modal-info</button>
+                    <button class="btn btn-default" onclick="showModal8('modal-warning')">modal-warning</button>
+                    <h3>缓存</h3>
+                    <button class="btn btn-default" onclick="showModal2()">无缓存</button>
+                    <button class="btn btn-default" onclick="showModal9()">有缓存</button>
+                    <h3>事件触发</h3>
+                    <blockquote>
+                        时间触发先后顺序：onLoaded -> onShow -> onShown -> onClose -> onHidden
+                    </blockquote>
+                    <button class="btn btn-default" onclick="showModal5()">关闭时</button>
+                    <button class="btn btn-default" onclick="showModal6()">加载完成时</button>
+                    <button class="btn btn-default" onclick="showModal7()">完全显示时（动画结束）</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        //静态内容
+                        ns.view.showModal("", {
+                            remote : false,
+                            content : "Hello World!"
+                        });
+                        //远程加载
+                        ns.view.showModal("$!basePath/doc/module-modal-page1");
+                        //iframe形式架子啊
+                        ns.view.showModal("http://m.baidu.com", {iframe : true});
+                        //不同大小
+                        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+                            size : "modal-lg/modal-md/modal-sm"
+                        });
+                        //不同皮肤
+                        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+                            theme : "modal-primary/modal-danger/modal-info/modal-warning"
+                        });
+                        //有缓存
+                        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+                            id : "唯一的ID",//如果需要缓存有效，则ID必须手动设置
+                            cache : true
+                        });
+                                        //关闭事件
+                        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+                            onHidden : function(){
+                                alert("关闭了");
+                            }
+                        });
+                        //加载完成事件
+                        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+                            onLoaded : function(){
+                                alert("加载完成");
+                            }
+                        });
+                        //显示完成事件
+                        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+                            onShown : function(){
+                                alert("显示完成");
+                            }
+                        });
+                    </pre>
+                </figure>
+                <h2>扩展实例</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default" onclick="showModal10()">参数正向传递</button>
+                    <button class="btn btn-default" onclick="showModal11()">参数回传</button>
+                </div>
+
+                <h2>参数</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>string</td>
+                            <td>弹窗的唯一标识，不传入时自动生成</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>string</td>
+                            <td>标题</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>content</td>
+                            <td>string</td>
+                            <td>静态内容，<code>remote=false</code>时有效</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>size</td>
+                            <td>string</td>
+                            <td>窗口大小，可选项：<code>modal-lg</code>、<code>modal-md</code>、<code>modal-sm</code></td>
+                            <td>modal-md</td>
+                        </tr>
+                        <tr>
+                            <td>border</td>
+                            <td>string</td>
+                            <td>边框样式</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>theme</td>
+                            <td>string</td>
+                            <td>弹窗皮肤：可选项：
+                                <ul>
+                                    <li>modal-primary</li>
+                                    <li>modal-danger</li>
+                                    <li>modal-info</li>
+                                    <li>modal-warning</li>
+                                </ul>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>showHeader</td>
+                            <td>bool</td>
+                            <td>是否显示头部</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>showFooter</td>
+                            <td>bool</td>
+                            <td>是否显示底部</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>showOk</td>
+                            <td>bool</td>
+                            <td>是否显示确定按钮</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>showCancel</td>
+                            <td>bool</td>
+                            <td>是否显示取消按钮</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>showClose</td>
+                            <td>bool</td>
+                            <td>是否显示关闭按钮</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>remote</td>
+                            <td>bool</td>
+                            <td>是否远程加载，设置为true是，remoteUrl必须设置</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>remoteUrl</td>
+                            <td>string</td>
+                            <td>远程地址</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>remoteUrl</td>
+                            <td>string</td>
+                            <td>远程地址</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>loadText</td>
+                            <td>string</td>
+                            <td>加载提示语</td>
+                            <td>正在加载...</td>
+                        </tr>
+                        <tr>
+                            <td>iframe</td>
+                            <td>bool</td>
+                            <td>是否使用iframe模式加载远程地址</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>iframeHeight</td>
+                            <td>number</td>
+                            <td>iframe高度</td>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <td>cache</td>
+                            <td>bool</td>
+                            <td>是否缓存，如果设置为true，则内容加载完成之后，第二次打开时将不再从远程获取。<code>需手动设置id</code></td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>okText</td>
+                            <td>string</td>
+                            <td>确定按钮文本</td>
+                            <td>确 定</td>
+                        </tr>
+                        <tr>
+                            <td>cancelText</td>
+                            <td>string</td>
+                            <td>取消按钮文本</td>
+                            <td>取 消</td>
+                        </tr>
+                        <tr>
+                            <td>headerClass</td>
+                            <td>string</td>
+                            <td>头部样式</td>
+                            <td>no-b</td>
+                        </tr>
+                        <tr>
+                            <td>headerAlign</td>
+                            <td>string</td>
+                            <td>头部文本对齐，可选项：
+                                <ul>
+                                    <li>text-left 左对齐</li>
+                                    <li>text-center 居中</li>
+                                    <li>text-right 右对齐</li>
+                                </ul>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>bodyClass</td>
+                            <td>string</td>
+                            <td>内容区样式</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>footerClass</td>
+                            <td>string</td>
+                            <td>底部样式</td>
+                            <td>p10 no-b</td>
+                        </tr>
+                        <tr>
+                            <td>footerAlign</td>
+                            <td>string</td>
+                            <td>底部文本对齐，同头部文本对其</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>backdrop</td>
+                            <td>bool</td>
+                            <td>是否显示遮罩层</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>keyboard</td>
+                            <td>bool</td>
+                            <td>是否支持<code>Esc</code>按钮关闭弹窗</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>fullScreen</td>
+                            <td>bool</td>
+                            <td>是否全屏显示</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>params</td>
+                            <td>object</td>
+                            <td>用于窗口参数传递</td>
+                            <td>false</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>事件</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-lg-3">名称</th>
+                            <th class="col-lg-4">参数</th>
+                            <th class="col-lg-5">描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr>
+                            <td>onShow</td>
+                            <td></td>
+                            <td>显示前触发</td>
+                        </tr>
+                        <tr>
+                            <td>onShown</td>
+                            <td></td>
+                            <td>显示后触发</td>
+                        </tr>
+                        <tr>
+                            <td>onHidden</td>
+                            <td></td>
+                            <td>关闭后触发</td>
+                        </tr>
+                        <tr>
+                            <td>onClose</td>
+                            <td></td>
+                            <td>关闭前触发</td>
+                        </tr>
+                        <tr>
+                            <td>onLoaded</td>
+                            <td></td>
+                            <td>加载完成触发，remote=false时不触发</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    function showModal1() {
+        ns.view.showModal("", {
+            remote: false,
+            content: "Hello World!"
+        })
+    }
+
+    function showModal2() {
+        ns.view.showModal("$!basePath/doc/module-modal-page1");
+    }
+
+    function showModal3() {
+        ns.view.showModal("http://m.baidu.com", {iframe: true});
+    }
+
+    function showModal4(size) {
+        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+            size: size
+        });
+    }
+
+    function showModal5() {
+        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+            onHidden: function () {
+                alert("关闭了");
+            }
+        });
+    }
+
+    function showModal6() {
+        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+            onLoaded: function () {
+                alert("加载完成");
+            }
+        });
+    }
+
+    function showModal7() {
+        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+            onShown: function () {
+                alert("显示完成");
+            }
+        });
+    }
+
+    function showModal8(theme) {
+        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+            theme: theme
+        });
+    }
+
+    function showModal9() {
+        ns.view.showModal("$!basePath/doc/module-modal-page1", {
+            id: "helloaaaaaa",
+            cache: true
+        });
+    }
+
+    function showModal10(){
+        ns.view.showModal("$!basePath/doc/module-modal-page2", {
+            params: "aaaaaa"
+        });
+    }
+
+    function showModal11(){
+        ns.view.showModal("$!basePath/doc/module-modal-page2", {
+            onHidden : function(dialog){
+                alert(dialog.msg);
+            }
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,26 @@
+.stepy { width: 100%; display: block; background-color: #fff }
+.stepy-header { background-color: #e3e6f3; border-radius: 2px 2px 0 0; border-bottom: 1px solid #e3e6f3 }
+.stepy-header li { background-color: transparent; position: relative; line-height: 1; border-radius: 4px 0px 0px 4px; margin: 0 27px 0 0; padding: 10px 40px; }
+.stepy-header li:before { position: absolute; top: 1px; right: -22px; z-index: 9; display: block; border: 23px solid transparent; border-right: 0; border-left: 22px solid #e3e6f3; content: "" }
+.stepy-header li:after { position: absolute; top: 0; right: -26px; z-index: 1; display: block; border: 24px solid transparent; border-right: 0; border-left: 23px solid #f5f5f5; content: "" }
+.stepy-header li.stepy-active:after { right: -22px; }
+.stepy-header li div { font-weight: 400; font-family: inherit; color: #A0A29E; font-weight: 800; text-shadow: none; text-transform: uppercase; font-size: 14px }
+.stepy-header li span { color: #A0A29E; }
+.stepy-header li.stepy-active div, .stepy-header li.stepy-active span { color: #fff }
+.stepy-header li.stepy-active div { font-weight: 800 }
+.stepy-step { background: 0 0; width: 100% }
+.stepy-step:after, .stepy-step:before { content: " "; display: table }
+.stepy-step:after { clear: both }
+.stepy-step legend { border-radius: 2px; background-color: #2e353d; color: #fff; padding: 0 15px; font-size: 13px }
+.stepy-header li.stepy-active { background-color: #1582dc; border-bottom: 2px solid #1582dc; }
+.stepy-header li.stepy-active:before { border-left: 22px solid #1582dc; }
+.stepy-header li.stepy-active:after { border-left: 23px solid #1582dc; }
+.stepy-errors { margin: 0; }
+.stepy-header li.done { background-color: #8bb9df; border-bottom: 2px solid #8bb9df; }
+.stepy-header li.done>span { color: #ffffff; }
+.stepy-header li.done>div { color: #ffffff; }
+.stepy-header li.done:before { border-left: 22px solid #8bb9df; }
+.stepy-header li.done:after { border-left: 23px solid #8bb9df; }
+.stepy-header li.done:after { right: -22px; }
+.stepy-header li>.state { position: absolute; left: 14px; top: 14px; font-size: 20px; color: #fff; display: none; }
+.stepy-header li.done>.state { display: block; }

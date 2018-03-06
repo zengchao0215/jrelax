@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">管理快捷菜单</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table id="dgUserQuickMenu"></table>
+            <div id="dgUserQuickMenuPager"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="pull-left">
+        <button id="add" type="button" class="btn btn-primary" data-loading-text="正在保存..."><i class="fa fa-plus"></i> 创建新菜单</button>
+        <button id="remove" type="button" class="btn btn-danger" data-loading-text="正在移除..."><i class="fa fa-close"></i> 移除选中菜单</button>
+    </div>
+    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+</div>
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/form.js");
+    ns.requireJS("/framework/js/form/validator.js");
+    ns.requireJS("/framework/js/form/checkbox.js");
+    ns.requireJS("/framework/js/view/datagrid.js");
+    ns.ready(function (dialog) {
+        var dgUserQuickMenu = dialog.find("#dgUserQuickMenu").jqGrid({
+            url: '$!basePath/profile/quickmenu/data',
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "名称", name: "name", width: 100},
+                {label: "链接地址", name: "url", width: 300}
+            ],
+            height: 300,
+            pager: "#dgUserQuickMenuPager",
+            pagerpos: "center",
+            multiselect: true,
+            icheckbox: true,
+            selectedToggle: dialog.find("#remove")
+        });
+
+        dialog.find("#add").on("click", function () {
+            ns.view.showModal("$!basePath/profile/quickmenu/add", {
+                onHidden: function (dialog, obj) {
+                    if (dialog.isSaved) {
+                        dgUserQuickMenu.reload();
+                    }
+                }
+            });
+        });
+        dialog.find("#remove").on("click", function () {
+            ns.confirm("确认从快捷菜单中移除吗？", function () {
+                var menuIds = dgUserQuickMenu.getSelectRows();
+                dialog.find("#remove").button("loading");
+                ns.post("$!basePath/profile/quickmenu/remove", {menuIds: menuIds.toString()}, function (success, data) {
+                    if (success) dgUserQuickMenu.reload();
+                    dialog.find("#remove").button("reset");
+                });
+            });
+        });
+    });
+</script>

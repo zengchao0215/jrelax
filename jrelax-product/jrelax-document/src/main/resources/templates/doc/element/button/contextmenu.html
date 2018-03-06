@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">按钮式下拉菜单</h1>
+                <p class="lead">把任意一个按钮放入 <code>.btn-group</code> 中，然后加入适当的菜单标签，就可以让按钮作为菜单的触发器了。</p>
+
+                <h2>单按钮下拉菜单</h2>
+                <div class="bs-example">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div class="btn-group"&gt;
+                          &lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                            Action &lt;span class="caret"&gt;&lt;/span&gt;
+                          &lt;/button&gt;
+                          &lt;ul class="dropdown-menu"&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Action&lt;/a&gt;&lt;/li&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Another action&lt;/a&gt;&lt;/li&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+                            &lt;li role="separator" class="divider"&gt;&lt;/li&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+                          &lt;/ul&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>分裂式按钮下拉菜单</h2>
+                <div class="bs-example">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle">
+                            Action
+                        </button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default dropdown-toggle"&gt;
+                                Action
+                            &lt;/button&gt;
+                            &lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                &lt;span class="caret"&gt;&lt;/span&gt;
+                                &lt;span class="sr-only"&gt;Toggle Dropdown&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Action&lt;/a&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Another action&lt;/a&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+                                &lt;li role="separator" class="divider"&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>不同尺寸</h2>
+                <div class="bs-example">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-lg dropdown-toggle">
+                            Action
+                        </button>
+                        <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle">
+                            Action
+                        </button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle">
+                            Action
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle">
+                            Action
+                        </button>
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                Action &lt;span class="caret"&gt;&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                Action &lt;span class="caret"&gt;&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                Action &lt;span class="caret"&gt;&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                Action &lt;span class="caret"&gt;&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;!--分离式按钮组不同尺寸--&gt;
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default btn-lg dropdown-toggle"&gt;
+                                Action
+                            &lt;/button&gt;
+                            &lt;button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                &lt;span class="caret"&gt;&lt;/span&gt;
+                                &lt;span class="sr-only"&gt;Toggle Dropdown&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default dropdown-toggle"&gt;
+                                Action
+                            &lt;/button&gt;
+                            &lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                &lt;span class="caret"&gt;&lt;/span&gt;
+                                &lt;span class="sr-only"&gt;Toggle Dropdown&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default btn-sm dropdown-toggle"&gt;
+                                Action
+                            &lt;/button&gt;
+                            &lt;button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                &lt;span class="caret"&gt;&lt;/span&gt;
+                                &lt;span class="sr-only"&gt;Toggle Dropdown&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class="btn-group"&gt;
+                            &lt;button type="button" class="btn btn-default btn-xs dropdown-toggle"&gt;
+                                Action
+                            &lt;/button&gt;
+                            &lt;button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                &lt;span class="caret"&gt;&lt;/span&gt;
+                                &lt;span class="sr-only"&gt;Toggle Dropdown&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                ...
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>向上弹出式菜单</h2>
+                <p>给父元素添加 <code>.dropup</code> 类就能使触发的下拉菜单朝上方打开。</p>
+                <div class="bs-example">
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn btn-default dropdown-toggle">
+                            Action
+                        </button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div class="btn-group dropup"&gt;
+                            &lt;button type="button" class="btn btn-default dropdown-toggle"&gt;
+                                Action
+                            &lt;/button&gt;
+                            &lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;
+                                &lt;span class="caret"&gt;&lt;/span&gt;
+                                &lt;span class="sr-only"&gt;Toggle Dropdown&lt;/span&gt;
+                            &lt;/button&gt;
+                            &lt;ul class="dropdown-menu"&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Action&lt;/a&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Another action&lt;/a&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Something else here&lt;/a&gt;&lt;/li&gt;
+                                &lt;li role="separator" class="divider"&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a href="#"&gt;Separated link&lt;/a&gt;&lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

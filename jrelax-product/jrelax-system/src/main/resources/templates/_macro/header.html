@@ -1,0 +1,112 @@
+<header class="header header-fixed navbar">
+    <div class="brand">
+        <a href="javascript:" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+        <!-- Logo -->
+        <a href="$!basePath/index" class="navbar-brand">
+            <img src="$!system_logo" alt="">
+            <span class="heading-font">
+               	${system_admin_title}
+           </span>
+        </a>
+    </div>
+    #parse("_macro/theme/$!layout/header.html")
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown hidden-xs" data-toggle="tooltip" data-placement="bottom" title="系统快捷菜单">
+            <a href="javascript:;" data-toggle="dropdown">
+                <i class="ti-more-alt"></i>
+            </a>
+            <ul class="dropdown-menu animated">
+                <li class="dropdown-header text-muted">快捷导航</li>
+                <li class="divider"></li>
+                #if($_quickMenus.size() > 0)
+                #foreach($menu in $_quickMenus)
+                <li>
+                    <a href="$!menu.url" data-tabs-link>$!menu.name</a>
+                </li>
+                #end
+                #else
+                <li class="dropdown-header text-muted">未添加快捷菜单</li>
+                #end
+                <li class="divider"></li>
+                <li>
+                    <a href="http://www.nethsoft.com" target="_blank">帮助</a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="ns.view.showModal('$!basePath/index/version')">关于</a>
+                </li>
+            </ul>
+        </li>
+        <li class="notifications dropdown" data-toggle="tooltip" data-placement="bottom" title="查看系统通知信息">
+            <a href="javascript:;" onclick="ns.__notify();" data-toggle="dropdown">
+                <i class="ti-bell"></i>
+                <script type="text/javascript" src="$!basePath/system/notify/count"></script>
+            </a>
+            <div class="dropdown-menu animated">
+                <div class="panel no-m">
+                    <div class="panel-heading text-muted"><b>通知中心</b>
+                    </div>
+                    <div class="panel content no-m" style="max-height:350px">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <center><img src="$!basePath/framework/img/loading.gif"/></center>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="$!basePath/system/notify">查看全部通知</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="dropdown hidden-xs" data-toggle="tooltip" data-placement="bottom" title="切换皮肤/布局">
+            <a href="javascript:;" class="pg-toggle">
+                <i class="ti-palette"></i>
+            </a>
+        </li>
+        <li class="off-right">
+            <a href="javascript:;" data-toggle="dropdown">
+                #if($!headimg)
+                <img src="$!{uploadPath}$!headimg" class="header-avatar img-circle" alt="$!RealName" title="$!RealName">
+                #else
+                <img src="$!basePath/framework/img/avatar.jpg" class="header-avatar img-circle" alt="$!RealName"
+                     title="$!RealName">
+                #end
+                <span class="hidden-xs ml10"></span>
+##                <i class="ti-angle-down ti-caret hidden-xs"></i>
+            </a>
+            <div class="dropdown-menu animated profile" style="min-width: 300px;">
+                <div class="panel no-m">
+                    <div class="panel content p10 no-m" style="max-height:350px">
+                        <div class="profile">
+                            <div class="profile-img">
+                                #if($!headimg)
+                                    <img width="80" src="$!{uploadPath}$!headimg" class="img-circle">
+                                #else
+                                    <img width="80" src="$!basePath/framework/img/avatar.jpg" class="img-circle">
+                                #end
+                            </div>
+                            <div class="profile-name">
+                                <p>$!RealName</p>
+                                <p class="text-muted login-time">登录时间：$!dateTool.format("MM-dd HH:mm", $ADMIN_SESSION.lastLoginTime)</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt15">
+                            <a class="btn btn-default btn-sm" href="javascript:;" onclick="ns.userCenter()"><i class="fa fa-user"></i> 个人中心</a>
+                            <a class="btn btn-default btn-sm" href="$!basePath/index/lock/on"><i class="fa fa-lock"></i> 锁定系统</a>
+                        </div>
+                        <div class="text-center mt5">
+                            <a class="btn btn-default btn-sm" href="javascript:;" onclick="ns.setting()"><i class="fa fa-cog"></i> 系统设置</a>
+                            <a class="btn btn-default btn-sm" href="javascript:;" onclick="ns.checkUpdate()"><i class="fa fa-refresh"></i> 系统更新</a>
+                        </div>
+                    </div>
+                    <div class="panel-footer m5 profile-sign">
+                        <a href="$!basePath/login-again"><i class="fa fa-rotate-left"></i></a>
+                        <div class="pull-right">
+                            <a href="javascript:;" onclick="ns.exit()"><i class="fa fa-power-off"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</header>

@@ -1,0 +1,11 @@
+#foreach($!obj in $!list)
+<tr id="$!obj.id">
+    <td><span class="pd-l-sm"></span><input name="key" type="text" class="form-control" value="$!obj.k" autocomplete="off"/></td>
+    <td><input name="value" type="text" class="form-control" value="$!obj.v" autocomplete="off"/></td>
+    <td style="vertical-align: middle">
+        <a href="javascript:itemUp('$!obj.id');" data-toggle="tooltip" title="上移一位"><i class="fa fa-arrow-up"></i></a>&nbsp;
+        <a href="javascript:itemDown('$!obj.id');" data-toggle="tooltip" title="下移一位"><i class="fa fa-arrow-down"></i></a>&nbsp;
+        <a href="javascript:removeItem('$!obj.id');" data-toggle="tooltip" title="删除此项"><i class="fa fa-close"></i></a>
+    </td>
+</tr>
+#end

@@ -1,0 +1,11 @@
+#if($!list.size()>0)
+#foreach($!message in $!list)
+<li class="list-group-item" onclick="ns.__readNotify('$!message.id',this)">
+    $!message.html()
+</li>
+#end
+#else
+<li class="list-group-item p15">
+    <center>没有新的通知信息</center>
+</li>
+#end

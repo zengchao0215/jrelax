@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">上传组件</h1>
+                <p class="lead">需引入<code>/framework/js/form/uploader.js</code></p>
+
+                <h2>基本实例</h2>
+                <div class="bs-example">
+                    <button class="btn btn-default" onclick="upload1()">普通上传</button>
+                    <button class="btn btn-default" onclick="upload2()">限制文件类型</button>
+                    <button class="btn btn-default" onclick="upload3()">超大文件上传</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        //普通上传
+                        ns.form.uploader.open({
+                            success: function (path, name, files) {
+                                alert("服务器路径为：" + path);
+                            }
+                        });
+                        //限制文件类型
+                        ns.form.uploader.open({
+                            filter : ".ppt",
+                            success: function (path, name, files) {
+                                alert("服务器路径为：" + path);
+                            }
+                        });
+                        //超大文件上传
+                        ns.form.uploader.open({
+                            blockUpload : true,
+                            success: function (path, name, files) {
+                                alert("服务器路径为：" + path);
+                            }
+                        });
+                    </pre>
+                </figure>
+
+
+                <h2>参数</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>icon</td>
+                            <td>string</td>
+                            <td>上传弹窗图标</td>
+                            <td>fa fa-cloud-upload</td>
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>string</td>
+                            <td>上传弹窗标题</td>
+                            <td>上传文件</td>
+                        </tr>
+                        <tr>
+                            <td>autoClose</td>
+                            <td>bool</td>
+                            <td>上传完成后是否自动关闭</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>savePath</td>
+                            <td>string</td>
+                            <td>服务器上保存的目录，具体保存目录仍由服务器自行决定</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>showFilename</td>
+                            <td>bool</td>
+                            <td>是否显示选择文件的文件名</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>showSavePath</td>
+                            <td>bool</td>
+                            <td>是否显示服务器保存目录输入框</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>multiple</td>
+                            <td>bool</td>
+                            <td>是否允许选择多个文件</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>selectAndSubmit</td>
+                            <td>bool</td>
+                            <td>选择文件后立即上传</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>maxSize</td>
+                            <td>number</td>
+                            <td>上传文件大小上线，如果超过这个上线，会自动切换为超大文件上传。 单位：字节</td>
+                            <td>50 * 1024 * 1024</td>
+                        </tr>
+                        <tr>
+                            <td>drop</td>
+                            <td>bool</td>
+                            <td>是否启用拖拽上传</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>autoBlockUpload</td>
+                            <td>bool</td>
+                            <td>是否根据文件大小自动切换超大文件上传和普通文件上传</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>blockUpload</td>
+                            <td>bool</td>
+                            <td>是否使用超大文件上传</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>blockSize</td>
+                            <td>number</td>
+                            <td>超大文件上传时，文件切割的大小。 单位：字节</td>
+                            <td>2 * 104 * 1024</td>
+                        </tr>
+                        <tr>
+                            <td>max</td>
+                            <td>number</td>
+                            <td>最多选择几个文件，-1表示不限制</td>
+                            <td>-1</td>
+                        </tr>
+                        <tr>
+                            <td>min</td>
+                            <td>number</td>
+                            <td>最少选择几个文件，-1表示不限制</td>
+                            <td>-1</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>事件</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-lg-3">名称</th>
+                            <th class="col-lg-4">参数</th>
+                            <th class="col-lg-5">描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr>
+                            <td>onLoad</td>
+                            <td></td>
+                            <td>显示前触发</td>
+                        </tr>
+                        <tr>
+                            <td>success</td>
+                            <td>文件在服务器上保存的路径，文件名，文件对象（包含文件大小、原文件名等信息）</td>
+                            <td>上传完成触发</td>
+                        </tr>
+                        <tr>
+                            <td>error</td>
+                            <td>错误消息</td>
+                            <td>上传失败触发</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/form/uploader.js");
+    function upload1() {
+        ns.form.uploader.open({
+            success: function (path, name, files) {
+                alert("服务器路径为：" + path);
+            }
+        });
+    }
+
+    function upload2() {
+        ns.form.uploader.open({
+            filter : ".ppt",
+            success: function (path, name, files) {
+                alert("服务器路径为：" + path);
+            }
+        });
+    }
+
+    function upload3() {
+        ns.form.uploader.open({
+            blockUpload : true,
+            success: function (path, name, files) {
+                alert("服务器路径为：" + path);
+            }
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,146 @@
+<form id="resEditForm" role="form" class="form-horizontal parsley-form" data-parsley-validate
+      action="$!basePath/system/res/edit/do" method="post">
+    <input type="hidden" name="id" value="$!res.id"/>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">编辑菜单</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group has-feedback">
+                    <label for="parentId" class="col-sm-2 control-label">上级菜单</label>
+                    <div class="col-sm-9">
+                        <input id="parentId" name="parentId" type="text" class="form-control" placeholder="上级菜单，不选择默认为一级菜单"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">名称<span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="name" data-parsley-required="true" placeholder="菜单名称" autofocus value="$!res.name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="url" class="col-sm-2 control-label">URL地址</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="url" class="form-control" placeholder="URL地址" value="$!res.url">
+                        <p class="help-block no-m">例如：/system/res/add.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="icon" class="col-sm-2 control-label">图标</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input id="icon" type="text" name="icon" class="form-control" placeholder="图标样式" value="$!res.icon">
+                            <span class="input-group-btn">
+                                <button id="btnSelectIcon" type="button" class="btn btn-primary"><i class="ti-plus"></i> 选择</button>
+			                </span>
+                        </div>
+                        <p class="help-block no-m">预览：<i id="iconPreview" class="ti-plus"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="row mb15">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label for="descript" class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-9">
+                        <textarea name="descript" class="form-control" rows="3">$!res.descript</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="enabled" class="col-sm-4 control-label">#i18n('system.common.enable')</label>
+                    <div class="col-sm-6 switcha">
+                        <div class="mr15">
+                            <input type="checkbox" name="enabled" class="js-switch-blue" #ifChecked($!res.enabled)>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="enabled" class="col-sm-4 control-label">显示</label>
+                    <div class="col-sm-6 switcha">
+                        <div class="mr15">
+                            <input type="checkbox" name="display" class="js-switch-blue" #ifChecked($!res.display)>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="enabled" class="col-sm-4 control-label">新窗口</label>
+                    <div class="col-sm-6 switcha">
+                        <div class="mr15">
+                            <input type="checkbox" name="newWindow" class="js-switch-blue" #ifChecked($!res.newWindow)>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="enabled" class="col-sm-4 control-label">新功能</label>
+                    <div class="col-sm-6 switcha">
+                        <div class="mr15">
+                            <input type="checkbox" name="beta" class="js-switch-blue" #ifChecked($!res.beta)>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary" data-loading-text="正在保存...">确 定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/form.js",
+        "/framework/js/form/combotree.js",
+        "/framework/js/form/validator.js"
+    ]);
+    ns.ready(function (dialog) {
+        dialog.find("#resEditForm").ajaxForm({
+            beforeSubmit: function (arr, form, options) {
+                form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("菜单编辑成功！");
+                    ns.view.Dialog.close(form, {isEdited: true, parentId: data.parentId});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("#ok").button("reset");
+            }
+        });
+
+        //图标样式 实时预览
+        dialog.find("#icon").on("keyup", function () {
+            $("#iconPreview").attr("class", $(this).val());
+        });
+        dialog.find("#btnSelectIcon").on("click", function () {
+            ns.view.showModal('$!basePath/system/res/icon', {
+                onHidden: function (data) {
+                    $("#icon").val(data.icon);
+                    $("#iconPreview").attr("class", data.icon);
+                },
+                size: 'modal-lg'
+            });
+        });
+
+        dialog.find("#parentId").combotree({
+            url: function (node) {
+                return node.id === "#" ? "$!basePath/system/res/tree?parent=true" : "$!basePath/system/res/tree/" + node.id
+            },
+            value : "$!res.parentId",
+            text : "$!parentName"
+        });
+    });
+</script>

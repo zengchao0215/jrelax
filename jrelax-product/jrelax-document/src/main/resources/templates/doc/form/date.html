@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1>日期选择</h1>
+                <p class="lead">基于DatePicker控件，需引入<code>/framework/js/form/data.js</code></p>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-1">日期选择</div>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control date">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1">日期选择(格式化)</div>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control date" data-date-format="yyyy年mm月dd日">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1">日期展示</div>
+                        <div class="col-lg-4">
+                            <div class="date"></div>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-lg-1"&gt;日期选择&lt;/div&gt;
+                            &lt;div class="col-lg-2"&gt;
+                                &lt;input type="text" class="form-control date"&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-lg-1"&gt;日期选择(yyyy年MM月dd日)&lt;/div&gt;
+                            &lt;div class="col-lg-2"&gt;
+                                &lt;input type="text" class="form-control date" data-date-format="yyyy年mm月dd日"&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-lg-1"&gt;日期展示&lt;/div&gt;
+                            &lt;div class="col-lg-4"&gt;
+                                &lt;div class="date"&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+                <h2>参数</h2>
+                <p>参数的配置方式为：在元素节点上设置 <code>data-date-参数名="参数值"</code>; 参数名为驼峰式时转换为下划线，如：startDate属性，配置则为：data-date-start-date</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>autoclose</td>
+                            <td>bool</td>
+                            <td>是否自动关闭</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>assumeNearbyYear</td>
+                            <td>bool</td>
+                            <td>是否将两位的年份自动解析为四位年份，如 15-1-1解析为 2015-1-1</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>calendarWeeks</td>
+                            <td>bool</td>
+                            <td>是否隐藏周</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>clearBtn</td>
+                            <td>bool</td>
+                            <td>是否清楚已选择的日期的按钮。 如果设置autoclose为true，此参数不生效</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>container</td>
+                            <td>string</td>
+                            <td>日期选择框的容器</td>
+                            <td>"body"</td>
+                        </tr>
+                        <tr>
+                            <td>datesDisabled</td>
+                            <td>string,array</td>
+                            <td></td>
+                            <td>[]</td>
+                        </tr>
+                        <tr>
+                            <td>daysOfWeekDisabled</td>
+                            <td>string,array</td>
+                            <td></td>
+                            <td>[]</td>
+                        </tr>
+                        <tr>
+                            <td>daysOfWeekHighlighted</td>
+                            <td>string,array</td>
+                            <td></td>
+                            <td>[]</td>
+                        </tr>
+                        <tr>
+                            <td>defaultViewDate</td>
+                            <td>strin</td>
+                            <td>默认显示的视图，分为三种：
+                                <ul>
+                                    <li>year:年视图，并选中当前年</li>
+                                    <li>month:月视图，并选中当前月</li>
+                                    <li>day:日视图，选中当前日</li>
+                                </ul>
+                            </td>
+                            <td>today</td>
+                        </tr>
+                        <tr>
+                            <td>disableTouchKeyboard</td>
+                            <td>bool</td>
+                            <td>触摸屏中，是否禁止弹出键盘</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>enableOnReadonly</td>
+                            <td>bool</td>
+                            <td>日期选择的文本框设置为只读</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>endDate</td>
+                            <td>date，string</td>
+                            <td>截止日期，此日期后的日期将被禁用，不可选择。 日期的格式必须和format属性相符</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>forceParse</td>
+                            <td>bool</td>
+                            <td>是否强制解析文本框中的日期值，如果解析失败文本框的值会被改变</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>format</td>
+                            <td>string</td>
+                            <td>日期格式，可用的配置项为：d, dd, D, DD, m, mm, M, MM, yy, yyyy
+                                <ul>
+                                    <li>d, dd: 天数是否自动补0 如：5, 05</li>
+                                    <li>D, DD: 天数全称和简称 如：五, 五号</li>
+                                    <li>m, mm: 月份是否自动补0 如：5, 05</li>
+                                    <li>M, MM: 月份全称和简称 如：五, 五月</li>
+                                    <li>yy, yyyy: 年份2位和4位 如：15, 2015</li>
+                                </ul>
+                            </td>
+                            <td>yyyy-mm-dd</td>
+                        </tr>
+                        <tr>
+                            <td>immediateUpdates</td>
+                            <td>bool</td>
+                            <td>选择年份或月份后，文本框的值是否立即变化</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>inputs</td>
+                            <td>array</td>
+                            <td>用于实现日期范围选择</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>keepEmptyValues</td>
+                            <td>bool</td>
+                            <td>仅在进行范围选择时生效，选择一个值后保持值不带到其他文本框中</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>keyboardNavigation</td>
+                            <td>bool</td>
+                            <td>是否使用键盘的方向键进行调整</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>language</td>
+                            <td>string</td>
+                            <td>语言,设置为其他语言之前需要导入语言包</td>
+                            <td>zh_CN</td>
+                        </tr>
+                        <tr>
+                            <td>maxViewMode</td>
+                            <td>string，number</td>
+                            <td>设置最大可以显示的视图模式，可用配置项包括：
+                                <ul>
+                                    <li>0, days 天视图</li>
+                                    <li>1, months 月视图、年视图</li>
+                                    <li>2, years 年视图、十年视图</li>
+                                    <li>3, decades 十年视图、世纪视图</li>
+                                    <li>4, centuries 世纪视图、千年视图</li>
+                                </ul>
+                            </td>
+                            <td>4，"centuries"</td>
+                        </tr>
+                        <tr>
+                            <td>minViewMode</td>
+                            <td>string，number</td>
+                            <td>设置最大可以显示的视图模式，可用配置项包括：
+                                <ul>
+                                    <li>0, days 天视图</li>
+                                    <li>1, months 月视图、年视图</li>
+                                    <li>2, years 年视图、十年视图</li>
+                                    <li>3, decades 十年视图、世纪视图</li>
+                                    <li>4, centuries 世纪视图、千年视图</li>
+                                </ul>
+                            </td>
+                            <td>0，"days"</td>
+                        </tr>
+                        <tr>
+                            <td>multidate</td>
+                            <td>bool</td>
+                            <td>是否可以多选日期，多个日期用逗号隔开</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>multidateSeparator</td>
+                            <td>string</td>
+                            <td>多个日期间隔符</td>
+                            <td>","</td>
+                        </tr>
+                        <tr>
+                            <td>orientation</td>
+                            <td>string</td>
+                            <td>显示方向，可用配置项包括：
+                                <ul>
+                                    <li>auto 自动</li>
+                                    <li>top 上</li>
+                                    <li>right 右</li>
+                                    <li>bottom 下</li>
+                                    <li>left 左</li>
+                                </ul>
+                            </td>
+                            <td>"auto"</td>
+                        </tr>
+                        <tr>
+                            <td>showOnFocus</td>
+                            <td>bool</td>
+                            <td>文本框获取焦点时立即显示日期选择框</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>startDate</td>
+                            <td>string，date</td>
+                            <td>起始时间，起始时间之前的时间将不可用</td>
+                            <td>当前时间</td>
+                        </tr>
+                        <tr>
+                            <td>startView</td>
+                            <td>string，number</td>
+                            <td>起始视图，可用配置项同上</td>
+                            <td>0, "days"</td>
+                        </tr>
+                        <tr>
+                            <td>templates</td>
+                            <td>object</td>
+                            <td>模板</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>showWeekDays</td>
+                            <td>bool</td>
+                            <td>显示周</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>string</td>
+                            <td>标题，显示在顶部</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>todayBtn</td>
+                            <td>bool</td>
+                            <td>是否显示“今天”按钮</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>todayHighlight</td>
+                            <td>bool</td>
+                            <td>当前日期保持高亮</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>toggleActive</td>
+                            <td>bool</td>
+                            <td></td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>weekStart</td>
+                            <td>number</td>
+                            <td>一周的开始， 0~6 （周日 ~ 周六）</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>zIndexOffset</td>
+                            <td>number</td>
+                            <td>z-index值，用于控制显示，防止被覆盖</td>
+                            <td>10</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>方法</h2>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        $('.datepicker').datepicker('方法名', 参数1, 参数2);
+                    </pre>
+                </figure>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-lg-3">名称</th>
+                            <th class="col-lg-4">参数</th>
+                            <th class="col-lg-5">描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr>
+                            <td>destroy</td>
+                            <td></td>
+                            <td>移除datepicker</td>
+                        </tr>
+                        <tr>
+                            <td>show</td>
+                            <td></td>
+                            <td>控制显示</td>
+                        </tr>
+                        <tr>
+                            <td>hide</td>
+                            <td></td>
+                            <td>隐藏</td>
+                        </tr>
+                        <tr>
+                            <td>update</td>
+                            <td>
+                                date
+                                <div>
+                                    <pre class="brush: javascript">
+                                        $('.datepicker').datepicker('update');
+                                        $('.datepicker').datepicker('update', '2011-03-05');
+                                        $('.datepicker').datepicker('update', '2011-03-05', '2011-03-07');
+                                        $('.datepicker').datepicker('update', new Date(2011, 2, 5));
+                                        $('.datepicker').datepicker('update', [new Date(2011, 2, 5), new Date(2011, 2, 7)]);
+                                    </pre>
+                                </div>
+                            </td>
+                            <td>更新</td>
+                        </tr>
+                        <tr>
+                            <td>setDate</td>
+                            <td>date</td>
+                            <td>设置日期</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>事件</h2>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        $('.datepicker').datepicker()
+                            .on(picker_event, function(e) {
+                                // `e` here contains the extra attributes
+                            });
+                    </pre>
+                </figure>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-lg-3">名称</th>
+                            <th class="col-lg-4">参数</th>
+                            <th class="col-lg-5">描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr>
+                            <td>show</td>
+                            <td></td>
+                            <td>显示后触发</td>
+                        </tr>
+                        <tr>
+                            <td>hide</td>
+                            <td></td>
+                            <td>隐藏后触发</td>
+                        </tr>
+                        <tr>
+                            <td>clearDate</td>
+                            <td></td>
+                            <td>日期被清除后触发</td>
+                        </tr>
+                        <tr>
+                            <td>changeDate</td>
+                            <td></td>
+                            <td>日期更改后触发</td>
+                        </tr>
+                        <tr>
+                            <td>changeMonth</td>
+                            <td></td>
+                            <td>从年视图切换为月视图时触发</td>
+                        </tr>
+                        <tr>
+                            <td>changeYear</td>
+                            <td></td>
+                            <td>从十年视图切换为年视图时触发</td>
+                        </tr>
+                        <tr>
+                            <td>changeDecade</td>
+                            <td></td>
+                            <td>从世纪视图切换为十年视图时触发</td>
+                        </tr>
+                        <tr>
+                            <td>changeCentury</td>
+                            <td></td>
+                            <td>从千年视图切换为世纪视图时触发</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS([
+        "/framework/js/form/date.js"
+    ]);
+</script>
+</html>

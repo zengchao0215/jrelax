@@ -1,0 +1,19 @@
+/*Bootstrap-Slider*/
+.slider.slider-horizontal { width: 100% !important }
+.slider.slider-horizontal .slider-track { height: 5px }
+.slider.slider-horizontal .slider-selection { background-image: none }
+.slider-track { background-color: #d0dbec; background-image: none; border-radius: 2px; -webkit-box-shadow: none; box-shadow: none }
+.slider-selection { position: absolute; background-color: #7f8bc8; border-radius: 2px; -webkit-box-shadow: none; box-shadow: none }
+.slider-handle { background: #fff; opacity: 1; filter: alpha(opacity=100); -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #7f8bc8 0 0 0 1px; box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #7f8bc8 0 0 0 1px }
+.slider.slider-horizontal .slider-handle { margin-top: -8px }
+.slider-info .slider-selection { background-color: #15acdc }
+.slider-info .slider-handle { -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #15acdc 0 0 0 1px; box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #15acdc 0 0 0 1px }
+.slider-primary .slider-selection { background-color: #1582dc }
+.slider-primary .slider-handle { -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #1582dc 0 0 0 1px; box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #1582dc 0 0 0 1px }
+.slider-success .slider-selection { background-color: #15db81 }
+.slider-success .slider-handle { -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #15db81 0 0 0 1px; box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #15db81 0 0 0 1px }
+.slider-warning .slider-selection { background-color: #daac16 }
+.slider-warning .slider-handle { -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #daac16 0 0 0 1px; box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #daac16 0 0 0 1px }
+.slider-danger .slider-selection { background-color: #da3e16 }
+.slider-danger .slider-handle { -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #da3e16 0 0 0 1px; box-shadow: rgba(0, 0, 0, .2) 0 2px 5px, #da3e16 0 0 0 1px }
+.slider-striped .slider .slider-selection { background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent), color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)), color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent), to(transparent)); background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent); background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent); -webkit-background-size: 40px 40px; background-size: 40px 40px }

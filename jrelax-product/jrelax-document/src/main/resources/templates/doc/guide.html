@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">入门指南</h1>
+                <p class="lead">介绍使用的基础知识，包括如何引用css，如何引用js等</p>
+
+                <div class="bs-example text-center">
+                    <img src="$!basePath/app/map.png">
+                </div>
+                <h2>引入静态资源</h2>
+                <p>在使用框架中的css和js文件时，强烈推荐使用如下方式引用</p>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        //此处的路径可以不传入basePath
+
+                        //导入js
+                        ns.requiredJS("xx.js");
+                        //导入css
+                        ns.requiredCSS("xx.css");
+                        //自动识别
+                        ns.require("xx.css/xx.js");
+                    </pre>
+                </figure>
+
+                <h2>组件使用</h2>
+                <p>组件的使用方式支持以下几种：</p>
+                <ul>
+                    <li>class样式初始化</li>
+                    <li>data-xx属性初始化</li>
+                    <li>手动初始化</li>
+                </ul>
+                <p>大部分情况下都是可以使用样式初始化和data属性初始化的方式来使用组件，使用框架默认的配置。这样可以省去很多繁琐的初始化步骤。</p>
+                <p>如果需要灵活的控制组件，那么就需要进行手动初始化</p>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        <!--样式初始化-->
+                        &lt;input type="text" class="select"/&gt;
+                        <!--data属性初始化-->
+                        &lt;input type="text" data-select&gt;
+                        <!--手动初始化-->
+                        $("选择器").xx();
+                    </pre>
+                </figure>
+
+                <h2>Ready事件</h2>
+                <p>文档的Ready事件支持两种方式，自定义Ready和jQuery方式</p>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        //自定义Ready(推荐)
+                        ns.ready(function(){});
+
+                        //jQuery
+                        $(function(){});
+                        //或者
+                        $(document).ready(function(){});
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

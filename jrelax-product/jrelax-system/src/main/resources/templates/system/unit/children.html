@@ -1,0 +1,38 @@
+#foreach($!obj in $list)
+<tr data-tt-id="$!obj.id" #if($!obj.parentId!='-1')data-tt-parent-id="$!obj.parentId"#end data-tt-branch="$!obj.hasChildren()">
+    <td>
+        <span class="pd-l-sm"></span><a href="javascript:;" data-type="text" data-title="输入新名称" data-pk="$!obj.id" data-placement="right" class="xeditable-name">$!obj.name</a> #if($!obj.system)
+        (系统)#end</td>
+    <td class="offscreen-right"><a href="javascript:;" data-type="text" data-title="输入新名称" data-pk="$!obj.id" data-placement="right" class="xeditable-address">$!obj.address</a></td>
+    <td>$!obj.contact</td>
+    <td>$!obj.mobile</td>
+    <td>$!obj.leader.realName</td>
+    <td id="td_status_$!obj.id">#if($!obj.enabled)<i class="fa fa-circle text-success ml5">#else <i class="fa fa-circle text-danger ml5">#end</i></td>
+    <td>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                <i class="ti-settings"></i>
+                <span class="ti-angle-down"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/unit/detail/$!obj.id')">#i18n('system.common.view')</a></li>
+                <li><a href="javascript:;" onclick="doEditUnit('$!obj.id')">#i18n('system.common.edit')</a></li>
+                <li><a href="javascript:;" onclick="del('$!obj.id')">#i18n('system.common.delete')</a></li>
+                <li><a href="javascript:;" onclick="doAddUnit('$!obj.id')">添加子组织</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:;" onclick="enableUnit('$!obj.id')">#i18n('system.common.enable')</a></li>
+                <li><a href="javascript:;" onclick="disableUnit('$!obj.id')">#i18n('system.common.disable')</a></li>
+                #if(!$!obj.system)
+                    #if($!unitRes)
+                        <li class="divider"></li>
+                        <li><a href="$!basePath/system/unit/res/$!obj.id">管理菜单</a></li>
+                        <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/unit/detail/res/$!obj.id')">查看菜单</a></li>
+                        <li><a href="javascript:;" onclick="copyResFromParent('$!obj.id')">复制菜单从上级（一级）</a></li>
+                        <li><a href="javascript:;" onclick="copyResToChildren('$!obj.id')">复制菜单到下级（一级）</a></li>
+                    #end
+                #end
+            </ul>
+        </div>
+    </td>
+</tr>
+#end

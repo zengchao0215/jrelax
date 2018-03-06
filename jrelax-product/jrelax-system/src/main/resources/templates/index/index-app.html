@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+</head>
+<body>
+	#loading
+    <div class="app $!layout">
+        <!-- 头部菜单 -->
+        #parse("_macro/header-app.html")
+        <section class="layout">
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper no-p">
+                        <iframe id="indexFrame" name="indexFrame" src="" frameborder="0" width="100%"></iframe>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </div>
+	#required_js
+	<script type="text/javascript" src="$!basePath/framework/js/index.app.js"></script>
+	#loading_close
+</body>
+</html>

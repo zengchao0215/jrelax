@@ -1,0 +1,85 @@
+<form class="parsley-form form-horizontal" data-parsley-validate role="form" method="post" action="$!basePath/system/scheduler/add/do">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">新增</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-md-2 col-sm-2">任务名称</label>
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <input type="text" class="form-control" name="name" data-parsley-required="true" placeholder="定时任务名称" maxlength="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-md-2 col-sm-2">执行时间</label>
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <input type="text" class="form-control" name="cron" data-parsley-required="true" placeholder="cron表达式" maxlength="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-md-2 col-sm-2">执行类</label>
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <input type="text" class="form-control" name="jobClass" data-parsley-required="true" placeholder="完整类路径：com.xx.xx" maxlength="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-md-2 col-sm-2">备注</label>
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <textarea class="form-control" name="remarks" placeholder="备注" maxlength="255"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-md-2 col-sm-2">是否启用</label>
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <input type="checkbox" class="form-control switch" name="enabled" checked>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.require([
+        "/framework/js/form/form.js",
+        "/framework/js/form/validator.js",
+        "/framework/js/form/switch.js",
+    ]);
+    ns.ready(function (dialog) {
+        dialog.find("form").ajaxForm({
+            beforeSubmit: function (arr, form, options) {
+                form.find("button:submit").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success === true) {
+                    ns.tip.toast.success("增加成功！");
+                    dialog.close({ok: true});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("button:submit").button("reset");
+            }
+        });
+    });
+</script>

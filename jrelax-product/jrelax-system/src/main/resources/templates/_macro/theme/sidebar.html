@@ -1,0 +1,66 @@
+<aside class="sidebar offscreen-left">
+    <!-- main navigation -->
+    <nav class="main-navigation" data-height="auto" data-size="6px" data-distance="0" data-rail-visible="true" data-wheel-step="10">
+        <p class="nav-title">菜单</p>
+        <ul class="nav">
+            #foreach($!first in $!_firstRes)
+            #if($!first.hasChildren() == false)
+            <li>
+                <a href="$!{basePath}$!{first.url}" title="$!first.name" data-tabs-link icon="$!first.icon" class="active" #if($!{first.newWindow})target="_blank"#end>
+                    <i class="$!first.icon"></i>
+                    <b>$!first.name</b>
+                    #if($!first.beta)<div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                </a>
+            </li>
+            #else
+            <li>
+                <a href="javascript:;" class="active">
+                    <i class="toggle-accordion"></i>
+                    <i class="$!first.icon"></i>
+                    <b>$!first.name</b>
+                    #if($!first.beta)<div class="badge badge-top bg-warning"><span>新功能</span></div>#end
+                </a>
+                <ul class="sub-menu">
+                    #foreach($!second in $!_secondRes.get($!first.id))
+                    #if($!second.hasChildren() == false)
+                    <li>
+                        <a href="$!{basePath}$!second.url" title="$!second.name" data-tabs-link icon="$!second.icon" #if($!{second.newWindow})target="_blank"#end>
+                            <span>$!second.name</span>
+                            #if($!second.beta)<div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                        </a>
+                    </li>
+                    #else
+                    <li>
+                        <a href="javascript:;">
+                            <i class="toggle-accordion"></i>
+                            <span>$!second.name</span>
+                            #if($!second.beta)<div class="badge badge-top bg-danger"><span>新功能</span></div>#end
+                        </a>
+                        <ul class="sub-menu">
+                            #foreach($!third in $!_thirdRes.get($!second.id))
+                            <li>
+                                <a href="$!{basePath}$!third.url" title="$!third.name" data-tabs-link icon="$!third.icon" #if($!{third.newWindow})target="_blank"#end>
+                                    <span>$!third.name #if($!third.beta)<div class="badge badge-top bg-danger"><span>新功能</span></div>#end</span>
+                                </a>
+                            </li>
+                            #end
+                        </ul>
+                    </li>
+                    #end
+                    #end
+                </ul>
+            </li>
+            #end
+            #end
+        </ul>
+        <!-- <p class="nav-title">常用</p>
+        <ul class="nav">
+            <li>
+                <a href="$!basePath/system/log">
+                    <i class="ti-control-record text-success"></i>
+                    <span>系统日志</span>
+                </a>
+            </li>
+        </ul> -->
+    </nav>
+</aside>

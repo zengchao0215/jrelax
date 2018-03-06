@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+
+
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <section class="panel shadow">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-rotate-left"></i> 初始化数据</h4>
+                                <p class="text-muted">对系统的部分功能进行初始化</p>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <button class="btn btn-primary" onclick="clearLog()"><i class="fa fa-book"></i>
+                                            清理日志
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 mt5">
+                                        <button class="btn btn-primary" onclick="clearHistoryNotify()"><i
+                                                class="fa fa-bell-o"></i> 清理历史通知
+                                        </button>
+                                        <button class="btn btn-primary" onclick="clearNotify()"><i
+                                                class="fa fa-bell"></i> 清理所有通知
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 页面组件脚本 -->
+
+<!-- 本页面脚本 -->
+<script type="text/javascript" src="$!basePath/framework/js/view/toast.js"></script>
+<script type="text/javascript">
+    function clearLog() {
+        ns.tip.confirm("清理后无法恢复，确定清理吗？", function () {
+            ns.post("$!basePath/system/senior/init/clear/log", {}, function (success, data) {
+                if (success) {
+                    ns.tip.toast.success("清理成功！");
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+            });
+        });
+    }
+    function clearHistoryNotify() {
+        ns.tip.confirm("清理后无法恢复，确定清理吗？", function () {
+            ns.post("$!basePath/system/senior/init/clear/notify/history", {}, function (success, data) {
+                if (success) {
+                    ns.tip.toast.success("清理成功！");
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+            });
+        });
+    }
+    function clearNotify() {
+        ns.tip.confirm("清理后无法恢复，确定清理吗？", function () {
+            ns.post("$!basePath/system/senior/init/clear/notify/all", {}, function (success, data) {
+                if (success) {
+                    ns.tip.toast.success("清理成功！");
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+            });
+        });
+    }
+</script>
+
+#loading_close
+</body>
+</html>

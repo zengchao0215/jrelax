@@ -1,0 +1,174 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">角色授权</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">菜单权限</div>
+                <div class="panel-body">
+                    <div id="jsTreeMenu"></div>
+                </div>
+                <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="nav-tabs bg-white bordered">
+                <ul class="nav nav-tabs nav-tabs" role="tablist" id="propertyTab">
+                    <li class="active"><a href="#pro_button" data-toggle="tab">按钮权限</a></li>
+                    <li><a href="#pro_column" data-toggle="tab">字段权限</a></li>
+                </ul>
+                <div class="tab-content p15">
+                    <div class="tab-pane fade active in" id="pro_button">
+                        <div class="alert alert-warning">请选择菜单</div>
+                    </div>
+                    <div class="tab-pane fade" id="pro_column">
+                        <div class="alert alert-warning">请选择菜单</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+</div>
+<script src="$!basePath/framework/js/form/form.js"></script>
+<script src="$!basePath/framework/js/view/toast.js"></script>
+<script src="$!basePath/framework/js/plugins/json.js"></script>
+<script src="$!basePath/framework/js/view/tree.js"></script>
+<script src="$!basePath/framework/js/form/select.js"></script>
+<script src="$!basePath/framework/js/form/validator.js"></script>
+<script src="$!basePath/framework/js/form/checkbox.js"></script>
+<script>
+    ns.ready(function (dialog) {
+        var inited = false;
+        var data = {
+            res: $!resources,//资源权限
+            button: $!button,//按钮权限
+            column: $!column//字段权限
+        };
+        var currentResId = undefined;
+        $("#jsTreeMenu").jstree({
+            plugins: ["wholerow", "checkbox", "contextmenu"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return node.id === "#" ? "$!basePath/system/role/unit/res/tree/$!role.unit.id" : "$!basePath/system/role/unit/res/tree/$!role.unit.id/" + node.id
+                    }
+                },
+                dblclick_toggle : false
+            }, checkbox: {
+                three_state: false
+            }, contextmenu : {
+                select_node : false,
+                items : function(node){
+                    return ns.view.tree.contextmenu.renderCheckItems(false);
+                }
+            }
+        }).on("loaded.jstree", function () {
+            //立即加载树下所有节点， 并选中已选择的菜单
+            $("#jsTreeMenu").jstree("load_all");
+        }).on("changed.jstree", function (node, options) {
+            if (inited) {
+                if (options.action == "select_node") {
+                    var id = options.node.id;
+                    ns.load("#pro_button", "$!basePath/system/role/edit/right/button", {resId: id}, function () {
+                        ns.form.initCheckbox();
+                        initSelected(id);
+                    });
+                    ns.load("#pro_column", "$!basePath/system/role/edit/right/column", {resId: id}, function () {
+                        ns.form.initCheckbox();
+                        initSelected(id)
+                    });
+
+                    //自动选中父节点
+                    var tree = $("#jsTreeMenu").jstree(true);
+                    tree.select_node(tree.get_parent(id));
+                } else if (options.action == "deselect_node") {
+                    $("#pro_button").html("<div class=\"alert alert-warning\">请选择菜单</div>");
+                    $("#pro_column").html("<div class=\"alert alert-warning\">请选择菜单</div>");
+                }
+            }
+        }).bind("load_all.jstree", function () {
+            var tree = $("#jsTreeMenu");
+            $.each(data.res, function (i, n) {
+                tree.jstree(true).select_node(n);
+            });
+            inited = true;
+            dialog.find(".overlay").remove();
+        });
+
+        function initSelected(id) {
+            var proButton = $("#pro_button"), proColumn = $("#pro_column");
+            currentResId = id;
+            //选中
+            var buttons = data.button[id];
+            if (buttons) {
+                $.each(buttons, function (i, bid) {
+                    proButton.find("input[value='" + bid + "']").iCheck("check");
+                });
+            }
+            var columns = data.column[id];
+            if (columns) {
+                $.each(columns, function (i, bid) {
+                    proColumn.find("input[value='" + bid + "']").iCheck("check");
+                });
+            }
+            //绑定事件
+            proButton.find(".icheck").on('ifChanged', function (event) {
+                var ids = [];
+                proButton.find(".icheck:checked").each(function (i, chk) {
+                    ids.push(chk.value);
+                });
+                data.button[currentResId] = ids;
+            });
+            proColumn.find(".icheck").on('ifChanged', function (event) {
+                var ids = [];
+                proColumn.find(".icheck:checked").each(function (i, chk) {
+                    ids.push(chk.value);
+                });
+                data.column[currentResId] = ids;
+            });
+        }
+
+        function getData() {
+            var data1 = {
+                res: [],
+                button: {},
+                column: {}
+            };
+            var tree = $.jstree.reference("#jsTreeMenu");
+            var nodes = tree.get_selected();
+            $.each(nodes, function (i, resId) {
+                data1.res.push(resId);
+                var buttons = data.button[resId];
+                if (buttons) {
+                    data1.button[resId] = buttons;
+                }
+                var columns = data.column[resId];
+                if (columns) {
+                    data1.column[resId] = columns;
+                }
+            });
+            return JSON.stringify(data1);
+        }
+
+        dialog.find("#ok").on("click", function () {
+            dialog.find("#ok").button("loading");
+            ns.post("$!basePath/system/role/edit/right/do", {roleId: "$!role.id", data: getData()}, function (success, data) {
+                if(success){
+                    ns.tip.toast.success("授权成功！");
+                    dialog.close({isSaved: true});
+                }else{
+                    ns.tip.toast.error(data.message);
+                }
+                dialog.find("#ok").button("reset");
+            })
+        });
+    });
+</script>

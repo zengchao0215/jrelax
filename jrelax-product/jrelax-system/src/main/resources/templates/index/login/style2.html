@@ -1,0 +1,132 @@
+﻿<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${system_login_title}</title>
+    <link rel="shortcut icon" href="$!system_logo">
+
+    <link rel="stylesheet" href="$!basePath/app/login/style2/css/style.css" type="text/css">
+
+</head>
+
+<body>
+
+<div class="cont">
+    <div class="demo">
+        <div class="login">
+            <!--<div class="login__check"></div>-->
+            <div class="login__logo">
+                <img src="$!system_logo" alt=""><br><br>
+                ${system_login_title}
+            </div>
+            <div class="login__form">
+                <form id="loginForm">
+                    <div class="login__row">
+                        <svg class="login__icon name svg-icon" viewbox="0 0 20 20">
+                            <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8"></path>
+                        </svg>
+                        <input id="username" type="text" class="login__input name" placeholder="用户名">
+                    </div>
+                    <div class="login__row">
+                        <svg class="login__icon pass svg-icon" viewbox="0 0 20 20">
+                            <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0"></path>
+                        </svg>
+                        <input id="password" type="password" class="login__input pass" placeholder="密码">
+                    </div>
+                    <button type="submit" class="login__submit">登 录</button>
+                    <!--<p class="login__signup">Don't have an account? &nbsp;<a>Sign up</a></p>-->
+                </form>
+            </div>
+        </div>
+        <div class="app">
+            <div class="app__top">
+                <div class="app__user">
+                    <img src="$!basePath/app/login/style2/success.png" alt="" width="100">
+                </div>
+            </div>
+            <div class="app__bot">
+                <p><img src="$!basePath/app/login/style2/refresh.gif" alt=""></p>
+                <p>正在转向系统首页...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src='$!basePath/app/login/style2/js/jquery.min.js'></script>
+<script>
+    $(document).ready(function () {
+
+        var animating = false,
+            submitPhase1 = 1100,
+            submitPhase2 = 400,
+            logoutPhase1 = 800,
+            $login = $(".login"),
+            $app = $(".app");
+
+        function ripple(elem, e) {
+            $(".ripple").remove();
+            var elTop = elem.offset().top,
+                elLeft = elem.offset().left,
+                x = e.pageX - elLeft,
+                y = e.pageY - elTop;
+            var $ripple = $("<div class='ripple'></div>");
+            $ripple.css({top: y, left: x});
+            elem.append($ripple);
+        };
+
+        function validate(username, password) {
+            if ($.trim(username.val()).length === 0) {
+                alert("请输入用户名");
+                username.focus();
+                return false;
+            }
+            if ($.trim(password.val()).length === 0) {
+                alert("请输入密码");
+                password.focus();
+                return false;
+            }
+            return true;
+        }
+
+        $(document).on("submit", "#loginForm", function (e) {
+            var username = $("#username"), password = $("#password");
+            if (validate(username, password)) {
+                var that = this;
+                ripple($(that), e);
+                $(that).addClass("processing");
+
+                //执行登录
+                $.post("$!basePath/login/do", {username: username.val(), password: password.val()}, function (data) {
+                    if (data.success === true) {
+                        $(that).addClass("success");
+                        setTimeout(function () {
+                            $app.show();
+                            $app.css("top");
+                            $app.addClass("active");
+                        }, submitPhase2 - 70);
+                        setTimeout(function () {
+                            $login.hide();
+                            $login.addClass("inactive");
+                            animating = false;
+                            $(that).removeClass("success processing");
+
+                            setTimeout(function () {
+                                window.location.href = "$!redirect_url";
+                            }, 1000);
+                        }, submitPhase2);
+                    } else {
+                        alert(data.message);
+                        $(that).removeClass("processing");
+                    }
+                });
+            }
+
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

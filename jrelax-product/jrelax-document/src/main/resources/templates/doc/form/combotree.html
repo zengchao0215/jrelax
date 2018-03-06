@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">下拉树</h1>
+                <p class="lead">继承自<code>JSTree</code>，JSTree的所有参数均可配置。需引入 <code>/framework/js/form/combotree.js</code></p>
+
+                <h2>使用示例</h2>
+                <div class="bs-example">
+                    <input class="form-control combotree" type="text" name="id"/>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;input class="form-control combotree" type="text" name="id"/&gt;
+                        //初始化
+                        ns.requireJS("/framework/js/form/combotree.js");
+
+                        ns.ready(function () {
+                            $(".combotree").combotree({
+                                height: 200,
+                                multiple: true,
+                                url: function (node) {
+                                    return node.id === "#" ? "$!basePath/system/unit/tree" : "$!basePath/system/unit/tree/" + node.id
+                                }
+                            });
+                        });
+                    </pre>
+                </figure>
+
+                <h2>参数</h2>
+                <p>参数继承自JQGrid</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>url</td>
+                            <td>string</td>
+                            <td>Grid的数据来源</td>
+                            <td><br></td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td>宽度</td>
+                            <td>auto</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>number</td>
+                            <td>高度</td>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>multiple</td>
+                            <td>bool</td>
+                            <td>是否多选</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>valueField</td>
+                            <td>string</td>
+                            <td>值字段名，需要和columns中的name字段对应</td>
+                            <td>id</td>
+                        </tr>
+                        <tr>
+                            <td>textField</td>
+                            <td>string</td>
+                            <td>显示文本字段，显示到文本框当中</td>
+                            <td>text</td>
+                        </tr>
+                        <tr>
+                            <td>text</td>
+                            <td>string</td>
+                            <td>初始化时显示的文本</td>
+                            <td>undefined</td>
+                        </tr>
+                        <tr>
+                            <td>value</td>
+                            <td>object</td>
+                            <td>初始化时的值</td>
+                            <td>undefined</td>
+                        </tr>
+                        <tr>
+                            <td>onSelected</td>
+                            <td>function</td>
+                            <td>选择后出发</td>
+                            <td><br></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>事件</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>参数</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr>
+                            <td>onSelected</td>
+                            <td>选中的数据，元素</td>
+                            <td>选择后某一行后触发</td>
+                            <td><br></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/form/combotree.js");
+
+    ns.ready(function () {
+        $(".combotree").combotree({
+            height: 200,
+            multiple: true,
+            url: function (node) {
+                return node.id === "#" ? "$!basePath/system/unit/tree" : "$!basePath/system/unit/tree/" + node.id
+            }
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,9 @@
+/*标签编辑*/
+.pillbox { margin-bottom: 10px; padding: 5px; border: 1px solid #e3e6f3; border-radius: 2px; line-height: 1 }
+.pillbox ul { margin: 0; padding: 0 }
+.pillbox li { display: inline-block; margin: 2px; padding: 2px 4px; vertical-align: middle; cursor: pointer; border-radius: 2px; white-space: nowrap; font-size: 12px }
+.pillbox li:after { font-family: themify; speak: none; font-style: normal; font-weight: 400; font-variant: normal; text-transform: none; position: relative; content: " \e646"; font-size: 10px; margin-left: 10px }
+.pillbox li.status-important { background-color: #da3e16 }
+.pillbox li.status-warning { background-color: #daac16 }
+.pillbox li.status-success { background-color: #15db81 }
+.pillbox li.status-info { background-color: #15acdc }

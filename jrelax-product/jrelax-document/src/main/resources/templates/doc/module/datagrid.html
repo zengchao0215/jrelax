@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">数据表格</h1>
+                <p class="lead">基于<code><a href="http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs" target="_blank">jQGrid</a>实现</code>，需引入<code>/framework/js/view/datagrid.js</code></p>
+
+                <h2>基本实例</h2>
+                <p></p>
+                <div class="bs-example">
+                    <table id="exampleTable"></table>
+                    <div id="exampleTablePager"></div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;table id="exampleTable"&gt;&lt;/table&gt;
+                        &lt;div id="exampleTablePager"&gt;&lt;/div&gt;
+                    </pre>
+                    <pre class="brush: javascript">
+                        $("#exampleTable").jqGrid({
+                            url:"$!basePath/doc/grid-data",
+                            colModel : [
+                                {name:"id", label:"序号"},
+                                {name:"name", label:"名称"}
+                            ],
+                            pager: "#exampleTablePager"
+                        });
+                    </pre>
+                    <pre class="brush: java">
+                        //在实际项目开发中，数据应该是查询出来的。 这里只是生成模拟数据
+                        @RequestMapping("/grid-data")
+                        @ResponseBody
+                        public Map&lt;String, Object&gt; gridData(PageBean pageBean) {
+                            pageBean.setTotalCount(1500);
+                            List&lt;Map&lt;String, String&gt;&gt; list = new ArrayList&lt;&gt;();
+                            for (int i = 0; i &lt; 15; i++) {
+                                Map&lt;String, String&gt; map = new HashMap&lt;&gt;();
+                                map.put("id", i + "");
+                                map.put("name", "name-" + i);
+
+                                list.add(map);
+                            }
+                            return DataGridTransforms.JQGRID.transform(list, pageBean);
+                        }
+                    </pre>
+                </figure>
+
+                <h2>参数</h2>
+                <div class="table-responsive">
+                    <h3>表格参数</h3>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                            <th>可更改</th>
+                        </tr>
+                        <tr>
+                            <td>ajaxGridOptions</td>
+                            <td>object</td>
+                            <td>This option allows to set global ajax settings for the grid when requesting data. Note that with this option it is possible to overwrite all current ajax settings in the grid including the <code>error</code>, <code>complete</code> and
+                                <code>beforeSend</code> events.
+                            </td>
+                            <td>empty object</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>ajaxSelectOptions</td>
+                            <td>object</td>
+                            <td>This option allows to set global ajax settings for the select element when the select is obtained via <code>dataUrl</code> option in <code>editoptions</code> or <code>searchoptions</code> objects</td>
+                            <td>empty object</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>altclass</td>
+                            <td>string</td>
+                            <td>The class that is used for applying different styles to alternate (zebra) rows in the grid. You can construct your own class and replace this value. This option is valid only if the <code>altRows</code> option is set to true</td>
+                            <td>ui-priority-secondary</td>
+                            <td>Yes. Requires reload</td>
+                        </tr>
+                        <tr>
+                            <td>altRows</td>
+                            <td>boolean</td>
+                            <td>Set a zebra-striped grid (alternate rows have different styles)</td>
+                            <td> false</td>
+                            <td> Yes. After reload</td>
+                        </tr>
+                        <tr>
+                            <td>autoencode</td>
+                            <td>boolean</td>
+                            <td>When set to true encodes (html encode) the incoming (from server) and posted data (from editing modules). For example <code>&lt;</code> will be converted to <code>&amp;lt;</code>.</td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>autowidth</td>
+                            <td>boolean</td>
+                            <td> When set to true, the grid width is recalculated automatically to the width of the parent element. This is done only initially when the grid is created. In order to resize the grid when the parent element changes width you should apply custom code and
+                                use the <code>setGridWidth</code> method for this purpose
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>caption</td>
+                            <td>string</td>
+                            <td>Defines the caption for the grid. This caption appears in the caption layer, which is above the header layer (see <a href="/jqgridwiki/doku.php?id=wiki:how_it_works" class="wikilink1" title="wiki:how_it_works">How It Works</a>). If the string is empty the
+                                caption does not appear.
+                            </td>
+                            <td>empty string</td>
+                            <td> No.Method avail.</td>
+                        </tr>
+                        <tr>
+                            <td>cellLayout</td>
+                            <td>integer</td>
+                            <td>This option determines the padding + border width of the cell. Usually this should not be changed, but if custom changes to the <code>td</code> element are made in the grid css file, this will need to be changed. The initial value of 5 means paddingLef(2)
+                                + paddingRight (2) + borderLeft (1) = 5
+                            </td>
+                            <td>5</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>cellEdit</td>
+                            <td>boolean</td>
+                            <td>Enables (disables) cell editing. See <a href="/jqgridwiki/doku.php?id=wiki:cell_editing" class="wikilink1" title="wiki:cell_editing">Cell Editing</a> for more details</td>
+                            <td>false</td>
+                            <td> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>cellsubmit</td>
+                            <td>string</td>
+                            <td>Determines where the contents of the cell are saved. Possible values are <code>remote</code> and <code>clientArray</code>. See <a href="/jqgridwiki/doku.php?id=wiki:cell_editing" class="wikilink1" title="wiki:cell_editing">Cell Editing</a> for more
+                                details.
+                            </td>
+                            <td>'remote'</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>cellurl</td>
+                            <td>string</td>
+                            <td>the url where the cell is to be saved. See <a href="/jqgridwiki/doku.php?id=wiki:cell_editing" class="wikilink1" title="wiki:cell_editing">Cell Editing</a> for more details</td>
+                            <td>null</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>cmTemplate</td>
+                            <td> object</td>
+                            <td> Defines a set of properties which override the default values in <code>colModel</code>. For example if you want to make all columns not sortable, then only one propery here can be specified instead of specifying it in all columns in <code>colModel</code>
+                            </td>
+                            <td> null</td>
+                            <td> No</td>
+                        </tr>
+                        <tr>
+                            <td>colModel</td>
+                            <td>array</td>
+                            <td>Array which describes the parameters of the columns.This is the most important part of the grid. For a full description of all valid values see <a href="/jqgridwiki/doku.php?id=wiki:colmodel_options" class="wikilink1" title="wiki:colmodel_options">
+                                colModel API</a>.
+                            </td>
+                            <td>empty array</td>
+                            <td> No</td>
+                        </tr>
+                        <tr>
+                            <td>colNames</td>
+                            <td>array</td>
+                            <td>An array in which we place the names of the columns. This is the text that appears in the head of the grid (header layer). The names are separated with commas. Note that the number of elements in this array should be equal of the number elements in the
+                                <code>colModel</code> array.
+                            </td>
+                            <td>empty array[]</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>data</td>
+                            <td>array</td>
+                            <td>An array that stores the local data passed to the grid. You can directly point to this variable in case you want to load an array data. It can replace the <code>addRowData</code> method which is slow on relative big data</td>
+                            <td> empty array</td>
+                            <td> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>datastr</td>
+                            <td>string</td>
+                            <td>The string of data when datatype parameter is set to <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data#xml_string" class="wikilink1" title="wiki:retrieving_data"> xmlstring</a> or <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data#json_string"
+                                                                                                                                                                                                                           class="wikilink1" title="wiki:retrieving_data"> jsonstring</a></td>
+                            <td>null</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>datatype</td>
+                            <td>string</td>
+                            <td>Defines in what format to expect the data that fills the grid. Valid options are <code>xml</code> (we expect data in xml format), <code>xmlstring</code> (we expect xml data as string), <code>json</code> (we expect data in JSON format),
+                                <code>jsonstring</code> (we expect JSON data as a string), <code>local</code> (we expect data defined at client side (array data)), <code>javascript</code> (we expect javascript as data), <code>function</code> (custom defined function for retrieving data), or <code>clientSide</code>
+                                to manually load data via the <code>data</code> array. See <a href="/jqgridwiki/doku.php?id=wiki:colmodel_options" class="wikilink1" title="wiki:colmodel_options"> colModel API</a> and <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data" class="wikilink1"
+                                                                                                                                                                                                                            title="wiki:retrieving_data"> Retrieving Data</a></td>
+                            <td>xml</td>
+                            <td> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>deepempty</td>
+                            <td>boolean</td>
+                            <td>This option should be set to <code>true</code> if an event or a plugin is attached to the table cell. The option uses jQuery empty for the the row and all its children elements. This of course has speed overhead, but prevents memory leaks. This option
+                                should be set to <code>true</code> if a sortable rows and/or columns are activated.
+                            </td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>deselectAfterSort</td>
+                            <td>boolean</td>
+                            <td>Applicable only when we use <code>datatype : local</code>. Deselects currently selected row(s) when a sort is applied.</td>
+                            <td>true</td>
+                            <td> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>direction</td>
+                            <td>string</td>
+                            <td>Determines the direction of text in the grid. The default is <code>ltr</code> (Left To Right). When set to <code>rtl</code> (Right To Left) the grid automatically changes the direction of the text. It is important to note that in one page we can have two
+                                (or more) grids where the one can have direction <code>ltr</code> while the other can have direction <code>rtl</code>. This option works only in Firefox 3.x versions and Internet Explorer versions &gt;=6. Currently Safari, Google Chrome and Opera do not completely
+                                support changing the direction to <code>rtl</code>. The most common problem in Firefox is that the default settings of the browser do not support <code>rtl</code>. In order change this see this <a href="/jqgridwiki/doku.php?id=wiki:howto_grid_base" class="wikilink1"
+                                                                                                                                                                                                                                     title="wiki:howto_grid_base">HOW TO</a> section in this chapter .
+                            </td>
+                            <td>ltr</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>editurl</td>
+                            <td>string</td>
+                            <td>Defines the url for inline and form editing. May be set to <code>clientArray</code> to manually post data to server, see <a href="/jqgridwiki/doku.php?id=wiki:inline_editing_s_clientarray" class="wikilink2" title="wiki:inline_editing_s_clientarray"
+                                                                                                                                                            rel="nofollow">Inline Editing</a>.
+                            </td>
+                            <td>null</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>emptyrecords</td>
+                            <td> string</td>
+                            <td> The string to display when the returned (or the current) number of records in the grid is zero. This option is valid only if <code>viewrecords</code> option is set to <code>true</code>.</td>
+                            <td>see lang file</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>ExpandColClick</td>
+                            <td>boolean</td>
+                            <td> When <code>true</code>, the tree grid (see <code>treeGrid</code>) is expanded and/or collapsed when we click anywhere on the text in the expanded column. In this case it is not necessary to click exactly on the icon.</td>
+                            <td>true</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>ExpandColumn</td>
+                            <td>string</td>
+                            <td> Indicates which column (name from <code>colModel</code>) should be used to expand the tree grid. If not set the first one is used. Valid only when the <code>treeGrid</code> option is set to <code>true</code>.</td>
+                            <td>null</td>
+                            <td> No</td>
+                        </tr>
+                        <tr>
+                            <td>footerrow</td>
+                            <td>boolean</td>
+                            <td>If set to <code>true</code> this will place a footer table with one row below the gird records and above the pager. The number of columns equal those specified in <code>colModel</code></td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>forceFit</td>
+                            <td>boolean</td>
+                            <td>If set to <code>true</code>, and a column's width is changed, the adjacent column (to the right) will resize so that the overall grid width is maintained (e.g., reducing the width of column 2 by 30px will increase the size of column 3 by 30px). In this
+                                case there is no horizontal scrollbar. <strong>Note:</strong> This option is not compatible with <code>shrinkToFit</code> option - i.e if <code>shrinkToFit</code> is set to false, <code>forceFit</code> is ignored.
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>gridstate</td>
+                            <td>string</td>
+                            <td> Determines the current state of the grid (i.e. when used with <code>hiddengrid</code>, <code>hidegrid</code> and <code>caption</code> options). Can have either of two states: <code>visible</code> or <code>hidden</code>.</td>
+                            <td>visible</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>gridview</td>
+                            <td>boolean</td>
+                            <td> In the previous versions of jqGrid including 3.4.X, reading a relatively large data set (number of rows &gt;= 100 ) caused speed problems. The reason for this was that as every cell was inserted into the grid we applied about 5 to 6 jQuery calls to it.
+                                Now this problem is resolved; we now insert the entry row at once with a jQuery append. The result is impressive - about 3 to 5 times faster. What will be the result if we insert all the data at once? Yes, this can be done with a help of <code>gridview</code> option
+                                (set it to <code>true</code>). The result is a grid that is 5 to 10 times faster. Of course, when this option is set to <code>true</code> we have some limitations. If set to <code>true</code> we can not use <code>treeGrid</code>, <code>subGrid</code>, or the <code>afterInsertRow</code>
+                                event. If you do not use these three options in the grid you can set this option to <code>true</code> and enjoy the speed.
+                            </td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>grouping</td>
+                            <td>boolean</td>
+                            <td> Enables grouping in grid. Please refer to the <a href="/jqgridwiki/doku.php?id=wiki:grouping" class="wikilink1" title="wiki:grouping">Grouping</a> page.</td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>headertitles</td>
+                            <td>boolean</td>
+                            <td> If the option is set to <code>true</code> the title attribute is added to the column headers.</td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>mixed</td>
+                            <td> The height of the grid. Can be set as number (in this case we mean pixels) or as percentage (only 100% is acceped) or value of <code>auto</code> is acceptable.</td>
+                            <td>150</td>
+                            <td>No.Method avail.</td>
+                        </tr>
+                        <tr>
+                            <td>hiddengrid</td>
+                            <td>boolean</td>
+                            <td> If set to <code>true</code> the grid is initially is hidden. The data is not loaded (no request is sent) and only the caption layer is shown. When the show/hide button is clicked for the first time to show grid, the request is sent to the server, the
+                                data is loaded, and grid is shown. From this point we have a regular grid. This option has effect only if the <code>caption</code> property is not empty and the <code>hidegrid</code> property (see below) is set to <code>true</code>.
+                            </td>
+                            <td>false</td>
+                            <td> No</td>
+                        </tr>
+                        <tr>
+                            <td>hidegrid</td>
+                            <td>boolean</td>
+                            <td> Enables or disables the show/hide grid button, which appears on the right side of the caption layer (see <a href="/jqgridwiki/doku.php?id=wiki:how_it_works" class="wikilink1" title="wiki:how_it_works"> How It Works</a>). Takes effect only if the <code>caption</code>
+                                property is not an empty string.
+                            </td>
+                            <td>true</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>hoverrows</td>
+                            <td>boolean</td>
+                            <td> When set to <code>false</code> the effect of mouse hovering over the grid data rows is disabled.</td>
+                            <td>true</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>idPrefix</td>
+                            <td>string</td>
+                            <td>When set, this string is added as prefix to the id of the row when it is built.</td>
+                            <td>empty</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>ignoreCase</td>
+                            <td>boolean</td>
+                            <td>By default the local searching is case-sensitive. To make the local search and sorting not case-insensitive set this options to <code>true</code></td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>inlineData</td>
+                            <td>empty object</td>
+                            <td>an array used to add content to the data posted to the server when we are in inline editing.</td>
+                            <td>{}</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>jsonReader</td>
+                            <td>array</td>
+                            <td> An array which describes the structure of the expected json data. For a full description and default setting, see <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data#json_data" class="wikilink1" title="wiki:retrieving_data"> Retrieving Data JSON
+                                Data</a></td>
+                            <td></td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>lastpage</td>
+                            <td>integer</td>
+                            <td> Gives the total number of pages returned from the request. If you use a function as datatype, your_grid.setGridParam({lastpage: your_number}) can be used to specify the max pages in the pager.</td>
+                            <td>0</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>lastsort</td>
+                            <td>integer</td>
+                            <td> Readonly property. Gives the index of last sorted column beginning from 0.</td>
+                            <td>0</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>loadonce</td>
+                            <td>boolean</td>
+                            <td>If this flag is set to <code>true</code>, the grid loads the data from the server only once (using the appropriate datatype). After the first request, the datatype parameter is automatically changed to <code>local</code> and all further manipulations are
+                                done on the client side. The functions of the pager (if present) are disabled.
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>loadtext</td>
+                            <td>string</td>
+                            <td> The text which appears when requesting and sorting data. This parameter is located in language file.</td>
+                            <td>Loading…</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>loadui</td>
+                            <td>string</td>
+                            <td> This option controls what to do when an ajax operation is in progress.<br>
+                                <strong>disable</strong> - disables the jqGrid progress indicator. This way you can use your own indicator.<br>
+                                <strong>enable</strong> (default) - shows the text set in the <code>loadtext</code> property (default value is <code>Loading…</code>) in the center of the grid. <br>
+                                <strong>block</strong> - displays the text set in the <code>loadtext</code> property and blocks all actions in the grid until the ajax request completes. Note that this disables paging, sorting and all actions on toolbar, if any.
+                            </td>
+                            <td>enable</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>mtype</td>
+                            <td>string</td>
+                            <td> Defines the type of request to make (“POST” or “GET”)</td>
+                            <td>GET</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>multikey</td>
+                            <td>string</td>
+                            <td>This parameter makes sense only when the <code>multiselect</code> option is set to <code>true</code>. Defines the key which should be pressed when we make multiselection. The possible values are: <code>shiftKey</code> - the user should press Shift Key,
+                                <code>altKey</code> - the user should press Alt Key, and <code>ctrlKey</code> - the user should press Ctrl Key.
+                            </td>
+                            <td>empty string</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>multiboxonly</td>
+                            <td>boolean</td>
+                            <td> This option works only when the <code>multiselect</code> option is set to <code>true</code>. When <code>multiselect</code> is set to <code>true</code>, clicking anywhere on a row selects that row; when <code>multiboxonly</code> is also set to
+                                <code>true</code>, the multiselection is done only when the checkbox is clicked (Yahoo style). Clicking in any other row (suppose the checkbox is not clicked) deselects all rows and selects the current row.
+                            </td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>multiselect</td>
+                            <td>boolean</td>
+                            <td> If this flag is set to <code>true</code> a multi selection of rows is enabled. A new column at left side containing checkboxes is added. Can be used with any datatype option.</td>
+                            <td>false</td>
+                            <td> No. see HOWTO</td>
+                        </tr>
+                        <tr>
+                            <td>multiselectWidth</td>
+                            <td>integer</td>
+                            <td> Determines the width of the checkbox column created when the <code>multiselect</code> option is enabled.</td>
+                            <td>20</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>multiSort</td>
+                            <td>boolean</td>
+                            <td>If set to true enables the multisorting. The options work if the datatype is local. In case when the data is obtained from the server the <em>sidx</em> parameter contain the order clause. It is a comma separated string in format field1 asc, field2 desc …,
+                                fieldN. Note that the last field does not not have asc or desc. It should be obtained from sord parameter <br>
+                                When the option is true the behavior is a s follow. The first click of the header field sort the field depending on the firstsortoption parameter in colModel or sortorder grid parameter. The next click sort it in reverse order. The third click removes the sorting from
+                                this field
+                            </td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>page</td>
+                            <td>integer</td>
+                            <td> Set the initial page number when we make the request.This parameter is passed to the url for use by the server routine retrieving the data.</td>
+                            <td>1</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>pager</td>
+                            <td>mixed</td>
+                            <td> Defines that we want to use a pager bar to navigate through the records. This must be a valid <acronym title="HyperText Markup Language">HTML</acronym> element; in our example we gave the div the id of “pager”, but any name is acceptable. Note that the
+                                navigation layer (the “pager” div) can be positioned anywhere you want, determined by your <acronym title="HyperText Markup Language">HTML</acronym>; in our example we specified that the pager will appear after the body layer. The valid settings can be (in the context
+                                of our example) <code>pager</code>, <code>#pager</code>, <code>jQuery('#pager')</code>. I recommend to use the second one - <code>#pager</code>. See <a href="/jqgridwiki/doku.php?id=wiki:pager" class="wikilink1" title="wiki:pager">Pager</a></td>
+                            <td>empty string.
+                                <del>Currently only one pagebar is possible.</del>
+                            </td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>pagerpos</td>
+                            <td>string</td>
+                            <td> Determines the position of the pager in the grid. By default the pager element when created is divided in 3 parts (one part for pager, one part for navigator buttons and one part for record information).</td>
+                            <td>center</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>pgbuttons</td>
+                            <td>boolean</td>
+                            <td> Determines if the Pager buttons should be shown if pager is available. Also valid only if <code>pager</code> is set correctly. The buttons are placed in the pager bar.</td>
+                            <td>true</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>pginput</td>
+                            <td>boolean</td>
+                            <td> Determines if the input box, where the user can change the number of the requested page, should be available. The input box appears in the pager bar.</td>
+                            <td>true</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>pgtext</td>
+                            <td>string</td>
+                            <td>Show information about current page status. The first value is the current loaded page. The second value is the total number of pages.</td>
+                            <td>See lang file</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>prmNames</td>
+                            <td>array</td>
+                            <td> The default value of this property is: <br>
+                                <code>{page:“page”,rows:“rows”, sort:“sidx”, order:“sord”, search:“_search”, nd:“nd”, id:“id”, oper:“oper”, editoper:“edit”, addoper:“add”, deloper:“del”, subgridid:“id”, npage:null, totalrows:“totalrows”}</code> <br>
+                                This customizes names of the fields sent to the server on a POST request. For example, with this setting, you can change the sort order element from <code>sidx</code> to <code>mysort</code> by setting <code>prmNames: {sort: “mysort”}</code>. The string that will be
+                                POST-ed to the server will then be <code>myurl.php?page=1&amp;rows=10&amp;mysort=myindex&amp;sord=asc</code> rather than <code>myurl.php?page=1&amp;rows=10&amp;sidx=myindex&amp;sord=asc</code> <br>
+                                So the value of the column on which to sort upon can be obtained by looking at <code>$POST['mysort']</code> in <acronym title="Hypertext Preprocessor">PHP</acronym>. When some parameter is set to null, it will be not sent to the server. For example if we set <code>prmNames:
+                                    {nd:null}</code> the <code>nd</code> parameter will not be sent to the server. For <code>npage</code> option see the <code>scroll</code> option. <br>
+                                These options have the following meaning and default values: <br>
+                                <code>page</code>: the requested page (default value <code>page</code>) <br>
+                                <code>rows</code>: the number of rows requested (default value <code>rows</code>) <br>
+                                <code>sort</code>: the sorting column (default value <code>sidx</code>) <br>
+                                <code>order</code>: the sort order (default value <code>sord</code>) <br>
+                                <code>search</code>: the search indicator (default value <code>_search</code>) <br>
+                                <code>nd</code>: the time passed to the request (for <acronym title="Internet Explorer">IE</acronym> browsers not to cache the request) (default value <code>nd</code>) <br>
+                                <code>id</code>: the name of the id when POST-ing data in editing modules (default value <code>id</code>) <br>
+                                <code>oper</code>: the operation parameter (default value <code>oper</code>) <br>
+                                <code>editoper</code>: the name of operation when the data is POST-ed in edit mode (default value <code>edit</code>) <br>
+                                <code>addoper</code>: the name of operation when the data is posted in add mode (default value <code>add</code>) <br>
+                                <code>deloper</code>: the name of operation when the data is posted in delete mode (default value <code>del</code>) <br>
+                                <code>totalrows</code>: the number of the total rows to be obtained from server - see <code>rowTotal</code> (default value <code>totalrows</code>) <br>
+                                <code>subgridid</code>: the name passed when we click to load data in the subgrid (default value <code>id</code>)
+                            </td>
+                            <td> none</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>postData</td>
+                            <td>array</td>
+                            <td> This array is appended directly to the url. This is an associative array and can be used this way: <code>{name1:value1…}</code>. See <acronym title="Application Programming Interface">API</acronym> methods for manipulation.</td>
+                            <td>empty array</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>reccount</td>
+                            <td>integer</td>
+                            <td> Readonly property. Determines the exact number of rows in the grid. Do not confuse this with <code>records</code> parameter. Although in many cases they may be equal, there are cases where they are not. For example, if you define <code>rowNum</code> to
+                                be 15, but the request to the server returns 20 records, the <code>records</code> parameter will be 20, but the <code>reccount</code> parameter will be 15 (the grid you will have 15 records and not 20).
+                            </td>
+                            <td>0</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>recordpos</td>
+                            <td>string</td>
+                            <td> Determines the position of the record information in the pager. Can be <code>left</code>, <code>center</code>, <code>right</code>.</td>
+                            <td>right</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>records</td>
+                            <td>integer</td>
+                            <td> Readonly property. Gives the number of records returned as a result of a query to the server.</td>
+                            <td>none</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>recordtext</td>
+                            <td>string</td>
+                            <td> Text that can be shown in the pager. Also this option is valid if <code>viewrecords</code> option is set to <code>true</code>. This text appears only if the total number of records is greater then zero. In order to show or hide some information the items
+                                in {} mean the following: <br>
+                                {0} - the start position of the records depending on page number and number of requested records <br>
+                                {1} - the end position <br>
+                                {2} - total records returned from the server.
+                            </td>
+                            <td> see lang file</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>resizeclass</td>
+                            <td>string</td>
+                            <td> Assigns a class to columns that are resizable so that we can show a resize handle only for ones that are resizable.</td>
+                            <td>empty string</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>rowList</td>
+                            <td>array[]</td>
+                            <td> An array to construct a select box element in the pager in which we can change the number of the visible rows. When changed during the execution, this parameter replaces the <code>rowNum</code> parameter that is passed to the url. If the array is empty,
+                                this element does not appear in the pager. Typically you can set this like <code>[10,20,30]</code>. If the <code>rowNum</code> parameter is set to 30 then the selected value in the select box is 30.
+                            </td>
+                            <td>empty arrray</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>rownumbers</td>
+                            <td>boolean</td>
+                            <td> If this option is set to <code>true</code>, a new column at left of the grid is added. The purpose of this column is to count the number of available rows, beginning from 1. In this case <code>colModel</code> is extended automatically with new element
+                                with the name <code>rn</code>. <strong>Note:</strong> Do not to use the name <code>rn</code> in the <code>colModel</code>.
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>rowNum</td>
+                            <td>integer</td>
+                            <td> Sets how many records we want to view in the grid. This parameter is passed to the url for use by the server routine retrieving the data. Note that if you set this parameter to 10 (i.e. retrieve 10 records) and your server return 15 then only 10 records
+                                will be loaded.
+                                <del>Set this parameter to <strong>-1</strong> (unlimited) to disable this checking.</del>
+                            </td>
+                            <td>20</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>rowTotal</td>
+                            <td> integer</td>
+                            <td> When set this parameter can instruct the server to load the total number of rows needed to work on. Note that <code>rowNum</code> determines the total records displayed in the grid, while <code>rowTotal</code> determines the total number of rows on which
+                                we can operate. When this parameter is set, we send an additional parameter to the server named <code>totalrows</code>. You can check for this parameter, and if it is available you can replace the <code>rows</code> parameter with this one. Mostly this parameter can be
+                                combined with <code>loadonce</code> parameter set to <code>true</code>.
+                            </td>
+                            <td>null</td>
+                            <td> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>rownumWidth</td>
+                            <td>integer</td>
+                            <td> Determines the width of the row number column if <code>rownumbers</code> option is set to <code>true</code>.</td>
+                            <td>25</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>savedRow</td>
+                            <td>array</td>
+                            <td> This is a readonly property and is used in inline and cell editing modules to store the data, before editing the row or cell. See <a href="/jqgridwiki/doku.php?id=wiki:cell_editing" class="wikilink1" title="wiki:cell_editing">Cell Editing</a> and <a
+                                    href="/jqgridwiki/doku.php?id=wiki:inline_editing" class="wikilink1" title="wiki:inline_editing">Inline Editing</a>.
+                            </td>
+                            <td>empty array</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <del>searchdata</del>
+                            </td>
+                            <td>
+                                <del>array {}</del>
+                            </td>
+                            <td>
+                                <del>This property contain the searched data in pair name:value.</del>
+                            </td>
+                            <td>
+                                <del>empty array{}</del>
+                            </td>
+                            <td>
+                                <del>Yes</del>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>scroll</td>
+                            <td>boolean or <br>
+                                integer
+                            </td>
+                            <td>Creates dynamic scrolling grids. When enabled, the pager elements are disabled and we can use the vertical scrollbar to load data. When set to <code>true</code> the grid will always hold all the items from the start through to the latest point ever
+                                visited. <br>
+                                When <code>scroll</code> is set to an integer value (example 1), the grid will just hold the visible lines. This allow us to load the data in portions whitout caring about memory leaks. In addition to this we have an optional extension to the server protocol: <code>npage</code>
+                                (see <code>prmNames</code> array). If you set the npage option in <code>prmNames</code>, then the grid will sometimes request more than one page at a time; if not, it will just perform multiple GET requests. <br>
+                                Note that this option is not compatible when a grid parameter <strong>height</strong> is set to <code>auto</code> or <code>100%</code>.
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>scrollOffset</td>
+                            <td>integer</td>
+                            <td> Determines the width of the vertical scrollbar. Since different browsers interpret this width differently (and it is difficult to calculate it in all browsers) this can be changed.</td>
+                            <td>18</td>
+                            <td>No.Method avail.</td>
+                        </tr>
+                        <tr>
+                            <td>scrollTimeout</td>
+                            <td>integer <br>
+                                (milliseconds)
+                            </td>
+                            <td> This controls the timeout handler when <code>scroll</code> is set to 1.</td>
+                            <td>200</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>scrollrows</td>
+                            <td>boolean</td>
+                            <td> When enabled, selecting a row with <code>setSelection</code> scrolls the grid so that the selected row is visible. This is especially useful when we have a verticall scrolling grid and we use form editing with navigation buttons (next or previous row).
+                                On navigating to a hidden row, the grid scrolls so that the selected row becomes visible.
+                            </td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>selarrrow</td>
+                            <td>array</td>
+                            <td> This options is readonly. Gives the currently selected rows when <code>multiselect</code> is set to <code>true</code>. This is a one-dimensional array and the values in the array correspond to the selected id's in the grid.</td>
+                            <td>empty array []</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>selrow</td>
+                            <td>string</td>
+                            <td> This option is readonly. It contains the id of the last selected row. If you sort or use paging, this options is set to null.</td>
+                            <td>null</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>shrinkToFit</td>
+                            <td>boolean or <br>
+                                integer
+                            </td>
+                            <td> This option, if set, defines how the the width of the columns of the grid should be re-calculated, taking into consideration the width of the grid. If this value is <code>true</code>, and the width of the columns is also set, then every column is scaled
+                                in proportion to its width. For example, if we define two columns with widths 80 and 120 pixels, but want the grid to have a width of 300 pixels, then the columns will stretch to fit the entire grid, and the extra width assigned to them will depend on the width of the
+                                columns themselves and the extra width available. The re-calculation is done as follows: the first column gets the width (300(new width)/200(sum of all widths))*80(first column width) = 120 pixels, and the second column gets the width (300(new width)/200(sum of all
+                                widths))*120(second column width) = 180 pixels. Now the widths of the columns sum up to 300 pixels, which is the width of the grid. If the value is false and the value in <code>width</code> option is set, then no re-sizing happens whatsoever. So in this example, if
+                                <code>shrinkToFit</code> is set to false, column one will have a width of 80 pixels, column two will have a width of 120 pixels and the grid will retain the width of 300 pixels. If the value of shrinkToFit is an integer, the width is calculated according to it. <img
+                                        src="/jqgridwiki/lib/images/smileys/fixme.gif" class="middle" alt="FIXME"> - The effect of using an integer can be elaborated.
+                            </td>
+                            <td>true</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>sortable</td>
+                            <td>boolean</td>
+                            <td> When set to <code>true</code>, this option allows reordering columns by dragging and dropping them with the mouse. Since this option uses the jQuery UI sortable widget, be sure to load this widget and its related files in the <acronym
+                                    title="HyperText Markup Language">HTML</acronym> head tag of the page. Also, be sure to select the jQuery UI Addons option under the jQuery UI Addon Methods section while downloading jqGrid if you want to use this facility. <strong>Note:</strong> The <code>colModel</code>
+                                object also has a property called <code>sortable</code>, which specifies if the grid data can be sorted on a particular column or not.
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>sortname</td>
+                            <td>string</td>
+                            <td> The column according to which the data is to be sorted when it is initially loaded from the server (note that you will have to use datatypes xml or json to load remote data). This parameter is appended to the url. If this value is set and the index
+                                (name) matches the name from colModel, then an icon indicating that the grid is sorted according to this column is added to the column header. This icon also indicates the sorting order - descending or ascending (see the parameter <code>sortorder</code>). Also see
+                                <code>prmNames</code>.
+                            </td>
+                            <td>empty string</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>sortorder</td>
+                            <td>string</td>
+                            <td>The initial sorting order (ascending or descending) when we fetch data from the server using datatypes xml or json. This parameter is appended to the url - see <code>prnNames</code>. The two allowed values are - <code>asc</code> or <code>desc</code>.</td>
+                            <td>asc</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>subGrid</td>
+                            <td>boolean</td>
+                            <td> If set to <code>true</code> this enables using a sub-grid. If the <code>subGrid</code> option is enabled, an additional column at left side is added to the basic grid. This column contains a 'plus' image which indicates that the user can click on it to
+                                expand the row. By default all rows are collapsed. See <a href="/jqgridwiki/doku.php?id=wiki:subgrid" class="wikilink1" title="wiki:subgrid">Subgrid</a></td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>subGridOptions</td>
+                            <td> object</td>
+                            <td> A set of additional options for the subgrid. For more information and default values see <a href="/jqgridwiki/doku.php?id=wiki:subgrid" class="wikilink1" title="wiki:subgrid">Subgrid</a>.</td>
+                            <td> see <a href="/jqgridwiki/doku.php?id=wiki:subgrid" class="wikilink1" title="wiki:subgrid">Subgrid</a></td>
+                            <td> Yes</td>
+                        </tr>
+                        <tr>
+                            <td>subGridModel</td>
+                            <td>array-[]</td>
+                            <td>This property, which describes the model of the subgrid, has an effect only if the subGrid property is set to <code>true</code>. It is an array in which we describe the column model for the subgrid data. For more information see <a
+                                    href="/jqgridwiki/doku.php?id=wiki:subgrid" class="wikilink1" title="wiki:subgrid">Subgrid</a>.
+                            </td>
+                            <td>empty array</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>subGridType</td>
+                            <td>mixed</td>
+                            <td> This option allows loading a subgrid as a service. If not set, the <code>datatype</code> parameter of the parent grid is used.</td>
+                            <td>null</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>subGridUrl</td>
+                            <td>string</td>
+                            <td> This option has effect only if the <code>subGrid</code> option is set to <code>true</code>. This option points to the url from which we get the data for the subgrid. jqGrid adds the id of the row to this url as parameter. If there is a need to pass
+                                additional parameters, use the <code>params</code> option in <code>subGridModel</code>. See <a href="/jqgridwiki/doku.php?id=wiki:subgrid" class="wikilink1" title="wiki:subgrid">Subgrid</a></td>
+                            <td>empty string</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>subGridWidth</td>
+                            <td>integer</td>
+                            <td> Defines the width of the sub-grid column if <code>subgrid</code> is enabled.</td>
+                            <td>20</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>toolbar</td>
+                            <td>array</td>
+                            <td> This option defines the toolbar of the grid. This is an array with two elements in which the first element's value enables the toolbar and the second defines the position relative to the body layer (table data). Possible values are <code>top</code>,
+                                <code>bottom</code>, and <code>both</code>. When we set it like <code>toolbar: [true,”both”]</code> two toolbars are created – one on the top of table data and the other at the bottom of the table data. When we have two toolbars, then we create two elements (div). The
+                                id of the top bar is constructed by concatenating the string “t_” and the id of the grid, like <code>“t_” + id_of_the_grid</code> and the id of the bottom toolbar is constructed by concatenating the string “tb_” and the id of the grid, like <code>“tb_” + id_of_the
+                                    grid</code>. In the case where only one toolbar is created, we have the id as <code>“t_” + id_of_the_grid</code>, independent of where this toolbar is located (top or bottom)
+                            </td>
+                            <td>[false, '']</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>toppager</td>
+                            <td>boolean</td>
+                            <td>When enabled this option places a pager element at top of the grid, below the caption (if available). If another pager is defined, both can coexist and are kept in sync. The id of the newly created pager is the combination <code>grid_id +
+                                “_toppager”</code>.
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>totaltime</td>
+                            <td>integer</td>
+                            <td> Readonly parameter. It gives the loading time of the records - currently available only when we load xml or json data. The measurement begins when the request is complete and ends when the last row is added.</td>
+                            <td>0</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>treedatatype</td>
+                            <td>mixed</td>
+                            <td> Gives the initial datatype (see <code>datatype</code> option). Usually this should not be changed. During the reading process this option is equal to the datatype option.</td>
+                            <td>null</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>treeGrid</td>
+                            <td>boolean</td>
+                            <td> Enables (disables) the tree grid format. For more details see <a href="/jqgridwiki/doku.php?id=wiki:treegrid" class="wikilink1" title="wiki:treegrid"> Tree Grid</a></td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>treeGridModel</td>
+                            <td>string</td>
+                            <td> Deteremines the method used for the <code>treeGrid</code>. The value can be either <code>nested</code> or <code>adjacency</code>. See <a href="/jqgridwiki/doku.php?id=wiki:treegrid" class="wikilink1" title="wiki:treegrid">Tree Grid</a></td>
+                            <td>nested</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>treeIcons</td>
+                            <td>array</td>
+                            <td> This array sets the icons used in the tree grid. The icons should be a valid names from UI theme roller images. The default values are: <code>{plus:'ui-icon-triangle-1-e',minus:'ui-icon-triangle-1-s',leaf:'ui-icon-radio-off'}</code></td>
+                            <td></td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>treeReader</td>
+                            <td>array</td>
+                            <td> Extends the <code>colModel</code> defined in the basic grid. The fields described here are appended to end of the <code>colModel</code> array and are hidden. This means that the data returned from the server should have values for these fields. For a
+                                full description of all valid values see <a href="/jqgridwiki/doku.php?id=wiki:treegrid" class="wikilink1" title="wiki:treegrid"> Tree Grid</a>.
+                            </td>
+                            <td></td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>tree_root_level</td>
+                            <td>numeric</td>
+                            <td> Defines the level where the root element begins when treeGrid is enabled.</td>
+                            <td>0</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>url</td>
+                            <td>string</td>
+                            <td> The url of the file that returns the data needed to populate the grid. May be set to <code>clientArray</code> to manualy post data to server; see <a href="/jqgridwiki/doku.php?id=wiki:inline_editing_s_clientarray" class="wikilink2"
+                                                                                                                                                                                      title="wiki:inline_editing_s_clientarray" rel="nofollow">Inline Editing</a>.
+                            </td>
+                            <td>null</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>userData</td>
+                            <td>array</td>
+                            <td> This array contains custom information from the request. Can be used at any time.</td>
+                            <td>empty array</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>userDataOnFooter</td>
+                            <td>boolean</td>
+                            <td> When set to <code>true</code> we directly place the user data array <code>userData</code> in the footer. The rules are as follows: If the <code>userData</code> array contains a name which matches any name defined in <code>colModel</code>, then the value
+                                is placed in that column. If there are no such values nothing is placed. Note that if this option is used we use the current formatter options (if available) for that column.
+                            </td>
+                            <td>false</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>viewrecords</td>
+                            <td>boolean</td>
+                            <td> If <code>true</code>, jqGrid displays the beginning and ending record number in the grid, out of the total number of records in the query. This information is shown in the pager bar (bottom right by default)in this format: “View X to Y out of Z”. If this
+                                value is <code>true</code>, there are other parameters that can be adjusted, including <code>emptyrecords</code> and <code>recordtext</code>.
+                            </td>
+                            <td>false</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>viewsortcols</td>
+                            <td>array</td>
+                            <td> The purpose of this parameter is to define a different look and behavior for the sorting icons (up/down arrows) that appear in the column headers. This parameter is an array with the following default options <code>viewsortcols :
+                                [false,'vertical',true]</code>. The first parameter determines if sorting icons should be visible on all the columns that have the sortable property set to <code>true</code>. Setting this value to <code>true</code> could be useful if you want to indicate to the user
+                                that (s)he can sort on that particular column. The default of false sets the icon to be visible only on the column on which that data has been last sorted. Setting this parameter to <code>true</code> causes all icons in all sortable columns to be visible.<br>
+                                The second parameter determines how icons should be placed - <code>vertical</code> means that the sorting arrows are one under the other. 'horizontal' means that the arrows should be next to one another. <br>
+                                The third parameter determines the click functionality. If set to <code>true</code> the data is sorted if the user clicks anywhere in the column's header, not only the icons. If set to false the data is sorted only when the sorting icons in the headers are clicked.
+                                <br>
+                                <strong>Important:</strong> If you are setting the third element to false, make sure that you set the first element to <code>true</code>; if you don't, the icons will not be visible and the user will not know where to click to be able to sort since clicking just
+                                anywhere in the header will not guarantee a sort.
+                            </td>
+                            <td>[false,'vertical',true]</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td> If this option is not set, the width of the grid is the sum of the widths of the columns defined in the colModel (in pixels). If this option is set, the initial width of each column is set according to the value of the <code>shrinkToFit</code> option.
+                            </td>
+                            <td>none</td>
+                            <td>No. Method avail.</td>
+                        </tr>
+                        <tr>
+                            <td>xmlReader</td>
+                            <td>array</td>
+                            <td> An array which describes the structure of the expected xml data. For a full description refer to <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data#xml_data" class="wikilink1" title="wiki:retrieving_data"> Retrieving Data in XML Format</a>.</td>
+                            <td></td>
+                            <td>No</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>列参数(colModel)</h3>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        <tr>
+                            <td>align</td>
+                            <td>string</td>
+                            <td>Defines the alignment of the cell in the Body layer, not in header cell. Possible values: left, center, right.</td>
+                            <td>left</td>
+                        </tr>
+                        <tr>
+                            <td>cellattr</td>
+                            <td>function</td>
+                            <td>This function add attributes to the cell during the creation of the data - i.e dynamically. By example all valid attributes for the table cell can be used or a style attribute with different properties. The function should return string. Parameters passed
+                                to this function are: <br>
+                                <em>rowId</em> - the id of the row <br>
+                                <em>val</em> - the value which will be added in the cell <br>
+                                <em>rawObject</em> - the raw object of the data row - i.e if datatype is json - array, if datatype is xml xml node. <br>
+                                <em>cm</em> - all the properties of this column listed in the colModel <br>
+                                <em>rdata</em> - the data row which will be inserted in the row. This parameter is array of type name:value, where name is the name in colModel
+                            </td>
+                            <td>null</td>
+                        </tr>
+                        <tr>
+                            <td>classes</td>
+                            <td>string</td>
+                            <td>This option allow to add classes to the column. If more than one class will be used a space should be set. By example classes:'class1 class2' will set a class1 and class2 to every cell on that column. In the grid css there is a predefined class
+                                ui-ellipsis which allow to attach ellipsis to a particular row. Also this will work in FireFox too.
+                            </td>
+                            <td>empty string</td>
+                        </tr>
+                        <tr>
+                            <td>datefmt</td>
+                            <td>string</td>
+                            <td>Governs format of sorttype:date (when datetype is set to local) and editrules {date:true} fields. Determines the expected date format for that column. Uses a <acronym title="Hypertext Preprocessor">PHP</acronym>-like date formatting. Currently ”/”, ”-”,
+                                and ”.” are supported as date separators. Valid formats are: <br>
+                                y,Y,yyyy for four digits year <br>
+                                YY, yy for two digits year <br>
+                                m,mm for months <br>
+                                d,dd for days. <br>
+                                See <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data#array_data" class="wikilink1" title="wiki:retrieving_data"> Array Data</a></td>
+                            <td><acronym title="International Organization for Standardization">ISO</acronym> Date (Y-m-d)</td>
+                        </tr>
+                        <tr>
+                            <td>defval</td>
+                            <td>string</td>
+                            <td>The default value for the search field. This option is used only in <a href="/jqgridwiki/doku.php?id=wiki:custom_searching" class="wikilink1" title="wiki:custom_searching">Custom Searching</a> and will be set as initial search.</td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>editable</td>
+                            <td>boolean</td>
+                            <td>Defines if the field is editable. This option is used in cell, inline and form modules. See <a href="/jqgridwiki/doku.php?id=wiki:common_rules" class="wikilink1" title="wiki:common_rules"> editing</a></td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>editoptions</td>
+                            <td>array</td>
+                            <td>Array of allowed options (attributes) for edittype option <a href="/jqgridwiki/doku.php?id=wiki:common_rules#editable" class="wikilink1" title="wiki:common_rules"> editing</a></td>
+                            <td>empty array</td>
+                        </tr>
+                        <tr>
+                            <td>editrules</td>
+                            <td>array</td>
+                            <td>sets additional rules for the editable field <a href="/jqgridwiki/doku.php?id=wiki:common_rules#editrules" class="wikilink1" title="wiki:common_rules"> editing</a></td>
+                            <td>empty array</td>
+                        </tr>
+                        <tr>
+                            <td>edittype</td>
+                            <td>string</td>
+                            <td>Defines the edit type for inline and form editing Possible values: text, textarea, select, checkbox, password, button, image and file. See also <a href="/jqgridwiki/doku.php?id=wiki:common_rules#edittype" class="wikilink1" title="wiki:common_rules">
+                                editing</a></td>
+                            <td>text</td>
+                        </tr>
+                        <tr>
+                            <td>firstsortorder</td>
+                            <td>string</td>
+                            <td>If set to asc or desc, the column will be sorted in that direction on first sort.Subsequent sorts of the column will toggle as usual</td>
+                            <td>null</td>
+                        </tr>
+                        <tr>
+                            <td>fixed</td>
+                            <td>boolean</td>
+                            <td> If set to true this option does not allow recalculation of the width of the column if shrinkToFit option is set to true. Also the width does not change if a setGridWidth method is used to change the grid width.</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>formoptions</td>
+                            <td>array</td>
+                            <td>Defines various options for form editing. See <a href="/jqgridwiki/doku.php?id=wiki:common_rules#formoptions" class="wikilink1" title="wiki:common_rules"> Form options</a></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>formatoptions</td>
+                            <td>array</td>
+                            <td>Format options can be defined for particular columns, overwriting the defaults from the language file. See <a href="/jqgridwiki/doku.php?id=wiki:predefined_formatter" class="wikilink1" title="wiki:predefined_formatter">Formatter</a> for more details.</td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td>formatter</td>
+                            <td>mixed</td>
+                            <td>The predefined types (string) or custom function name that controls the format of this field. See <a href="/jqgridwiki/doku.php?id=wiki:predefined_formatter" class="wikilink1" title="wiki:predefined_formatter">Formatter</a> for more details.</td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td>frozen</td>
+                            <td>boolean</td>
+                            <td>If set to true determines that this column will be frozen after calling the setFrozenColumns method</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>hidedlg</td>
+                            <td>boolean</td>
+                            <td>If set to true this column will not appear in the modal dialog where users can choose which columns to show or hide. See <a href="/jqgridwiki/doku.php?id=wiki:show_hide_columns" class="wikilink1" title="wiki:show_hide_columns">Show/Hide Columns</a>.</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>hidden</td>
+                            <td>boolean</td>
+                            <td>Defines if this column is hidden at initialization.</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>index</td>
+                            <td>string</td>
+                            <td>Set the index name when sorting. Passed as sidx parameter.</td>
+                            <td>empty string</td>
+                        </tr>
+                        <tr>
+                            <td>jsonmap</td>
+                            <td>string</td>
+                            <td>Defines the json mapping for the column in the incoming json string. See <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data" class="wikilink1" title="wiki:retrieving_data">Retrieving Data</a></td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td>key</td>
+                            <td>boolean</td>
+                            <td>Overwrite the id (defined in readers) from server. Can be set as id for the unique row id. Only one column can have this property. This option have higher priority as those from the readers. If there are more than one key set the grid finds the first one
+                                and the second is ignored.
+                            </td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>label</td>
+                            <td>string</td>
+                            <td>When colNames array is empty, defines the heading for this column. If both the colNames array and this setting are empty, the heading for this column comes from the name property.</td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>Set the unique name in the grid for the column. This property is required. As well as other words used as property/event names, the reserved words (which cannot be used for names) include subgrid, cb and rn.</td>
+                            <td>Required</td>
+                        </tr>
+                        <tr>
+                            <td>resizable</td>
+                            <td>boolean</td>
+                            <td>Defines if the column can be re sized</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>search</td>
+                            <td>boolean</td>
+                            <td>When used in search modules, disables or enables searching on that column. <a href="/jqgridwiki/doku.php?id=wiki:search_config" class="wikilink1" title="wiki:search_config"> Search Configuration</a></td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>searchoptions</td>
+                            <td>array</td>
+                            <td>Defines the search options used searching <a href="/jqgridwiki/doku.php?id=wiki:search_config" class="wikilink1" title="wiki:search_config"> Search Configuration</a></td>
+                            <td>empty</td>
+                        </tr>
+                        <tr>
+                            <td>sortable</td>
+                            <td>boolean</td>
+                            <td>Defines is this can be sorted.</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>sortfunc</td>
+                            <td>function</td>
+                            <td>Custom function to make custom sorting when datatype is local. Three parameters a, b and direction are passed. The <em>a</em> and <em>b</em> parameters are values to be compared direction is numeric 1 and -1 for ascending and descending order. The
+                                function should return 1, -1 or 0
+                            </td>
+                            <td>null</td>
+                        </tr>
+                        <tr>
+                            <td>sorttype</td>
+                            <td>mixed</td>
+                            <td>Used when datatype is local. Defines the type of the column for appropriate sorting.Possible values: <br>
+                                int/integer - for sorting integer <br>
+                                float/number/currency - for sorting decimal numbers <br>
+                                date - for sorting date <br>
+                                text - for text sorting <br>
+                                function - defines a custom function for sorting. To this function we pass the value to be sorted and it should return a value too. <br>
+                                See <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data#array_data" class="wikilink1" title="wiki:retrieving_data"> Array Data</a></td>
+                            <td>text</td>
+                        </tr>
+                        <tr>
+                            <td>stype</td>
+                            <td>string</td>
+                            <td> Determines the type of the element when searching. See <a href="/jqgridwiki/doku.php?id=wiki:search_config" class="wikilink1" title="wiki:search_config"> Search Configuration</a></td>
+                            <td>text</td>
+                        </tr>
+                        <tr>
+                            <td>surl</td>
+                            <td>string</td>
+                            <td>Valid only in <a href="/jqgridwiki/doku.php?id=wiki:custom_searching" class="wikilink1" title="wiki:custom_searching">Custom Searching</a> and edittype : 'select' and describes the url from where we can get already-constructed select element</td>
+                            <td>empty string</td>
+                        </tr>
+                        <tr>
+                            <td>template</td>
+                            <td> object</td>
+                            <td> Set of valid properties for the colModel. This option can be used if you want to overwrite a lot of default values in the column model with easy. See cmTemplate in grid options</td>
+                            <td> null</td>
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>boolean</td>
+                            <td>If this option is false the title is not displayed in that column when we hover a cell with the mouse</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td>Set the initial width of the column, in pixels. This value currently can not be set as percentage</td>
+                            <td>150</td>
+                        </tr>
+                        <tr>
+                            <td>xmlmap</td>
+                            <td>string</td>
+                            <td>Defines the xml mapping for the column in the incomming xml file. Use a <acronym title="Cascading Style Sheets">CSS</acronym> specification for this See <a href="/jqgridwiki/doku.php?id=wiki:retrieving_data" class="wikilink1" title="wiki:retrieving_data">Retrieving
+                                Data</a></td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td>unformat</td>
+                            <td>function</td>
+                            <td> Custom function to “unformat” a value of the cell when used in editing See <a href="/jqgridwiki/doku.php?id=wiki:custom_formatter" class="wikilink1" title="wiki:custom_formatter">Custom Formatter</a>. (Unformat is also called during sort operations. The
+                                value returned by unformat is the value compared during the sort.)
+                            </td>
+                            <td>null</td>
+                        </tr>
+                        <tr>
+                            <td>viewable</td>
+                            <td>boolean</td>
+                            <td>This option is valid only when <a href="/jqgridwiki/doku.php?id=wiki:form_editing#viewgridrow" class="wikilink1" title="wiki:form_editing">viewGridRow</a> method is activated. When the option is set to false the column does not appear in view Form</td>
+                            <td>true</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>方法</h2>
+                <blockquote>
+                    <p>
+                        方法调用有两种方式：
+                    <ul>
+                        <li><code>$("EL").方法名(参数)</code>(支持链式调用)</li>
+                        <li><code>$("EL").jqGrid("方法名", 参数)</code></li>
+                    </ul>
+                    </p>
+                </blockquote>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>方法名</th>
+                            <th>参数列表</th>
+                            <th>返回值</th>
+                            <th>描述</th>
+                        </tr>
+                        <tr>
+                            <td><span style="color:green; ">addJSONData</span></td>
+                            <td>data</td>
+                            <td>none</td>
+                            <td>Populates a grid with the passed data (an array).This method should be used this way - Example: Suppose we have data from a particular webservice (jsonresponse), then <br>
+                                <span style="color:blue; "> var mygrid = jQuery(”#”+grid_id)[0];<br>
+ var myjsongrid = eval(”(”+jsonresponse.responseText+”)”); <br>
+ mygrid.addJSONData(myjsongrid); <br>
+ myjsongrid = null; <br>
+ jsonresponse =null; </span> <br>
+                                will populate the data to the grid. And, of course, the data in myjsongrid can be manipulated before being passed to addJSONData.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>addRowData</td>
+                            <td>rowid,<br>
+                                data, <br>
+                                position, <br>
+                                srcrowid
+                            </td>
+                            <td> true on success, <br>
+                                false otherwise
+                            </td>
+                            <td> Inserts a new row with id = <em>rowid</em> containing the data in <em>data</em> (an object) at the <em>position</em> specified (first in the table, last in the table or before or after the row specified in <em>srcrowid</em>). The syntax of the data
+                                object is: {name1:value1,name2: value2…} where name is the name of the column as described in the colModel and the value is the value. <br>
+                                This method can insert multiple rows at once. In this case the data parameter should be array defined as <br>
+                                [{name1:value1,name2: value2…}, {name1:value1,name2: value2…} ] and the first option rowid should contain the name from data object which should act as id of the row. It is not necessary that the name of the rowid in this case should be a part from colModel.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:green; ">addXmlData</span></td>
+                            <td>data</td>
+                            <td>none</td>
+                            <td>Populates a grid with the passed data. This method should be used this way - Example: <br>
+                                Suppose we have data from a particular webservice (xmlresponse), then <br>
+                                <span style="color:blue; "> var mygrid = jQuery(”#”+grid_id)[0]; <br>
+ mygrid.addXmlData(xmlresponse.responseXML); </span><br>
+                                will populate the data into the grid. And, of course, the data in xmlresponse can be manipulated before being passed to addXmlData.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>bindKeys</td>
+                            <td>{ <br>
+                                onEnter: null, <br>
+                                onSpace: null, <br>
+                                onLeftKey: null, onRightKey: null, <br>
+                                scrollingRows : true <br>
+                                }
+                            </td>
+                            <td> jqGrid object</td>
+                            <td> When called the method make it so that it is possible to select a row with Up and Down keys - i.e we scroll the grid data with keys. It is possible to invoke additional events when the row is selected and a key like enter, space, left or right are
+                                pressed. To these events a selected id of the row is passed as parameter.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>clearGridData</td>
+                            <td>clearfooter</td>
+                            <td>jqGrid object</td>
+                            <td> Clears the currently loaded data from grid. If the clearfooter parameter is set to true, the method clears the data placed on the footer row.</td>
+                        </tr>
+                        <tr>
+                            <td>delRowData</td>
+                            <td>rowid</td>
+                            <td>true on success, <br>
+                                false otherwise
+                            </td>
+                            <td>Deletes the row with the id = <em>rowid</em>. This operation does not delete data from the server.</td>
+                        </tr>
+                        <tr>
+                            <td>editRow</td>
+                            <td>rowid,<br>
+                                keys<br>
+                            </td>
+                            <td> none?</td>
+                            <td>Edits the row specified by <strong>rowid</strong>. <strong>keys</strong> is a boolean value, indicating if to use the Enter key to accept the value ane Esc to cancel the edit, or not.</td>
+                        </tr>
+                        <tr>
+                            <td>footerData</td>
+                            <td>action,<br>
+                                data, <br>
+                                format
+                            </td>
+                            <td>jqGrid object</td>
+                            <td>This method gets or sets data on footer. See footerrow in <a href="/jqgridwiki/doku.php?id=wiki:options" class="wikilink1" title="wiki:options">options</a> array.<br>
+                                <em>action</em> - can be 'get' or 'set'. The default is get. 'get' returns an object of type name:value, where the name is a name from colModel. This will return data from the footer. The other two options have no effect in this case. <br>
+                                'set' takes a <em>data</em> array (object) and places the values in the footer. The object should be in name:value pair, where the name is the name from colModel<br>
+                                <em>format</em> - default is true. This instruct the method to use the formatter (if set in colModel) when new values are set. A value of false will disable the using of formatter
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>getCell</td>
+                            <td>rowid, <br>
+                                iCol
+                            </td>
+                            <td>cell content</td>
+                            <td> Returns the content of the cell specified by id = <em>rowid</em> and column = <em>iCol</em>. iCol can be either the column index or the name specified in colModel.<br>
+                                <span style="color:red; ">Do not use this method when you are editing the row or cell. This will return the cell content and not the actuall value of the input element </span></td>
+                        </tr>
+                        <tr>
+                            <td>getCol</td>
+                            <td>colname, returntype, mathoperation</td>
+                            <td>array[] or value</td>
+                            <td> This method returns an array with the values from the column. <em>colname</em> can be either a number that represents the index of the column or a name from colModel. returntype determines the type of the returned array. When set to false (default) the
+                                array contain only the values. <br>
+                                When set to true the array contain a set of objects. The object is defined as {id:rowid, value:cellvalue} where the rowid is the id of the row and cellvalue is the value of the cell. For example, such output can be [{id:1,value:1},{id:2,value:2}…] <br>
+                                The valid options for mathoperation are - 'sum, 'avg', 'count'. If this parameter is set and is valid, the returned value is a scalar representing the operation applied to the all values in the column. If the parameter is not valid the returned value is empty array
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>getDataIDs</td>
+                            <td>none</td>
+                            <td>array[]</td>
+                            <td>This method returns an array of the id's in the current grid view. It returns an empty array if no data is available.</td>
+                        </tr>
+                        <tr>
+                            <td>getGridParam</td>
+                            <td>name</td>
+                            <td>mixed value</td>
+                            <td>Returns the value of the requested parameter. <em>name</em> is the name from the options array. If the name is not set, the entry options are returned. For available options, see <a href="/jqgridwiki/doku.php?id=wiki:options" class="wikilink1"
+                                                                                                                                                                                                                      title="wiki:options">options</a>.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>getInd</td>
+                            <td>rowid,<br>
+                                rowcontent
+                            </td>
+                            <td> mixed</td>
+                            <td> This method returns the index of the row in the grid table specified by id= <em>rowid</em> when <em>rowcontent</em> set to false (default). If rowcontent is set to true, it returns the entry row object. If the rowid can not be found, the function returns
+                                false.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>getLocalRow</td>
+                            <td>rowid</td>
+                            <td> row object</td>
+                            <td> Return the row data from the local array stored in data parameter when the datatype is local</td>
+                        </tr>
+                        <tr>
+                            <td>getRowData</td>
+                            <td>rowid or none</td>
+                            <td>array{}</td>
+                            <td>Returns an array with data of the requested id = <em>rowid.</em> The returned array is of type name:value, where the name is a name from colModel and the value from the associated column in that row. It returns an empty array if the rowid can not be
+                                found.<br>
+                                <span style="color:red; ">1. Do not use this method when you are editing the row or cell. This will return the cell content and not the actuall value of the input element.2.the performance of this method becomes an issue. Do not use this method in the body of “for” and “when”. (When calling this method, it will calculates the row datas one time.)  </span>
+                                <br>
+                                If the rowid is not set the method return all the data from the grid in array
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>hideCol</td>
+                            <td>colname<br>
+                                or<br>
+                                [colnames]
+                            </td>
+                            <td>jqGrid object</td>
+                            <td>Given a single colname, it hides the column with that name. Given an array of colnames [“name1”,”name2”], it hides the columns with those names, 'name1' and 'name2', in the example. The names in colname or colnames must all be valid names from the
+                                colModel. <br>
+                                NB: The width of the grid is not changed.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>remapColumns</td>
+                            <td>permutation, updateCells, keepHeader</td>
+                            <td>none</td>
+                            <td>Reorder the grid columns based on the permutation array. The indexes of the <em>permutation</em> array are the current order, the values are the new order. By example if the array has values [1,0,2] after calling this method the first column will be
+                                reordered as second. <em>updateCells</em> if set to true will reorder the cell data. <em>keepHeader</em> if set to true will reorder the data above the header cells.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>resetSelection</td>
+                            <td>none</td>
+                            <td>jqGrid object</td>
+                            <td>Resets (unselects) the selected row(s). Also works in multiselect mode.</td>
+                        </tr>
+                        <tr>
+                            <td>restoreRow</td>
+                            <td>rowid</td>
+                            <td>none?</td>
+                            <td>Restores the data to original values before the editing of the row specified by <strong>rowid</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td>saveRow</td>
+                            <td>rowid,<br>
+                                callback,<br>
+                                url,<br>
+                                extraparams<br>
+                            </td>
+                            <td>none?</td>
+                            <td>Saves the row specified by <strong>rowid</strong>, after it has been opened for editing mode by the editRow method. <strong>callback</strong> is a function called after the save is complete. The function accepts an XMLHttpRequest object with the response
+                                from the server. <strong>url</strong> is the <acronym title="Uniform Resource Locator">URL</acronym> used to submit the values. If specified, this value overrides the value specified by the <a href="/jqgridwiki/doku.php?id=wiki:options" class="wikilink1"
+                                                                                                                                                                                                                                 title="wiki:options">editurl</a> option. <strong>extraparas</strong> are
+                                additional parameters passed to the server. Data is posted in the form id=rowid&amp;name=value…, where the name is the “name” from <a href="/jqgridwiki/doku.php?id=wiki:colmodel_options" class="wikilink1" title="wiki:colmodel_options">colModel</a>.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>setCaption</td>
+                            <td>caption</td>
+                            <td>jqGrid object</td>
+                            <td>Sets a new caption of the grid. If the Caption layer was hidden, it is shown.</td>
+                        </tr>
+                        <tr>
+                            <td>setCell</td>
+                            <td>rowid,<br>
+                                colname, <br>
+                                data, <br>
+                                class, <br>
+                                properties, <br>
+                                forceup
+                            </td>
+                            <td>jqGrid object</td>
+                            <td>This method can change the content of particular cell and can set class or style properties. Where: <br>
+                                <em>rowid</em> the id of the row, <br>
+                                <em>colname</em> the name of the column (this parameter can be a number (the index of the column) beginning from 0 <br>
+                                <em>data</em> the content that can be put into the cell. If empty string the content will not be changed <br>
+                                <em>class</em> if class is string then we add a class to the cell using addClass; if class is an array we set the new css properties via css <br>
+                                <em>properties</em> sets the attribute properies of the cell, <br>
+                                <em>forceup</em> If the parameter is set to true we perform update of the cell instead that the value is empty
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>setGridParam</td>
+                            <td>object</td>
+                            <td>jqGrid object</td>
+                            <td>Sets a particular parameter. Note - for some parameters to take effect a trigger(“reloadGrid”) should be executed. Note that with this method we can override events. The name (in the name:value pair) is the name from options array. For a particular
+                                options, see <a href="/jqgridwiki/doku.php?id=wiki:options" class="wikilink1" title="wiki:options">options</a>.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>setGridHeight</td>
+                            <td>new_height</td>
+                            <td>jqGrid object</td>
+                            <td>Sets the new height of the grid dynamically. Note that the height is set only to the grid cells and not to the grid. <em>new_height</em> can be in pixels, percentage, or 'auto'.</td>
+                        </tr>
+                        <tr>
+                            <td>setGridWidth</td>
+                            <td>new_width,<br>
+                                shrink
+                            </td>
+                            <td>jqGrid object</td>
+                            <td>Sets a new width to the grid dynamically. The parameters are: <br>
+                                <em>new_width</em> is the new width in pixels.<br>
+                                <em>shrink (true or false)</em> has the same behavior as shrinkToFit - see <a href="/jqgridwiki/doku.php?id=wiki:options" class="wikilink1" title="wiki:options">options</a>. If this parameter is not set we take the value of shrinkToFit.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>setLabel</td>
+                            <td> colname, <br>
+                                data, <br>
+                                class, <br>
+                                properties
+                            </td>
+                            <td>jqGrid object</td>
+                            <td>Sets a new label in the header for the specified column; can also set attributes and classes . The parameters are: <br>
+                                <em>colname</em> the name of the column from colModel(this parameter can be a number (the index of the column) beginning from 0 <br>
+                                <em>data</em> the content that can be put into the label. If empty string the content will not be changed <br>
+                                <em>class</em> if class is string then we add a class to the label using addClass; if class is an array we set the new css properties via css <br>
+                                <em>properties</em> sets the attribute properies of the label
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>setRowData</td>
+                            <td>rowid,<br>
+                                data, <br>
+                                cssprop
+                            </td>
+                            <td>true on success, <br>
+                                false otherwise
+                            </td>
+                            <td>Updates the values (using the <em>data</em> array) in the row with <em>rowid</em>. The syntax of data array is: {name1:value1,name2: value2…} where the name is the name of the column as described in the colModel and the value is the new value. <br>
+                                If the cssprop parameter is string we use addClass to add classes to the row. If the parameter is object we use css to add css properties. Note that we can set properties and classes without data, in this case we should set data to false <br>
+                                <span style="color:red; ">Do not use this method when you are editing the row or cell. This will set the content and overwrite the input elements.</span> \\
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>setSelection</td>
+                            <td>rowid,<br>
+                                onselectrow
+                            </td>
+                            <td>jqGrid object</td>
+                            <td>Toggles a selection of the row with id = <em>rowid</em>; if <em>onselectrow</em> is true (the default) then the event onSelectRow is launched, otherwise it is not.</td>
+                        </tr>
+                        <tr>
+                            <td>showCol</td>
+                            <td>colname</td>
+                            <td>jqGrid object</td>
+                            <td>Shows a column with a given <em>colname</em>. If the colname is a string we show only the specified column. If colname is array of type [“name1”,”name2”] then the columns with names 'name1' and 'name2' will be shown at the same time The names in colname
+                                must be valid names from colModel. The width does not change.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>trigger(“reloadGrid”)</td>
+                            <td>none</td>
+                            <td>none</td>
+                            <td> Reloads the grid with the current settings. This means that a new request is send to the server if datatype is xml or json. This method should be applied to an already-constructed grid. Pay attention that this method does not change HEADER information,
+                                that means that any changes to colModel would not be affected. You should use gridUnload to reload new configuration with different colModel. IT'S WORK ONLY IF loadonce: false !!!
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>unbindKeys</td>
+                            <td> none</td>
+                            <td> jqGrid object</td>
+                            <td> unbind the events defined in bindKeys method</td>
+                        </tr>
+                        <tr>
+                            <td><span style="color:green; ">updateColumns</span></td>
+                            <td>none</td>
+                            <td>none</td>
+                            <td>this synchronizes the width of the headers with the data. Useful when used with table drag and drop. This method should be used this way - Example: <br>
+                                <span style="color:blue; "> var mygrid=jQuery(”#grid_id”)[0];<br>
+ mygrid.updateColumns();</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>事件</h2>
+                <blockquote>
+                    <p>
+                        表格初始化时通过参数设置事件，如：<code>$("EL").jqGrid({事件:function(参数){})</code>
+                    </p>
+                </blockquote>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>事件名</th>
+                            <th>参数列表</th>
+                            <th>描述</th>
+                        </tr>
+                        <tr>
+                            <td>afterInsertRow</td>
+                            <td>rowid <br>
+                                rowdata <br>
+                                rowelem
+                            </td>
+                            <td>This event fires after every inserted row.<br>
+                                <em>rowid</em> is the id of the inserted row <br>
+                                <em>rowdata</em> is an array of the data to be inserted into the row. This is array of type name: value, where the name is a name from colModel <br>
+                                <em>rowelem</em> is the element from the response. If the data is xml this is the xml element of the row; if the data is json this is array containing all the data for the row <br>
+                                Note: this event does not fire if gridview option is set to true
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>beforeProcessing</td>
+                            <td>data, status, xhr</td>
+                            <td> This event fire before proccesing the data from the server. Note that the <em>data</em> is formatted depended on the value of the <em>datatype</em> parameter - i.e if the <em>datatype</em> is 'json' for example the <em>data</em> is JavaScript object</td>
+                        </tr>
+                        <tr>
+                            <td>beforeRequest</td>
+                            <td>none</td>
+                            <td> This event fire before requesting any data. Also does not fire if datatype is function. If the event return false the request is not made to the server</td>
+                        </tr>
+                        <tr>
+                            <td>beforeSelectRow</td>
+                            <td>rowid, e</td>
+                            <td> This event fire when the user click on the row, but before select them. <br>
+                                <em>rowid</em> is the id of the row. <br>
+                                <em>e</em> is the event object <br>
+                                This event should return boolean true or false. If the event return true the selection is done. If the event return false the row is not selected and any other action if defined does not occur.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>gridComplete</td>
+                            <td>none</td>
+                            <td>This fires after all the data is loaded into the grid and all other processes are complete. Also the event fires independent from the datatype parameter and after sorting paging and etc.</td>
+                        </tr>
+                        <tr>
+                            <td>loadBeforeSend</td>
+                            <td>xhr,<br>
+                                settings
+                            </td>
+                            <td>A pre-callback to modify the XMLHttpRequest object (<em>xhr</em>) before it is sent. Use this to set custom headers etc. Returning <em>false</em> will cancel the request.</td>
+                        </tr>
+                        <tr>
+                            <td>loadComplete</td>
+                            <td>data</td>
+                            <td>This event is executed immediately after every server request. <br>
+                                <em>data</em> Data from the response depending on datatype grid parameter
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>loadError</td>
+                            <td>xhr,<br>
+                                status,<br>
+                                error
+                            </td>
+                            <td>A function to be called if the request fails. The function gets passed three arguments: The XMLHttpRequest object (<em>xhr</em>), a string describing the type of error (<em>status</em>) that occurred and an optional exception object (<em>error</em>), if
+                                one occurred.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onCellSelect</td>
+                            <td>rowid,<br>
+                                iCol, <br>
+                                cellcontent,<br>
+                                e
+                            </td>
+                            <td> Fires when we click on particular cell in the grid.<br>
+                                <em>rowid</em> is the id of the row <br>
+                                <em>iCol</em> is the index of the cell,<br>
+                                <em>cellcontent</em> is the content of the cell,<br>
+                                <em>e</em> is the event object element where we click.<br>
+                                (Note that this available when we not use cell editing module and is disabled when using cell editing).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ondblClickRow</td>
+                            <td>rowid, <br>
+                                iRow, <br>
+                                iCol, <br>
+                                e
+                            </td>
+                            <td>Raised immediately after row was double clicked. <br>
+                                <em>rowid</em> is the id of the row, <br>
+                                <em>iRow</em> is the index of the row (do not mix this with the rowid),<br>
+                                <em>iCol</em> is the index of the cell. <br>
+                                <em>e</em> is the event object
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onHeaderClick</td>
+                            <td>gridstate</td>
+                            <td>Fire after clicking to hide or show grid (hidegrid:true);<br>
+                                <em>gridstate</em> is the state of the grid - can have two values - visible or hidden
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onPaging</td>
+                            <td>pgButton</td>
+                            <td>This event fires after click on [page button] and before populating the data. Also works when the user enters a new page number in the page input box (and presses [Enter]) and when the number of requested records is changed via the select box. To this
+                                event we pass only one parameter <em>pgButton</em> See <a href="/jqgridwiki/doku.php?id=wiki:pager" class="wikilink1" title="wiki:pager">pager</a>. <br>
+                                If this event return 'stop' the processing is stopped and you can define your own custom paging
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onRightClickRow</td>
+                            <td>rowid, <br>
+                                iRow, <br>
+                                iCol, <br>
+                                e
+                            </td>
+                            <td>Raised immediately after row was right clicked. <br>
+                                <em>rowid</em> is the id of the row, <br>
+                                <em>iRow</em> is the index of the row (do not mix this with the rowid),<br>
+                                <em>iCol</em> is the index of the cell.<br>
+                                <em>e</em> is the event object. <br>
+                                Note - this event does not work in Opera browsers, since Opera does not support oncontextmenu event
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onSelectAll</td>
+                            <td>aRowids,<br>
+                                status
+                            </td>
+                            <td>This event fires when multiselect option is true and you click on the header checkbox. <br>
+                                <em>aRowids</em> array of the selected rows (rowid's). <br>
+                                <em>status</em> - boolean variable determining the status of the header check box - true if checked, false if not checked. <br>
+                                Note that the aRowids alway contain the ids when header checkbox is checked or unchecked.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onSelectRow</td>
+                            <td> rowid,<br>
+                                status,<br>
+                                e
+                            </td>
+                            <td>Raised immediately after row was clicked. <br>
+                                <em>rowid</em> is the id of the row,<br>
+                                <em>status</em> is the status of the selection,<br>
+                                <em>e</em> is the event object. Can be used when multiselect is set to true. true if the row is selected, false if the row is deselected.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>onSortCol</td>
+                            <td>index,<br>
+                                iCol,<br>
+                                sortorder
+                            </td>
+                            <td>Raised immediately after sortable column was clicked and before sorting the data. <br>
+                                <em>index</em> is the index name from colModel, <br>
+                                <em>iCol</em> is the index of column, <br>
+                                <em>sortorder</em> is the new sorting order - can be 'asc' or 'desc'. <br>
+                                If this event return 'stop' the sort processing is stopped and you can define your own custom sorting
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>rowattr</td>
+                            <td> rowData,<br>
+                                currentObj,<br>
+                                rowId
+                            </td>
+                            <td> rowData is array with the cell data. currObj is the current row represented in the source like json or xml. rowId is the id of the row. This event is called when the new table row is inserted. It can be used to set additional style and class attributes
+                                of the row dynamically. The event should return a object something like this {“style” : “somestyle”, “class”: “someclass”}. Note that you can set any attribute to the row. It is important to note that the event does fire only when a new row is inserted - this mean
+                                that it can not be used with methods which updated the row like setRowData.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>resizeStart</td>
+                            <td> event, index</td>
+                            <td> Event which is called when we start resize a column. <em>event</em> is the event object, <em>index</em> is the index of the column in colModel.</td>
+                        </tr>
+                        <tr>
+                            <td>resizeStop</td>
+                            <td> newwidth, index</td>
+                            <td> Event which is called after the column is resized. <em>newwidth</em> is the is the new width of the column , <em>index</em> is the index of the column in colModel.</td>
+                        </tr>
+                        <tr>
+                            <td>serializeGridData</td>
+                            <td>postData</td>
+                            <td>If set this event can serialize the data passed to the ajax request. The function should return the serialized data. This event can be used when a custom data should be passed to the server - e.g - JSON string, <acronym title="Extensible Markup Language">XML</acronym>
+                                string and etc. <br>
+                                To this event we pass the postData array.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/view/datagrid.js");
+
+    ns.ready(function () {
+        $("#exampleTable").jqGrid({
+            url: "$!basePath/doc/grid-data",
+            colModel: [
+                {name: "id", label: "序号"},
+                {name: "name", label: "名称"}
+            ],
+            pager: "#exampleTablePager"
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">表格</h1>
+
+                <h2>基本实例</h2>
+                <p>添加 <code>.table</code>类样式</p>
+                <div class="bs-example">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓</th>
+                            <th>名</th>
+                            <th>昵称</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;table class="table"&gt;
+                            ...
+                        &lt;/table&gt;
+                    </pre>
+                </figure>
+
+                <h2>条纹状表格</h2>
+                <p>添加 <code>.table-striped</code>类样式，实现奇偶行背景色不同的斑马线效果</p>
+                <div class="bs-example">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓</th>
+                            <th>名</th>
+                            <th>昵称</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;table class="table-striped"&gt;
+                            ...
+                        &lt;/table&gt;
+                    </pre>
+                </figure>
+
+                <h2>带边框的表格</h2>
+                <p>添加 <code>.table-bordered</code>类样式</p>
+                <div class="bs-example">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓</th>
+                            <th>名</th>
+                            <th>昵称</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;table class="table table-bordered"&gt;
+                            ...
+                        &lt;/table&gt;
+                    </pre>
+                </figure>
+
+                <h2>鼠标悬停效果</h2>
+                <p>添加 <code>.table-hover</code>类样式</p>
+                <div class="bs-example">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓</th>
+                            <th>名</th>
+                            <th>昵称</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;table class="table table-hover"&gt;
+                            ...
+                        &lt;/table&gt;
+                    </pre>
+                </figure>
+
+                <h2>紧缩表格</h2>
+                <p>添加 <code>.table-condensed</code>类样式</p>
+                <div class="bs-example">
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓</th>
+                            <th>名</th>
+                            <th>昵称</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;table class="table table-condensed"&gt;
+                            ...
+                        &lt;/table&gt;
+                    </pre>
+                </figure>
+
+                <h2>不同情境下的行</h2>
+                <p>添加在tr中添加 <code>.active .success .info .danger .warning</code>类样式</p>
+                <div class="bs-example">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓</th>
+                            <th>名</th>
+                            <th>昵称</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="active">
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr class="success">
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr class="info">
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        <tr class="danger">
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        <tr class="warning">
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;table class="table"&gt;
+                            &lt;thead&gt;
+                            &lt;tr&gt;
+                                &lt;th&gt;#&lt;/th&gt;
+                                &lt;th&gt;姓&lt;/th&gt;
+                                &lt;th&gt;名&lt;/th&gt;
+                                &lt;th&gt;昵称&lt;/th&gt;
+                            &lt;/tr&gt;
+                            &lt;/thead&gt;
+                            &lt;tbody&gt;
+                            &lt;tr class="active"&gt;
+                                &lt;th scope="row"&gt;1&lt;/th&gt;
+                                &lt;td&gt;Mark&lt;/td&gt;
+                                &lt;td&gt;Otto&lt;/td&gt;
+                                &lt;td&gt;@mdo&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr class="success"&gt;
+                                &lt;th scope="row"&gt;2&lt;/th&gt;
+                                &lt;td&gt;Jacob&lt;/td&gt;
+                                &lt;td&gt;Thornton&lt;/td&gt;
+                                &lt;td&gt;@fat&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr class="info"&gt;
+                                &lt;th scope="row"&gt;3&lt;/th&gt;
+                                &lt;td&gt;Larry&lt;/td&gt;
+                                &lt;td&gt;the Bird&lt;/td&gt;
+                                &lt;td&gt;@twitter&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr class="danger"&gt;
+                                &lt;th scope="row"&gt;3&lt;/th&gt;
+                                &lt;td&gt;Larry&lt;/td&gt;
+                                &lt;td&gt;the Bird&lt;/td&gt;
+                                &lt;td&gt;@twitter&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr class="warning"&gt;
+                                &lt;th scope="row"&gt;3&lt;/th&gt;
+                                &lt;td&gt;Larry&lt;/td&gt;
+                                &lt;td&gt;the Bird&lt;/td&gt;
+                                &lt;td&gt;@twitter&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;/tbody&gt;
+                        &lt;/table&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

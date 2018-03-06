@@ -1,0 +1,104 @@
+<form id="resAddForm" role="form" class="form-horizontal parsley-form" data-parsley-validate
+      action="$!basePath/system/res/batch/add/do" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">批量添加菜单</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="col-lg-2">上级菜单</th>
+                        <th class="col-lg-4">名称 <span class="text-danger">*</span></th>
+                        <th class="col-lg-4">URL地址</th>
+                        <th class="col-lg-2">图标</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    #foreach($index in [1..10])
+                    <tr>
+                        <td>$!index</td>
+                        <td>
+                            <input name="parentIds" type="text" class="form-control combotree" placeholder="同上"/>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="names"  #if($foreach.first)  data-parsley-required="true" data-parsley-placement="bottom" #end autofocus>
+                        </td>
+                        <td>
+                            <input type="text" name="urls" class="form-control">
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input id="icon" type="text" name="icons" class="form-control">
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btnSelectIcon"><i class="ti-plus"></i></button>
+			                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    #end
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary" data-loading-text="正在保存...">确 定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/form.js",
+        "/framework/js/form/combotree.js",
+        "/framework/js/form/validator.js"
+    ]);
+    ns.ready(function (dialog) {
+        dialog.find("#resAddForm").ajaxForm({
+            beforeSubmit: function (arr, form, options) {
+                form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success == true) {
+                    if(data.total == data.successCount)
+                        ns.tip.toast.success("菜单新增成功！");
+                    else
+                        ns.tip.toast.success("成功："+data.successCount+"，失败："+(data.total - data.successCount));
+                    ns.view.Dialog.close(form, {isSaved: true, parentId: data.parentId});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("#ok").button("reset");
+            }
+        });
+
+
+        dialog.find(".btnSelectIcon").on("click", function () {
+            var tr = $(this).parents("tr");
+            ns.view.showModal('$!basePath/system/res/icon', {
+                onHidden: function (data) {
+                    tr.find("#icon").val(data.icon);
+                },
+                size: 'modal-lg'
+            });
+        });
+
+        dialog.find(".combotree:first").combotree({
+            url: function (node) {
+                return node.id === "#" ? "$!basePath/system/res/tree?parent=true" : "$!basePath/system/res/tree/" + node.id
+            },
+            value: "$!parentRes.id",
+            text: "$!parentRes.name"
+        });
+
+        dialog.find(".combotree:gt(0)").combotree({
+            url: function (node) {
+                return node.id === "#" ? "$!basePath/system/res/tree?parent=true" : "$!basePath/system/res/tree/" + node.id
+            },
+            text: "同上"
+        });
+    });
+</script>

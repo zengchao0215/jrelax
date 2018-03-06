@@ -1,0 +1,10 @@
+<h4>$!name</h4>
+#if($!buttons.size() == 0)
+<div class="alert alert-warning">未配置按钮</div>
+#else
+<div class="row res-btn">
+    #foreach($!button in $!buttons)
+        <div class="col-lg-2 mb5"><input type="checkbox" value="$!button.id" class="icheck" skin="box-blue" title="$!button.name"></div>
+    #end
+</div>
+#end

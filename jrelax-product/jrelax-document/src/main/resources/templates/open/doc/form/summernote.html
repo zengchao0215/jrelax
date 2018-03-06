@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提示组件</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<div class="app">
+	<h3>依赖</h3>
+	<p><code>/framework/js/summernote.js</code></p>
+	<div class="hr-line-dashed"></div>
+	<textarea name="" id="" cols="30" rows="10"></textarea>
+	<div id="preview"></div>
+</div>
+<body class="p10">
+	#required_js
+	<script type="text/javascript">
+		ns.ready(function(){
+			ns.requireJS("/framework/js/form/summernote.js");
+            var obj = $("textarea").summernote({
+                height : "400px",
+                lang : "zh-CN"
+            });
+
+//            setInterval(function(){
+//                var html = $("textarea").code();
+//                $("#preview").html(html);
+//			}, 500);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="com.jrelax" updateCheck="false">
+	<diskStore path="java.io.tmpdir" />
+	<defaultCache
+			maxElementsInMemory="1000"
+			eternal="false"
+			timeToIdleSeconds="3600"
+			timeToLiveSeconds="3600"
+			overflowToDisk="true"
+			memoryStoreEvictionPolicy="LRU"/>
+
+	<cache name="com.jrelax.web.system.entity.Role"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.RoleResourceButton"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.RoleResourceColumn"
+		   maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		   timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.User"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.Resource"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.ResourceButton"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.DataDict"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.DataDictItem"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.UserConfig"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.Version"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.entity.system.UesrNotify"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="false">
+	</cache>
+	<cache name="com.jrelax.web.system.entity.Log"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600" overflowToDisk="true">
+	</cache>
+	<cache name="org.hibernate.cache.internal.StandardQueryCache"
+		maxElementsInMemory="5000" eternal="false" timeToLiveSeconds="3600"
+		overflowToDisk="false" />
+	<cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
+		maxElementsInMemory="5000" eternal="true" overflowToDisk="true" />
+</ehcache>

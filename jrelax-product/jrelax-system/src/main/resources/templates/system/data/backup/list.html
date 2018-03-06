@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">备份文件列表</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            #if($!list.size()>0)
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-lg-10 col-md-10">文件名</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    #foreach($!name in $!list)
+                        <tr>
+                            <td>$!name</td>
+                            <td>
+                                <button class="btn btn-primary btn-xs" onclick="doDelete('$!table', '$!name', this)">删除</button>
+                            </td>
+                        </tr>
+                    #end
+                </table>
+            #else
+            <div class="alert alert-warning">暂无备份文件</div>
+            #end
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">知道了</button>
+</div>
+<script>
+    function doDelete(table, name, btn){
+        ns.confirm("确定要删除此备份文件吗？", function(){
+           ns.post("$!basePath/system/data/backup/delete", {table:table, name:name}, function(success, data){
+               if(success){
+                   ns.tip.toast.successCenter("删除成功");
+                   $(btn).parents("tr").remove();
+               }else{
+                   ns.tip.toast.errorCenter("删除失败");
+               }
+           });
+        });
+    }
+</script>

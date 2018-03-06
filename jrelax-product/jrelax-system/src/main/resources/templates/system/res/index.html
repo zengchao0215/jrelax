@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="btn-group tool-button">
+                        #ifAuthButton("btnAdd")
+                        <button type="button" class="btn btn-primary navbar-btn" onclick="doAdd()"><i class="fa fa-plus"></i> 新增菜单</button>
+                        <button type="button" class="btn btn-primary navbar-btn" onclick="doBatchAdd()"><i class="fa fa-copy"></i> 批量添加</button>
+                        #end
+                        #ifAuthButton("#btnSort")
+                        <button type="button" class="btn btn-primary navbar-btn" onclick="showSortMenu()"><i class="ti-exchange-vertical"></i> 排序</button>
+                    #end
+                    </div>
+                    <!-- 右按钮区 -->
+                    <div class="pull-right offscreen-right">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary navbar-btn level #if(!$!status)active#end" id="1">
+                                <input type="radio" name="options">
+                                <span>启用</span>
+                            </label>
+                            <label class="btn btn-primary navbar-btn level #if($!status)active#end" id="2">
+                                <input type="radio" name="options">
+                                <span>全部</span>
+                            </label>
+                        </div>
+                        <button class="btn btn-primary navbar-btn"
+                                onclick="ns.view.showModal('$!basePath/system/res/chart',{size:'modal-lg'})"><i class="fa fa-sitemap"></i> 查看结构图
+                        </button>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row mb15">
+                            <div class="col-lg-12 col-md-12">
+                                <table id="menuTreeTable" class="table no-m">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-md-3 pd-l-lg">
+                                            <span class="pd-l-sm ml20"></span>名称
+                                        </th>
+                                        <th class="col-md-5 offscreen-right">URL</th>
+                                        <th class="col-md-2">#i18n('system.common.status')</th>
+                                        <th class="col-md-2">#i18n('system.common.op')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        #foreach($!obj in $list)
+                                        <tr data-tt-id="$!obj.id" #if($!obj.parentId!='-1')data-tt-parent-id="$!obj.parentId"#end data-tt-branch="$!obj.hasChildren()">
+                                            <td>
+                                                <span class="pd-l-sm"></span>
+                                                <i class="$!obj.icon mr5"></i>
+                                                <a href="javascript:;" data-type="text" data-title="输入新名称" data-pk="$!obj.id" data-placement="right" class="xeditable-name">$!obj.name</a>
+                                                #if($!obj.beta)
+                                                    <div class="badge badge-top bg-danger"><span>新功能</span></div>
+                                                #end
+                                                #if($!obj.newWindow)<span class="badge bg-info">新窗口</span>#end
+                                            </td>
+                                            <td class="offscreen-right">
+                                                <a href="javascript:;" data-type="text" data-title="输入新URL" data-pk="$!obj.id" data-emptytext="未设置" data-placement="right"
+                                                   class="xeditable-url">$!obj.url</a>
+                                            </td>
+                                            <td id="td_status_$!obj.id">
+                                                #if($!obj.enabled)
+                                                <i class="fa fa-circle text-success ml5">
+                                                #else
+                                                    <iclass
+                                                    ="fa fa-circle text-danger ml5">
+                                                #end
+                                            </i>
+                                            </td>
+                                        <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                <i class="ti-settings"></i>
+                                                <span class="ti-angle-down"></span>
+                                            </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="javascript:;"
+                                                   onclick="ns.view.showModal('$!basePath/system/res/detail/$!obj.id',{border:false})">#i18n('system.common.view')</a>
+                                            </li>
+                                            <li><a href="javascript:;" onclick="doEdit('$!obj.id')">#i18n('system.common.edit')</a>
+                                            </li>
+                                            #ifAuthButton("btnRemove")
+                                            #if($!obj.url != "/index")
+                                                <li><a href="javascript:;" onclick="del('$!obj.id')">#i18n('system.common.delete')</a>
+                                                </li>
+                                            #end
+                                        #end
+                                        <li class="divider"></li>
+                                        #ifAuthButton("btnEnable")
+                                        <li><a href="javascript:;" onclick="enableRes('$!obj.id')">#i18n('system.common.enable')</a></li>
+                                    #end
+                                        #ifAuthButton("btnDisable")
+                                        <li><a href="javascript:;" onclick="disableRes('$!obj.id')">#i18n('system.common.disable')</a></li>
+                                    #end
+                                        <li class="divider"></li>
+                                        #ifAuthButton("btnAdd")
+                                        <li><a href="javascript:;" onclick="doAdd('$!obj.id')">添加子菜单</a></li>
+                                        <li><a href="javascript:;" onclick="doBatchAdd('$!obj.id')">添加子菜单（批量）</a></li>
+                                    #end
+                                        <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/res/columns?id=$!obj.id')">管理字段</a></li>
+                                        <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/res/buttons?id=$!obj.id')">管理按钮</a></li>
+                                        <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/res/role?id=$!obj.id')">管理角色</a></li>
+                                    </ul>
+                                    </div>
+                                    </td>
+                                    </tr>
+                                    #end
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 页面组件脚本 -->
+<script src="$!basePath/framework/plugins/jquery.nestable.js"></script>
+<script src="$!basePath/framework/plugins/count-to/jquery.countTo.js"></script>
+
+<!-- 本页面脚本 -->
+<script src="$!basePath/framework/js/view/toast.js"></script>
+<script src="$!basePath/framework/js/view/treetable.js"></script>
+<script src="$!basePath/framework/js/form/editable.js"></script>
+
+<script type="text/javascript">
+    function showSortMenu() {
+        ns.view.showModal('$!basePath/system/res/sort', {
+            onHidden: function (dialog, obj) {
+                if(dialog.isSorted){
+                    window.location.reload();
+                }
+            }
+        });
+    }
+
+    function doAdd(id) {
+        var url = "$!basePath/system/res/add";
+        if (id) url += "?pid=" + id;
+        ns.view.showModal(url, {
+            onHidden: function (dialog, obj) {
+                if(dialog.isSaved){
+                    var parentId = dialog.parentId;
+                    if(parentId == "-1") window.location.reload();
+                    else{
+                        loadChild(parentId);
+                    }
+                }
+            }
+        })
+    }
+
+    function doBatchAdd(id){
+        var url = "$!basePath/system/res/batch/add";
+        if (id) url += "?pid=" + id;
+        ns.view.showModal(url, {
+            size: "modal-lg",
+            onHidden: function (dialog, obj) {
+                if(dialog.isSaved){
+                    var parentId = dialog.parentId;
+                    if(parentId == "-1") window.location.reload();
+                    else{
+                        loadChild(parentId);
+                    }
+                }
+            }
+        })
+    }
+
+    function doEdit(id){
+        ns.view.showModal("$!basePath/system/res/edit/"+id, {
+            onHidden: function (dialog, obj) {
+                if(dialog.isEdited){
+                    var parentId = dialog.parentId;
+                    if(parentId == "-1") window.location.reload();
+                    else{
+                        loadChild(parentId);
+                    }
+                }
+            }
+        })
+    }
+
+    function del(id) {
+        ns.tip.confirm("<h5>您有必要知道一下几点：</h5><ul><li>菜单删除后无法恢复，并且用户和角色也将失去此菜单</li><li>如果选中的是父级菜单，那么父级菜单下面的所有子菜单也全部会删除</li></ul>确定要删除吗？", function () {
+            var bar = ns.view.showProgressbar("正在删除...");
+            $.post("$!basePath/system/res/delete/" + id, {}, function (data) {
+                if (data.success == true) {
+                    Toast.success("删除成功!");
+                    //从表格中移除此行
+                    menuTreeTable.treetable("removeNode", id);
+                } else {
+                    Toast.error(data.message);
+                }
+
+                bar.close();
+            });
+        });
+    }
+    function enableRes(id) {
+        $.post("$!basePath/system/res/enable/" + id, {}, function (data) {
+            if (data.success == true) {
+                $("#td_status_" + id).find("i").attr("class", "fa fa-circle text-success ml5");
+            } else {
+                Toast.error(data.message);
+            }
+        });
+    }
+    function disableRes(id) {
+        $.post("$!basePath/system/res/disable/" + id, {}, function (data) {
+            if (data.success == true) {
+                $("#td_status_" + id).find("i").attr("class", "fa fa-circle text-danger ml5");
+            } else {
+                Toast.error(data.message);
+            }
+        });
+    }
+    function initXeditable() {
+        //x-editable
+        $(".xeditable-url").editable({//url快捷编辑
+            url: "$!basePath/system/res/edit/url"
+        });
+        $(".xeditable-name").editable({//名称快捷编辑
+            url: "$!basePath/system/res/edit/name",
+            validate: function (value) {
+                if ($.trim(value) == '') {
+                    return "名称不能为空！";
+                }
+            }
+        });
+    }
+
+    function loadChild(id){
+        var node = menuTreeTable.data("treetable").tree[id];
+        ns.view.treetable.loading(menuTreeTable, node);
+
+        $.get("$!basePath/system/res/child/" + node.id, {}, function (data) {
+            menuTreeTable.treetable("unloadBranch", node);
+
+            menuTreeTable.treetable("loadBranch", node, data);
+            initXeditable();
+            ns.initCustomControls();
+        });
+    }
+    var menuTreeTable;
+    $(function () {
+        $(document).on("click", ".level", function (e) {
+            var id = $(this).attr("id");
+            switch (id) {
+                case "1":
+                    window.location.href = "$!basePath/system/res";
+                    break;
+                case "2":
+                    window.location.href = "$!basePath/system/res?status=all";
+                    break;
+            }
+        });
+        menuTreeTable = $("#menuTreeTable").treetable({
+            expandable: true,
+            onNodeExpand: function () {
+                loadChild(this.id);
+            }
+        });
+        initXeditable();
+        $("#dialogMenuDetail").on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
+        $("#dialogSort").on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
+    });
+</script>
+#loading_close
+</body>
+</html>

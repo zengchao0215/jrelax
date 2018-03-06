@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <!-- 机构  -->
+            <aside class="sidebar-250 canvas-right">
+                <header class="header navbar clearfix pl0 pr0">
+                    <p class="navbar-text"><i class="fa fa-sitemap mr5"></i> 组织结构</p>
+                </header>
+                <div class="content-wrap no-p">
+                    <div class="wrapper">
+                        <div id="jsTreeUnit"></div>
+                    </div>
+                </div>
+                <footer>
+                    <div class="mb5">
+                        包含下级&nbsp;
+                        <input type="checkbox" name="includeChildren" class="switch">
+                    </div>
+                </footer>
+            </aside>
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="btn-group tool-button">
+                        <button class="btn btn-primary navbar-btn" onclick="doAddUser()" id="btnAdd"><i
+                                class="fa fa-user-plus"></i> 新增用户</button>
+                        <button class="btn btn-primary navbar-btn" onclick="doBatchAddUser()" id="btnBatchAdd"><i
+                                class="fa fa-copy"></i> 批量添加</button>
+                        <div id="btnUserOp" class="btn-group" role="group" aria-label="...">
+                            <button class="btn btn-primary navbar-btn" onclick="doMove()" id="btnMove"><i class="fa fa-arrows"></i>
+                                移动到
+                            </button>
+                            <button class="btn btn-danger navbar-btn" onclick="delCheck()" id="btnRemove"><i class="fa fa-user-times"></i>
+                                删除选中
+                            </button>
+                        </div>
+                    </div>
+                    <div class="pull-right offscreen-right">
+                        <button class="btn btn-primary navbar-btn"
+                                onclick="ns.view.showSidebarStatic('.sidebar-panel')"><i class="fa fa-sliders"></i> 筛选
+                        </button>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table id="dgUser"></table>
+                                <div id="dgUserPager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+<div class="sidebar-panel from-right">
+    <div class="sidebar-panel-container shadow">
+        <header class="sidebar-panel-header">
+            <h4>筛选</h4>
+            <a class="sidebar-panel-close text-center"><i class="ti-close"></i> </a>
+        </header>
+        <div class="sidebar-panel-content">
+            <form id="searchForm" role="form">
+                <div class="form-group">
+                    <label for="userName">用户名</label>
+                    <input id="userName" name="userName" type="text" class="form-control" placeholder="用户名/登录名" autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="realName">姓名</label>
+                    <input id="realName" name="realName" type="text" class="form-control" placeholder="姓名">
+                </div>
+                <div class="form-group">
+                    <label>联系方式</label>
+                    <input name="mobile" type="text" class="form-control" placeholder="联系方式">
+                </div>
+                <button type="submit" class="btn btn-primary btn-form-submit">查询</button>
+                <button type="reset" class="btn btn-default">重置</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 删除选中用户 -->
+<div id="dialogDeleteCheck" class="modal fade bs-modal-lg" tabindex="-2" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">删除用户</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 mb10">
+                        确定删除以下用户吗？
+                    </div>
+                    <div class="col-xs-12">
+                        <ul id="checkedUser" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="ok" type="button" class="btn btn-primary" data-loading-text="正在删除...">确 定
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+            </div>
+        </div>
+    </div>
+</div>
+#required_js
+<script type="text/javascript">
+    //导入js
+    ns.requireJS([
+        "/framework/js/form/checkbox.js",
+        "/framework/js/view/toast.js",
+        "/framework/js/view/tree.js",
+        "/framework/js/view/treetable.js",
+        "/framework/js/form/editable.js",
+        "/framework/js/view/datagrid.js",
+        "/framework/js/form/search.form.js",
+        "/framework/js/common/unit.js",
+        "/framework/js/form/switch.js"
+    ]);
+    var dgUser, currentUnitId = "-1";
+    function initTreeView() {
+        $("#jsTreeUnit").jstree({
+            plugins: ["wholerow"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return node.id === "#" ? "$!basePath/system/unit/tree" : "$!basePath/system/unit/tree/" + node.id
+                    }
+                },
+                multiple: false
+            }
+        }).on("select_node.jstree", function (node, selected) {
+            loadUser(selected.selected[0]);
+        }).on("loaded.jstree", function (node, jstree) {
+            var id = ns.data.sessionStorage.get("sys_user_tree_id");
+            if (!id)
+                id = $(node.target).find("li:first").attr("id");
+            if (id)
+                jstree.instance.select_node(id);
+        });
+    }
+    function initDataGrid(){
+        dgUser = $("#dgUser").jqGrid({
+            url: '$!basePath/system/user/unituser/data',
+            datatype : "local",
+            colModel: [
+                { label: 'ID', name: 'id', key: true, hidden:true, align:"left" },
+                { label: '用户名', name: 'userName', width:100},
+                { label: '姓名', name: 'realName', width:100, formatter: function(val,options,row){
+                    return ns.view.datagrid.renderEditable("输入新姓名", "xeditable-realname", val, row.id, "right");
+                }},
+                { label: '联系方式', name: 'mobile', width:100, formatter: function(val,options,row){
+                    return ns.view.datagrid.renderEditable("输入新号码", "xeditable-mobile", val, row.id, "right");
+                }},
+                { label: '邮箱', name: 'email', width:100, formatter: function(val,options,row){
+                    return ns.view.datagrid.renderEditable("输入新邮箱", "xeditable-email", val, row.id, "right");
+                }},
+                { label: '状态', name: 'enabled', width:100, formatter:function(val){
+                    return ns.view.datagrid.renderEnabled(val);
+                }},
+                { label: '是否在线', name: 'online', width:100, formatter:function(val){
+                    return ns.view.datagrid.renderEnabled(val);
+                }},
+                { label:'操作',width: 50,formatter:function(val,node,data){
+                    return ns.view.datagrid.renderOp([
+                        {title:"查看基本信息", onclick:function(){
+                            ns.view.showModal("$!basePath/system/user/detail/info/"+data.id,{border:false});
+                        }},
+                        {title:"查看资源权限", onclick:function(){
+                            ns.view.showModal("$!basePath/system/user/detail/right/"+data.id,{border:false,size:"modal-lg"});
+                        }},
+                        {divider:true},
+                        {title: "修改", onclick:function(){
+                            ns.view.showModal("$!basePath/system/user/edit/"+data.id, {
+                                size:"modal-lg",
+                                onClose : function(dialog, obj){
+                                    if(dialog.isEdited){
+                                        dgUser.reload();
+                                    }
+                                }
+                            });
+                        }},
+                        {title:"删除", onclick:function(){
+                            doDelete(data.id);
+                        }},
+                        {title:"密码重置", onclick:function(){
+                            resetPwd(data.id);
+                        }},
+                        {divider:true},
+                        {title:"启用", onclick:function(){
+                            enableUser(data.id);
+                        }},
+                        {title:"禁用", onclick:function(){
+                            disableUser(data.id);
+                        }},
+                        {divider:true},
+                        {title:"管理所属用户组", onclick:function(){
+                            ns.view.showModal("$!basePath/system/user/group/"+data.id,{border:false,size:"modal-lg"});
+                        }}
+                    ]);
+                } }
+            ],
+            height: $(".main-content .wrapper").height() - ns.view.datagrid.offsetHeight,
+            pager: "#dgUserPager",
+            searchForm : "#searchForm",
+            multiselect : true,
+            multiboxonly : true,
+            icheckbox : true,
+            xeditable : initXeditable,
+            selectedToggle : "#btnUserOp"
+        });
+
+        $("input[name='includeChildren']").on("change", function(){
+            dgUser.reload({includeChildren:this.checked});
+        });
+    }
+    function loadUser(id) {
+        dgUser.setGridParam({
+            datatype : "json",
+            postData : {unitId : id}
+        }).trigger("reloadGrid");
+        currentUnitId = id;
+    }
+
+    function doDelete(id) {
+        ns.confirm("用户删除后无法恢复，确定删除吗？", function () {
+            var bar = ns.view.showProgressbar("正在删除...");
+            $.post("$!basePath/system/user/delete/" + id, {}, function (data) {
+                if (data.success == true) {
+                    dgUser.reload();
+                } else {
+                    Toast.error(data.message);
+                }
+
+                bar.close();
+            });
+        });
+    }
+    function delCheck() {
+        var ids = dgUser.getSelectRows();
+        if (ids.length > 0) {
+            var content = "<div class=\"col-xs-12 mb10\">确定删除以下用户吗？</div><div class=\"col-xs-12\"><ul class='no-m'>";
+            $.each(ids, function (i, id) {
+                var data = dgUser.getRowData(id);
+                content += "<li>" + data.realName + "</li>";
+            });
+            content += "</ul></div>";
+
+            ns.tip.confirm(content, function () {
+                var bar = ns.view.showProgressbar("正在删除...");
+                $.post("$!basePath/system/user/delete", {ids: ids.toString()}, function (data) {
+                    if (data.success == true) {
+                        dgUser.reload();
+                    } else {
+                        ns.tip.toast.error(data.message);
+                    }
+                    bar.close();
+                });
+            });
+        } else {
+            ns.tip.toast.warning("请先选择要删除的用户！");
+        }
+    }
+    function enableUser(id) {
+        $.post("$!basePath/system/user/enable/" + id, {}, function (data) {
+            if (data.success == true) {
+                dgUser.reload();
+            } else {
+                Toast.error(data.message);
+            }
+        });
+    }
+    function disableUser(id) {
+        $.post("$!basePath/system/user/disable/" + id, {}, function (data) {
+            if (data.success == true) {
+                dgUser.reload();
+            } else {
+                Toast.error(data.message);
+            }
+        });
+    }
+    //密码重置
+    function resetPwd(id) {
+        ns.tip.confirm("确定重置密码吗？", function () {
+            $.post("$!basePath/system/user/resetPwd/" + id, {}, function (data) {
+                if (data.success == true) {
+                    Toast.success("密码已重置为："+data.pwd);
+                } else {
+                    Toast.error(data.message);
+                }
+            });
+        });
+    }
+    function initCheckBox() {
+        ns.form.initCheckbox("#gbox_dgUser input[type='checkbox']");
+        var chkAll = $("#gbox_dgUser th input[type='checkbox']");
+        chkAll.on("ifChecked", function (event) {
+            $("#gbox_dgUser td input[type='checkbox']").iCheck("check");
+        });
+        chkAll.on("ifUnchecked", function (event) {
+            $("#gbox_dgUser td input[type='checkbox']").iCheck("uncheck");
+        });
+    }
+    function initXeditable() {
+        //x-editable
+        $(".xeditable-realname").editable({//姓名快捷编辑
+            url: "$!basePath/system/user/edit/realname",
+            validate: function (value) {
+                if ($.trim(value) == '') {
+                    return "姓名不能为空！";
+                }
+            }
+        });
+        $(".xeditable-mobile").editable({//手机号快捷编辑
+            url: "$!basePath/system/user/edit/mobile"
+        });
+        $(".xeditable-email").editable({//邮箱快捷编辑
+            url: "$!basePath/system/user/edit/email"
+        });
+    }
+    function doAddUser(){
+        ns.view.showModal("$!basePath/system/user/add?uid="+currentUnitId, {
+            size:"modal-lg",
+            onClose : function(dialog, obj){
+                if(dialog.isSaved){
+                    dgUser.reload();
+                }
+            }
+        });
+    }
+    //批量添加
+    function doBatchAddUser(){
+        ns.view.showModal("$!basePath/system/user/batch/add?uid="+currentUnitId, {
+            fullScreen: true,
+            onClose : function(dialog, obj){
+                if(dialog.isSaved){
+                    dgUser.reload();
+                }
+            }
+        });
+    }
+
+    function doMove(){
+        var ids = dgUser.getSelectRows();
+        if(ids.length > 0){
+            ns.common.unit.select({
+                callback : function(data){
+                    var unit = data[0];
+                    if(unit){
+                        ns.post("$!basePath/system/user/move", {ids:ids.toString(), unitId: unit.id}, function(success, data){
+                           if(success){
+                               dgUser.reload();
+                           } else{
+                               ns.tip.error("移动失败，请稍后再试！");
+                           }
+                        });
+                    }
+                }
+            });
+        }
+    }
+    ns.ready(function () {
+        initTreeView();
+        initDataGrid();
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="btn-group tool-button">
+                        #ifAuthButton("btnAdd")
+                        <button class="btn btn-primary navbar-btn" onclick="doAddUnit()"><i class="ti-plus"></i>
+                            #i18n("system.sys.unit.add")</button>
+                        #end
+                    </div>
+                    <div class="pull-right offscreen-right">
+                        <button class="btn btn-primary navbar-btn"
+                                onclick="ns.view.showModal('$!basePath/system/unit/chart',{size:'modal-lg'})"><i class="fa fa-sitemap"></i> 查看结构图
+                        </button>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row mb15">
+                            <div class="col-lg-12 col-md-12">
+                                <table id="unitTreeTable" class="table no-m">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-md-3 pd-l-lg">
+                                            <span class="pd-l-sm ml20"></span>#i18n('system.sys.unit.name')
+                                        </th>
+                                        <th class="col-md-4 offscreen-right">#i18n('system.sys.unit.addr')</th>
+                                        <th class="col-md-1">#i18n('system.sys.unit.contact')</th>
+                                        <th class="col-md-2">#i18n('system.sys.unit.phone')</th>
+                                        <th class="col-md-1">负责人</th>
+                                        <th class="col-md-1">#i18n('system.common.status')</th>
+                                        <th>#i18n('system.common.op')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    #foreach($!obj in $list)
+                                    <tr data-tt-id="$!obj.id" #if($!obj.parentId!='-1')data-tt-parent-id="$!obj.parentId" #end data-tt-branch="$!obj.hasChildren()">
+                                        <td>
+                                            <span class="pd-l-sm"></span>
+                                            <a href="javascript:;" data-type="text" data-title="输入新名称" data-pk="$!obj.id" data-placement="right" class="xeditable-name">$!obj.name</a>
+                                            #if($!obj.system)(系统)#end
+                                        </td>
+                                        <td class="offscreen-right">
+                                            <a href="javascript:;" data-type="text" data-title="输入新地址" data-pk="$!obj.id" data-placement="right" class="xeditable-address">$!obj.address</a>
+                                        </td>
+                                        <td>$!obj.contact</td>
+                                        <td>$!obj.mobile</td>
+                                        <td>$!obj.leader.realName</td>
+                                        <td id="td_status_$!obj.id">
+                                            #if($!obj.enabled)
+                                            <i class="fa fa-circle text-success ml5">
+                                            #else <i class="fa fa-circle text-danger ml5">
+                                            #end</i>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="ti-settings"></i>
+                                                    <span class="ti-angle-down"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="javascript:;"
+                                                           onclick="ns.view.showModal('$!basePath/system/unit/detail/$!obj.id',{border:false})">#i18n('system.common.view')</a>
+                                                    </li>
+                                                    #ifAuthButton("btnEdit")
+                                                    <li><a href="javascript:;" onclick="doEditUnit('$!obj.id')">#i18n('system.common.edit')</a>
+                                                    </li>
+                                                    #end
+                                                    #ifAuthButton("btnRemove")
+                                                    <li><a href="javascript:;" onclick="del('$!obj.id')">#i18n('system.common.delete')</a>
+                                                    </li>
+                                                    #end
+                                                    #ifAuthButton("btnAdd")
+                                                    <li><a href="javascript:;" onclick="doAddUnit('$!obj.id')">添加子组织</a></li>
+                                                    #end
+                                                    <li class="divider"></li>
+                                                    #ifAuthButton("btnEnable")
+                                                    <li><a href="javascript:;" onclick="enableUnit('$!obj.id')">#i18n('system.common.enable')</a>
+                                                    </li>
+                                                    #end
+                                                    #ifAuthButton("btnDisable")
+                                                    <li><a href="javascript:;" onclick="disableUnit('$!obj.id')">#i18n('system.common.disable')</a>
+                                                    </li>
+                                                    #end
+                                                    #if(!$!obj.system)
+                                                        #if($!unitRes)
+                                                            <li class="divider"></li>
+                                                            <li><a href="$!basePath/system/unit/res/$!obj.id">管理菜单</a></li>
+                                                            <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/unit/detail/res/$!obj.id')">查看菜单</a>
+                                                            </li>
+                                                            <li><a href="javascript:;" onclick="copyResToChildren('$!obj.id')">复制菜单到下级（一级）</a>
+                                                            </li>
+                                                        #end
+                                                    #end
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    #end
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/plugins/jquery.nestable.js",
+        "/framework/js/view/toast.js",
+        "/framework/js/view/treetable.js",
+        "/framework/js/form/editable.js"
+    ]);
+
+    function doAddUnit(id){
+        var url = '$!basePath/system/unit/add';
+        if(id) url += "?pid="+id;
+        ns.view.showModal(url, {
+            size:'modal-lg',
+            onHidden : function(dialog){
+                if(dialog.isSaved){
+                    rexpandNode(dialog.parentId);
+                }
+            }
+        });
+    }
+
+    function doEditUnit(id){
+        ns.view.showModal("$!basePath/system/unit/edit/"+id, {
+            size:'modal-lg',
+            onHidden : function(dialog){
+                if(dialog.isEdited){
+                    rexpandNode(dialog.parentId);
+                    if(dialog.oldParentId !== dialog.parentId){
+                        rexpandNode(dialog.oldParentId);
+                    }
+                }
+            }
+        });
+    }
+
+    function rexpandNode(id){
+        if(id && id.length > 0 && id != "-1"){
+            unitTreeTable.treetable("collapseNode", id);
+            unitTreeTable.treetable("expandNode", id);
+        }else{
+            window.location.reload();
+        }
+    }
+    function del(id) {
+        ns.tip.confirm("<h5>您有必要知道以下几点：</h5><ul><li>组织删除后无法恢复，并且用户也将失去此组织的联系</li><li>如果选中的是父级组织，那么父级组织下面的所有子组织也全部会删除</li></ul>确定要删除吗？", function () {
+            var bar = ns.view.showProgressbar("正在删除...");
+            $.post("$!basePath/system/unit/delete/" + id, {}, function (data) {
+                if (data.success == true) {
+                    ns.tip.toast.success("删除成功!");
+                    //从表格中移除此行
+                    unitTreeTable.treetable("removeNode", id);
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+
+                bar.close();
+            });
+        });
+    }
+    function enableUnit(id) {
+        $.post("$!basePath/system/unit/enable/" + id, {}, function (data) {
+            if (data.success == true) {
+                $("#td_status_" + id).find("i").attr("class", "fa fa-circle text-success ml5");
+            } else {
+                Toast.error(data.message);
+            }
+        });
+    }
+    function disableUnit(id) {
+        $.post("$!basePath/system/unit/disable/" + id, {}, function (data) {
+            if (data.success == true) {
+                $("#td_status_" + id).find("i").attr("class", "fa fa-circle text-danger ml5");
+            } else {
+                Toast.error(data.message);
+            }
+        });
+    }
+    function initXeditable() {
+        //x-editable
+        $(".xeditable-address").editable({//地址快捷编辑
+            url: "$!basePath/system/unit/edit/address"
+        });
+        $(".xeditable-name").editable({//名称快捷编辑
+            url: "$!basePath/system/unit/edit/name",
+            validate: function (value) {
+                if ($.trim(value) == '') {
+                    return '名称不能为空！';
+                }
+            }
+        });
+    }
+
+    function copyResFromParent(id) {
+        ns.post("$!basePath/system/unit/copyres/parent", {id: id}, function (success, data) {
+            if (success) {
+                ns.tip.toast.success("成功从上级复制" + data.count + "个菜单！");
+            } else {
+                ns.tip.toast.error(data.message);
+            }
+        });
+    }
+
+    function copyResToChildren(id) {
+        ns.post("$!basePath/system/unit/copy/res/children", {id: id}, function (success, data) {
+            if (success) {
+                ns.tip.toast.success("成功将" + data.count + "个菜单复制到" + data.count2 + "个子机构！");
+            } else {
+                ns.tip.toast.error(data.message);
+            }
+        });
+    }
+
+    var unitTreeTable;
+    $(function () {
+        $(document).on("click", ".level", function (e) {
+            var id = $(this).attr("id");
+            switch (id) {
+                case "1":
+                    unitTreeTable.treetable("collapseAll");
+                    break;
+                case "2":
+                    unitTreeTable.treetable("expandAll");
+                    break;
+            }
+        });
+        unitTreeTable = $("#unitTreeTable").treetable({
+            expandable: true,
+            onNodeExpand: function () {
+                var node = this;
+                ns.view.treetable.loading(unitTreeTable, node);
+                $.get("$!basePath/system/unit/child/" + node.id, {}, function (data) {
+                    unitTreeTable.treetable("unloadBranch", node);
+
+                    unitTreeTable.treetable("loadBranch", node, data);
+
+                    initXeditable();
+                    ns.initCustomControls();
+                });
+            }
+        });
+        $("#dialogUnitDetail").on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
+        initXeditable();
+    });
+</script>
+#loading_close
+</body>
+</html>

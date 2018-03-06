@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+<div class="app">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <aside class="sidebar-400 canvas-right">
+                <header class="header navbar clearfix pl0 pr0">
+                    <p class="navbar-text"><i class="fa fa-database mr5"></i> 字典列表</p>
+                    <div class="btn-group pull-right mr10">
+                        <button type="button" class="btn btn-sm btn-primary navbar-btn" onclick="add()"><i
+                                class="ti-plus"></i></button>
+                        <button id="btnEdit" class="btn btn-sm btn-primary navbar-btn disabled" onclick="updateDateDict()"><i
+                                class="ti-pencil"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger navbar-btn disabled" onclick="del()"><i
+                                class="ti-close"></i></button>
+                        <button type="button" class="btn btn-sm btn-primary navbar-btn" onclick="help()"><i
+                                class="ti-help-alt"></i></button>
+                    </div>
+                </header>
+                <div class="content-wrap no-p">
+                    <div class="wrapper">
+                        <div id="jsTreeDataDict"></div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 内容主体 -->
+            <section class="main-content bg-white">
+                <!-- 主体操作栏 -->
+                <header class="header">
+                    <!-- 左按钮区 -->
+                    <!-- 左按钮区 -->
+                    <div class="toolbar">
+                        <button id="btnAddItem" class="btn btn-primary toolbar-item disabled" onclick="addItem()"><i
+                                class="ti-plus"></i> 添加字典项
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle toolbar-item disabled"
+                                    data-toggle="dropdown">
+                                <i class="fa fa-sign-in"></i> 导入/导出
+                                <span class="ti-angle-down"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:;" onclick="importData()">导入JSON</a></li>
+                                <li><a href="javascript:;" onclick="exportData()">导出JSON</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="toolbar pull-right">
+                        <button id="btnSync" class="btn btn-primary toolbar-item" data-loading-text="正在同步..."
+                                onclick="sync()"><i class="ti-reload"></i> 同步缓存
+                        </button>
+                        <button id="btnSave" class="btn btn-primary toolbar-item disabled" data-loading-text="正在保存..."
+                                onclick="save()"><i class="ti-save"></i> 保存
+                        </button>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <form id="dataDictItemForm" method="post">
+                            <input type="hidden" name="id"/>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <table id="dataDictTable" class="table no-m">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-md-4 pd-l-lg">
+                                                <span class="pd-4-sm"></span>Key
+                                            </th>
+                                            <th class="col-md-4">Value</th>
+                                            <th class="col-md-1">#i18n('system.common.op')</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+            <div id="dialogAddDataDict" class="modal fade bs-modal-sm" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">新增数据字典</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="saveForm" role="form">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label for="name">分类</label>
+                                            <div class="input-group">
+                                                <input type="text" name="category" class="form-control"
+                                                       placeholder="字典分类"
+                                                       autofocus/>
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                        选择 <span class="caret"></span>
+                                                    </button>
+                                                    <ul id="categoryList" class="dropdown-menu pull-right"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label for="name">名称</label>
+                                            <input type="text" name="remarks" class="form-control" placeholder="字典名称"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label for="name">Key</label>
+                                            <input class="form-control" type="text" name="name" placeholder="字典Key"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="ok" type="button" class="btn btn-primary" data-loading-text="正在保存...">确 定
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 页面组件脚本 -->
+<script src="$!basePath/framework/plugins/jquery.form.js"></script>
+
+<!-- 本页面脚本 -->
+<script src="$!basePath/framework/js/view/toast.js"></script>
+<script src="$!basePath/framework/js/view/tree.js"></script>
+<script type="text/javascript">
+    var _catalog, _cid;
+    function initTreeView() {
+        $("#jsTreeDataDict").jstree({
+            plugins: ["wholerow"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return node.id === "#" ? "$!basePath/system/datadict/tree" : "$!basePath/system/datadict/tree/" + node.id
+                    }
+                },
+                themes: {
+                    icons: false
+                },
+                multiple: false
+            }
+        }).on("select_node.jstree", function (node, selected) {
+            var id = selected.selected;
+            if (id[0].length < 10) return _catalog = id;
+            else _cid = id;
+            _catalog = undefined;
+            ns.showLoadingbar($(".main-content"));
+            jQuery.post("$!basePath/system/datadict/item/" + id, {}, function (data) {
+                $("#dataDictTable tbody").html(data);
+                $("#dataDictItemForm input[name='id']").val(id);
+                ns.closeLoadingbar($(".main-content"));
+
+                initItemEvents();
+
+                $(".disabled").removeClass("disabled");
+            });
+        }).on("loaded.jstree", function (node, jstree) {
+            onTreeReload(node, jstree, true);
+        }).on("refresh.jstree", function (node, jstree) {
+            onTreeReload(node, jstree);
+        });
+    }
+    function onTreeReload(node, jstree, select) {
+        var id = $(node.target).find("li:first").attr("id");
+        if (id != "-1") {
+            if (select) {
+                jstree.instance.open_node(id);
+            }
+            $(".main-content .header .btn").removeAttr("disabled");
+        } else {
+            $("#dataDictTable tbody").html("");
+            $(".main-content .header .btn").attr("disabled", "disabled");
+            $(".main-content .header .btn-group .btn").removeAttr("disabled");
+        }
+    }
+    function initItemEvents() {
+        $("#dataDictTable tbody input").unbind("keyup");
+        $("#dataDictTable tbody input").bind("keyup", function (e) {
+            if (e.keyCode == 38) {//up
+                var item = $(this);
+                var prevItem = item.parents("tr").prev();
+                if (prevItem.length > 0)
+                    prevItem.find("input:eq(" + item.parent().index() + ")").focus();
+            } else if (e.keyCode == 40) {//down
+                var item = $(this);
+                var nextItem = item.parents("tr").next();
+                if (nextItem.length > 0)
+                    nextItem.find("input:eq(" + item.parent().index() + ")").focus();
+                else addItem();
+            }
+        });
+        $("[data-toggle=tooltip]").tooltip();
+    }
+    function setCategory(obj) {
+        obj = $(obj);
+        obj.parent().parent().prev().val(obj.find("a").text());
+    }
+    function add() {
+        ns.view.showModal("$!basePath/system/datadict/add", {
+            onHidden: function (dialog) {
+                if (dialog.isSaved) {
+                    //刷新树
+                    $.jstree.reference("#jsTreeDataDict").refresh();
+                }
+            }
+        });
+    }
+    function del() {
+        if (_catalog) {
+            ns.tip.confirm("确定删除此分类下的所有字典数据吗？", function () {
+                var bar = ns.view.showProgressbar("正在删除...");
+                $.post("$!basePath/system/datadict/delete/catalog/" + _catalog, {}, function (data) {
+                    if (data.success == true) {
+                        Toast.success("删除成功!");
+                        //刷新树
+                        $.jstree.reference("#jsTreeDataDict").refresh();
+                    } else {
+                        Toast.error(data.message);
+                    }
+
+                    bar.close();
+                });
+            });
+        } else {
+            ns.tip.confirm("确定删除此字典数据吗？", function () {
+                var id = $("#dataDictItemForm input[name='id']").val();
+                var bar = ns.view.showProgressbar("正在删除...");
+                $.post("$!basePath/system/datadict/delete/" + id, {}, function (data) {
+                    if (data.success == true) {
+                        Toast.success("删除成功!");
+                        //刷新树
+                        $.jstree.reference("#jsTreeDataDict").refresh();
+                    } else {
+                        Toast.error(data.message);
+                    }
+
+                    bar.close();
+                });
+            });
+        }
+    }
+    function addItem() {
+        var id = new Date().getTime();
+        var html = "<tr id=\"" + id + "\"><td><span class=\"pd-l-sm\"></span><input name=\"key\" type=\"text\" class=\"form-control\" autocomplete='off'/></td>";
+        html += "<td><input name=\"value\" type=\"text\" class=\"form-control\" autocomplete='off'/></td>";
+        html += "<td>";
+        html += "<a href=\"javascript:itemUp('" + id + "');\" data-toggle=\"tooltip\" title=\"上移一位\"><i class=\"fa fa-arrow-up\"></i></a>\t";
+        html += "<a href=\"javascript:itemDown('" + id + "');\" data-toggle=\"tooltip\" title=\"下移一位\"><i class=\"fa fa-arrow-down\"></i></a>\t";
+        html += "<a href=\"javascript:removeItem('" + id + "');\" data-toggle=\"tooltip\" title=\"删除此项\"><i class=\"fa fa-close\"></i></a>";
+        html += "</td> </tr>";
+        $("#dataDictTable tbody").append(html);
+        $("#dataDictTable tbody tr:last input:first").focus();
+        initItemEvents();
+    }
+    function removeItem(id) {
+        $("#dataDictTable tbody tr[id='" + id + "']").remove();
+    }
+
+    function itemUp(id) {
+        var tr1 = $("#dataDictTable tbody tr[id='" + id + "']");
+        var tr2 = tr1.prev();
+
+        if (tr2.length > 0) {
+            tr2.insertAfter(tr1);
+        }
+        highlight(tr1);
+    }
+
+    function itemDown(id) {
+        var tr1 = $("#dataDictTable tbody tr[id='" + id + "']");
+        var tr2 = tr1.next();
+
+        if (tr2.length > 0) {
+            tr1.insertAfter(tr2);
+        }
+        highlight(tr1);
+    }
+
+    function highlight(tr) {
+        tr.toggleClass("bg-default");
+        var i = 0;
+        var timer = setInterval(function () {
+            i++;
+            tr.toggleClass("bg-default");
+            if (i >= 3) {
+                clearInterval(timer);
+            }
+        }, 300);
+    }
+    // 修改字典名称
+    function updateDateDict() {
+        var id = $("#dataDictItemForm input[name='id']").val();
+        if (id.length < 10) return ns.tip.toast.warning("请先选择要修改的字典！");
+        ns.view.showModal("$!basePath/system/datadict/edit/" + id, {
+            onHidden: function (dialog) {
+                if (dialog.isEdited) {
+                    //刷新树
+                    $.jstree.reference("#jsTreeDataDict").refresh();
+                }
+            }
+        });
+    }
+    //保存数据字典项
+    function save() {
+        var btn = $("#btnSave");
+        btn.button("loading");
+        $("#dataDictItemForm").ajaxSubmit({
+            url: "$!basePath/system/datadict/saveItem", success: function (data) {
+                if (data.success == true) {
+                    Toast.success("保存成功!");
+                    setTimeout(function () {
+                        $("#btnSync").tooltip({title: "点击这里，立即生效", placement: "bottom"});
+                        $("#btnSync").tooltip("show");
+
+                        setTimeout(function () {
+                            $("#btnSync").tooltip("destroy");
+                        }, 3000);
+                    }, 4000);
+                } else {
+                    Toast.error(data.message);
+                }
+                btn.button("reset");
+            }
+        });
+    }
+    // 同步
+    function sync() {
+        var btn = $("#btnSync");
+        btn.button("loading");
+        $.post("$!basePath/system/datadict/sync", {}, function (data) {
+            if (data.success == true) {
+                Toast.success("同步成功!");
+            } else {
+                Toast.error(data.message);
+            }
+            btn.button("reset");
+        });
+    }
+    var enjoyhint_instance;
+    function help() {
+        //导入样式和js
+        if (enjoyhint_instance == undefined) {
+            $("head").append("<link rel=\"stylesheet\" href=\"$!basePath/framework/plugins/enjoyhint/enjoyhint.css\">");
+            $("body").append("<script type=\"text/javascript\" src=\"$!basePath/framework/plugins/enjoyhint/enjoyhint.min.js\"><\/script>");
+            enjoyhint_instance = new EnjoyHint({});
+            var enjoyhint_script_steps = [
+                {
+                    selector: "#jsTreeDataDict",
+                    event_type: "next",
+                    description: "1. 从此处点击选择一个数据字典"
+                },
+                {
+                    selector: "#btnAddItem",
+                    event_type: "next",
+                    description: "2. 点击此处，新增一个子项"
+                },
+                {
+                    selector: "#dataDictItemForm tbody tr td a:last",
+                    event_type: "next",
+                    description: "2.1 如输入错误，可点击此处删除子项"
+                },
+                {
+                    selector: "#btnSave",
+                    event_type: "next",
+                    description: "3. 输入完毕后点击保存，等待保存成功提示"
+                },
+                {
+                    selector: "#btnSync",
+                    event_type: "next",
+                    description: "4. 操作结束后，点击此处将数据库中的数据与服务器缓存同步"
+                }
+            ];
+            enjoyhint_instance.setScript(enjoyhint_script_steps);
+        }
+        enjoyhint_instance.runScript();
+    }
+
+    function exportData() {
+        var id = _catalog || _cid;
+        if (!id) return ns.tip.toast.warning("请先选择字典或字典组！");
+        ns.view.showModal("$!basePath/system/datadict/export/json?id=" + id);
+    }
+    function importData() {
+        ns.view.showModal("$!basePath/system/datadict/import/json", {
+            onHidden : function(dialog){
+                if(dialog.success){
+                    //刷新树
+                    $.jstree.reference("#jsTreeDataDict").refresh();
+                }
+            }
+        });
+    }
+    ns.ready(function () {
+        initTreeView();
+    });
+</script>
+
+#loading_close
+</body>
+</html>

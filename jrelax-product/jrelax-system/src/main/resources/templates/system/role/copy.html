@@ -1,0 +1,63 @@
+<form id="roleCopyForm" class="parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/system/role/copy/do">
+    <input type="hidden" name="id" value="$!role.id">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">复制角色</h4>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" name="unit.id" value="$!unit.id">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">复制到机构</label>
+                    <input type="text" class="form-control combotree" name="unitId" data-parsley-required="true" placeholder="机构名称">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">名称</label>
+                    <input type="text" class="form-control" name="name" data-parsley-required="true" placeholder="名称" autofocus>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/form.js",
+        "/framework/js/form/select.js",
+        "/framework/js/form/validator.js",
+        "/framework/js/form/combotree.js"
+    ]);
+    ns.ready(function (dialog) {
+        $("#roleCopyForm").ajaxForm({
+            beforeSubmit: function (arr, form , options) {
+                form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("角色复制成功！");
+                    ns.view.Dialog.close(form, {isCopy: true});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                form.find("#ok").button("reset")
+            ;
+            }
+        });
+
+        dialog.find(".combotree").combotree({
+            url: function (node) {
+                return node.id === "#" ? "$!basePath/system/unit/tree" : "$!basePath/system/unit/tree/" + node.id
+            },
+            value: "$!role.unit.id",
+            text: "$!role.unit.name"
+        });
+    });
+</script>

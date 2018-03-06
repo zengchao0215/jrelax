@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+    <style>
+        .backup-table {
+            padding-left: 50px !important;
+        }
+    </style>
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="tool-button">
+                        <a class="btn btn-primary navbar-btn" href="javascript:;" onclick="doConfig()"><i class="fa fa-cog"></i>设置程序路径</a>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row mb15">
+                            <div class="col-lg-12 col-md-12">
+                                #if($!error)
+                                    <div class="alert alert-warning">
+                                        $!error
+                                        <a href="$!basePath/system/data/backup">重试</a>
+                                    </div>
+                                #else
+                                    <h4>数据库名：$!catalog， 共$!tableList.size()张表</h4>
+                                <div class="alert alert-warning">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <strong>提示：</strong> 数据库用户需要配置 `File` 和 `Lock Tables` 权限
+                                </div>
+                                <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-md-9">名称</th>
+                                            <th class="col-md-3">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="bg-default">
+                                            <td>数据库：$!catalog</td>
+                                            <td>
+                                                <button class="btn btn-warning btn-xs" type="button" onclick="doBack('')">整库备份</button>
+                                                <button class="btn btn-warning btn-xs" type="button" onclick="viewList('')">查看备份文件</button>
+                                            </td>
+                                        </tr>
+                                            #foreach($!table in $!tableList)
+                                            <tr>
+                                                <td class="backup-table">$!table</td>
+                                                <td>
+                                                    <button class="btn btn-default btn-xs" type="button" onclick="doBack('$!table')">立即备份</button>
+                                                    <button class="btn btn-default btn-xs" type="button" onclick="viewList('$!table')">查看备份文件</button>
+                                                </td>
+                                            </tr>
+                                            #end
+                                        </tbody>
+                                    </table>
+                                #end
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<script type="text/javascript">
+    function doConfig() {
+        ns.prompt("请输入备份程序所在文件夹", function (path) {
+            ns.post("$!basePath/system/data/backup/config", {path: path}, function (success, data) {
+                if (success) {
+                    window.location.reload();
+                }
+            });
+        }, null, {
+            size: "modal-lg"
+        });
+    }
+
+    function doBack(table) {
+        ns.confirm("确定要进行备份操作吗？", function () {
+            var bar = ns.view.showProgressbar("正在备份");
+            ns.post("$!basePath/system/data/backup/backup", {table: table}, function (success, data) {
+                if (success) {
+                    ns.tip.toast.success("备份成功");
+                } else {
+                    ns.tip.toast.error("备份失败");
+                }
+                bar.close();
+            });
+        });
+    }
+
+    function viewList(table) {
+        ns.view.showModal("$!basePath/system/data/backup/list?table=" + table);
+    }
+</script>
+#loading_close
+</body>
+</html>

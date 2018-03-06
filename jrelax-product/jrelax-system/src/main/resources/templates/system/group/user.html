@@ -1,0 +1,77 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">管理用户</h4>
+</div>
+<div class="modal-body">
+    <input type="hidden" name="id" value="$!group.id">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table id="dgGroupUser"></table>
+            <div id="dgGroupUserPager"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="pull-left">
+        <button id="add" type="button" class="btn btn-primary" data-loading-text="正在添加..."><i class="fa fa-plus"></i> 加入新用户</button>
+        <button id="remove" type="button" class="btn btn-danger" data-loading-text="正在移除..."><i class="fa fa-close"></i> 移除选中用户</button>
+    </div>
+    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+</div>
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/checkbox.js");
+    ns.requireJS("/framework/js/view/datagrid.js");
+    ns.requireJS("/framework/js/common/user.js");
+    ns.ready(function (dialog) {
+        var dgGroupUser = dialog.find("#dgGroupUser").jqGrid({
+            url: '$!basePath/system/group/user/data',
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "登录名", name: "userName", width: 100},
+                {label: "真实姓名", name: "realName", width: 100},
+                {label: "联系方式", name: "mobile", width: 100},
+            ],
+            autowidth:false,
+            width:dialog.find("modal-body").width(),
+            height: 300,
+            pager: "#dgGroupUserPager",
+            pagerpos: "center",
+            multiselect: true,
+            icheckbox: true,
+            postData: {groupId: "$!group.id"}
+        });
+
+        dialog.find("#add").on("click", function(){
+            ns.common.user.selectByUnit({
+                multi : true,
+                callback : function(data){
+                    var userIds = [];
+                    $.each(data, function(i, user){
+                        userIds.push(user.id);
+                    });
+                    dialog.find("#add").button("loading");
+                    ns.post("$!basePath/system/group/user/add", {groupId:"$!group.id", userIds:userIds.toString()}, function(success, data){
+                        if(success){
+                            ns.tip.toast.success("用户已添加到用户组！");
+                            dgGroupUser.reload();
+                        }
+                        dialog.find("#add").button("reset");
+                    })
+                }
+            })
+        });
+        dialog.find("#remove").on("click", function(){
+            ns.confirm("确认从用户组中移除吗？", function(){
+                var userIds = dgGroupUser.getSelectRows();
+                dialog.find("#remove").button("loading");
+                ns.post("$!basePath/system/group/user/remove", {groupId:"$!group.id", userIds:userIds.toString()}, function(success, data){
+                    if(success){
+                        ns.tip.toast.success("用户已从用户组中移除！");
+                        dgGroupUser.reload();
+                    }
+                    dialog.find("#remove").button("reset");
+                });
+            });
+        });
+    });
+</script>

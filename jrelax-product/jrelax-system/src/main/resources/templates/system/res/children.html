@@ -1,0 +1,32 @@
+#foreach($!obj in $list)
+<tr data-tt-id="$!obj.id" #if($!obj.parentId!='-1')data-tt-parent-id="$!obj.parentId"#end data-tt-branch="$!obj.hasChildren()">
+    <td><span class="pd-l-sm"></span><i class="$!obj.icon mr5"></i> <a href="javascript:;" data-type="text" data-title="输入新名称" data-pk="$!obj.id" data-placement="right"
+                                                                       class="xeditable-name">$!obj.name</a> #if($!obj.beta)
+        <div class="badge badge-top bg-danger"><span>新功能</span></div>#end #if($!obj.newWindow)<span class="badge bg-info">新窗口</span>#end</td>
+    <td class="offscreen-right"><a href="javascript:;" data-type="text" data-title="输入新URL" data-pk="$!obj.id" data-emptytext="未设置" data-placement="right" class="xeditable-url">$!obj.url</a></td>
+    <td id="td_status_$!obj.id">#if($!obj.enabled)<i class="fa fa-circle text-success ml5">#else <i class="fa fa-circle text-danger ml5">#end</i></td>
+    <td>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                <i class="ti-settings"></i>
+                <span class="ti-angle-down"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="javascript:;"
+                       onclick="ns.view.showModal('$!basePath/system/res/detail/$!obj.id',{border:false})">#i18n('system.common.view')</a></li>
+                <li><a href="javascript:;" onclick="doEdit('$!obj.id')">#i18n('system.common.edit')</a></li>
+                <li><a href="javascript:;" onclick="del('$!obj.id')">#i18n('system.common.delete')</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:;" onclick="enableRes('$!obj.id')">#i18n('system.common.enable')</a></li>
+                <li><a href="javascript:;" onclick="disableRes('$!obj.id')">#i18n('system.common.disable')</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:;" onclick="doAdd('$!obj.id')">添加子菜单</a></li>
+                <li><a href="javascript:;" onclick="doBatchAdd('$!obj.id')">添加子菜单（批量）</a></li>
+                <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/res/columns?id=$!obj.id')">管理字段</a></li>
+                <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/res/buttons?id=$!obj.id')">管理按钮</a></li>
+                <li><a href="javascript:;" onclick="ns.view.showModal('$!basePath/system/res/role?id=$!obj.id')">管理角色</a></li>
+            </ul>
+        </div>
+    </td>
+</tr>
+#end

@@ -1,0 +1,18 @@
+.timeline{position:relative;display:table;width:100%;margin-bottom:-15px}
+.timeline:before{position:absolute;top:35px;bottom:15px;left:50%;width:4px;background:#1582dc;content:'';margin-left:-2px;border-radius:2px}
+.timeline .panel{position:relative}
+.timeline-heading{display:table;margin:0 auto;margin-bottom:30px;padding:5px 15px;min-width:80px;border-radius:2px;background:#1582dc;color:#fff;text-align:center;position:relative;clear:both}
+.timeline-panel{width:50%;position:relative;clear:both}
+.timeline-panel:before{position:absolute;top:10px;margin:2px 0 0 -6px;width:12px;height:12px;border:2px solid #f1f4f9;border-radius:50%;background:#1582dc;content:""}
+.timeline-panel>.panel{border:1px solid #c4d1df;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.timeline-panel>.panel:after{position:absolute;top:11px;right:100%;width:0;height:0;border-width:6px;border-style:solid;border-color:transparent #fff transparent transparent;content:" ";pointer-events:none}
+.timeline-panel>.panel:before{position:absolute;top:10px;right:100%;width:0;height:0;border-width:7px;border-style:solid;border-color:transparent #c4d1df transparent transparent;content:" ";pointer-events:none}
+.timeline-panel:nth-child(even){float:right;padding-left:20px;padding-right:0}
+.timeline-panel:nth-child(even):before{left:0}
+.timeline-panel:nth-child(even) .timeline-date{left:-190px;position:absolute;text-align:right;margin-top:6px;width:150px}
+.timeline-panel:nth-child(odd){float:left;padding-right:20px;padding-left:0}
+.timeline-panel:nth-child(odd):before{right:0;margin:2px -6px 0 0}
+.timeline-panel:nth-child(odd) .timeline-content{float:left;padding:0 20px 0 0}
+.timeline-panel:nth-child(odd) .timeline-date{right:-190px;text-align:left;position:absolute;margin-top:8px;width:150px}
+.timeline-panel:nth-child(odd) .panel:after{left:100%;border-color:transparent transparent transparent #fff}
+.timeline-panel:nth-child(odd) .panel:before{left:100%;border-color:transparent transparent transparent #c4d1df}

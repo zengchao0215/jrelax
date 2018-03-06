@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+<title>${system_admin_title}</title> #required_css
+<style>
+.tab-content{
+	font-size: 25px;
+}
+.tab-content span{
+	width: 50px;
+	height: 40px;
+}
+	.icon-row{
+		position: relative;
+	}
+	.tag{
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		color: #ccc;
+	}
+</style>
+</head>
+
+<body>
+	#loading
+	<div class="app $!layout">
+		<section class="layout">
+			<!-- 内容主体 -->
+			<section class="main-content">
+				<div class="content-wrap">
+					<div class="wrapper">
+						<div class="col-md-12 no-p">
+							<div class="box-tab no-m">
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="#fontawesome" data-toggle="tab">Fontawesome</a></li>
+									<li><a href="#themify" data-toggle="tab">Themify</a></li>
+									<li><a href="#glyphicon" data-toggle="tab">Glyphicon</a></li>
+									<li><a href="#sli" data-toggle="tab">Simple Line Icons</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade active in" id="fontawesome">
+										<div class="icon-row">
+										#set($ch = '')
+										#foreach($!icon in $!fa)
+											#if(!$!icon.startsWith($ch) )
+												#set($tag = $ch.substring(6))
+												<div class="tag">$!tag</div>
+												<div class="hr-line-dashed"></div>
+											</div>
+											<div class="icon-row">
+											#end
+											#set($ch = $icon.substring(0, 7))
+											<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+												#if($foreach.last)
+												#set($tag = $ch.substring(6))
+												<div class="tag">$tag</div>
+												#end
+										#end
+										</div>
+									</div>
+									<div class="tab-pane fade" id="themify">
+										<div class="icon-row">
+										#set($ch = '')
+										#foreach($!icon in $!ti)
+											#if(!$!icon.startsWith($ch) )
+												#set($tag = $ch.substring(3))
+												<div class="tag">$!tag</div>
+												<div class="hr-line-dashed"></div>
+											</div>
+											<div class="icon-row">
+											#end
+											#set($ch = $icon.substring(0, 4))
+										<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+												#if($foreach.last)
+												#set($tag = $ch.substring(3))
+												<div class="tag">$tag</div>
+												#end
+										#end
+										</div>
+									</div>
+									<div class="tab-pane fade" id="glyphicon">
+										<div class="icon-row">
+										#set($ch = '')
+										#foreach($!icon in $!gly)
+											#if(!$!icon.startsWith($ch) )
+												#set($tag = $ch.substring(20))
+												<div class="tag">$!tag</div>
+												<div class="hr-line-dashed"></div>
+											</div>
+											<div class="icon-row">
+											#end
+											#set($ch = $icon.substring(0, 21))
+											<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+												#if($foreach.last)
+												#set($tag = $ch.substring(20))
+												<div class="tag">$tag</div>
+												#end
+										#end
+										</div>
+									</div>
+									<div class="tab-pane fade" id="sli">
+										<div class="icon-row">
+										#set($ch = '')
+										#foreach($!icon in $!sli)
+										#if(!$!icon.startsWith($ch) )
+												#set($tag = $ch.substring(5))
+												<div class="tag">$!tag</div>
+												<div class="hr-line-dashed"></div>
+											</div>
+											<div class="icon-row">
+										#end
+										#set($ch = $icon.substring(0, 6))
+										<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+												#if($foreach.last)
+												#set($tag = $ch.substring(5))
+												<div class="tag">$tag</div>
+												#end
+										#end
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<a class="exit-offscreen"></a>
+			</section>
+		</section>
+	</div>
+	#required_js
+
+	<!-- 本页面脚本 -->
+	<script type="text/javascript">
+		$(".tab-content span").bind("click", function(){
+//			ns.tip.alert($(this).attr("title"));
+			prompt("图标", $(this).attr("title"));
+		});
+	</script>
+	#loading_close
+</body>
+</html>

@@ -1,0 +1,43 @@
+<form id="dataImportForm" role="form" method="post" action="$!basePath/system/datadict/import/json/do">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title">导入JSON</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="form-group">
+					<textarea name="json" cols="30" rows="10" class="form-control"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<span class="text-danger pull-left">* 可利用此功能进行数据字典的异地复制迁移</span>
+		<button id="ok" type="submit" class="btn btn-primary" data-loading-text="正在导入...">确 定</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+	</div>
+</form>
+<script src="$!basePath/framework/plugins/jquery.form.js"></script>
+<script type="text/javascript">
+	ns.ready(function(dialog) {
+		dialog.find("#dataImportForm").ajaxForm({
+			beforeSubmit : function(arr, $form, options) {
+				var data = $form.find("textarea");
+				if (data.val().length <= 0) {
+					ns.tip.toast.warning("JSON数据不可为空！");
+					return false;
+				}
+				$form.find("#ok").button("loading");
+			},
+			success : function(data, statusText, xhr, $form) {
+				if (data.success == true) {
+					Toast.success("导入成功！");
+					dialog.close({success : true});
+				} else {
+					Toast.error(data.message);
+				}
+			}
+		});
+	});
+</script>

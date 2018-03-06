@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">日志记录</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table id="dgSchedulerLog"></table>
+            <div id="dgSchedulerLogPager"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+</div>
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/checkbox.js",
+        "/framework/js/view/datagrid.js"]);
+    ns.ready(function (dialog) {
+        setTimeout(function () {
+            dialog.find("#dgSchedulerLog").jqGrid({
+                url: '$!basePath/scheduler/log/data?id=$!scheduler.id',
+                colModel: [
+                    {label: "ID", name: "id", key: true, hidden: true},
+                    {
+                        label: "状态", name: "status", formatter: function (val, row, data) {
+                            if (data.status == 1) return "<span class='text-warning'>失败</span>";
+                            else return "<span class='text-success'>运行中</span>";
+                        }
+                    },
+                    {label: "消息", name: "msg"},
+                    {label: "执行时间", name: "execTime"},
+                    {label: "运行时长", name: "times"}
+                ],
+                rownumbers: true,
+                height: 400,
+                pager: "#dgSchedulerLogPager",
+            });
+        }, 500);
+    });
+</script>

@@ -1,0 +1,104 @@
+<form id="roleAddForm" class="form-horizontal parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/system/role/add/do">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">新增角色</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">所属机构</label>
+                    <div class="col-sm-10">
+                        #if($unit)
+                        <input type="hidden" name="unit.id" value="$!unit.id">
+                        <input type="text" class="form-control" name="unit.id" data-parsley-required="true" placeholder="机构名称" value="$!unit.name" disabled>
+                        #else
+                        <input type="text" class="form-control combotree" name="unit.id" data-parsley-required="true">
+                        #end
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">名称<span class="text-danger">*</span></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="name" data-parsley-required="true" placeholder="名称" autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">描述</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="descript" placeholder="描述"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">是否启用</label>
+                    <div class="col-sm-10">
+                        <div class="switcha mr15">
+                            <input type="checkbox" name="enabled" class="form-control js-switch-blue" checked="checked">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">数据权限</label>
+                    <div class="col-sm-10">
+                        <select name="perm" class="form-control chosen">
+                            #foreach($!obj in $!permMap.entrySet())
+                            <option value="$!obj.key">$!obj.value</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/form.js",
+        "/framework/js/form/select.js",
+        "/framework/js/form/validator.js",
+        "/framework/js/form/combotree.js"
+    ]);
+    ns.ready(function (dialog) {
+        dialog.find("#roleAddForm").ajaxForm({
+            beforeSubmit: function (arr, $form, options) {
+                $form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, $form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("角色添加成功！");
+                    ns.view.Dialog.close($form, {isSaved: true, id: data.id});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                $form.find("#ok").button("reset");
+            }
+        });
+
+        dialog.find(".combotree").combotree({
+            url : function(node){
+                return node.id === "#" ? "$!basePath/system/unit/tree" : "$!basePath/system/unit/tree/" + node.id
+            }
+        });
+    });
+</script>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    <section class="layout">
+        <!-- 菜单 -->
+        <section class="container">
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="toolbar">
+                        <a class="btn btn-primary toolbar-item" onclick="doAddBlackList()"><i class="fa fa-plus"></i> 新增规则</a>
+                    </div>
+                    <div class="pull-right toolbar">
+                        <a class="btn btn-primary toolbar-item" onclick="doSync()"><i class="ti-reload"></i> 同步缓存</a>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <table id="dgBlackList"></table>
+                                <div id="dgBlackListPager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+<script type="text/javascript">
+    ns.requireJS("/framework/js/view/datagrid.js");
+    var dgBlackList;
+    ns.ready(function () {
+        dgBlackList = $("#dgBlackList").jqGrid({
+            url: '$!basePath/system/senior/black/list/data',
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "规则", name: "rules", width:"400"},
+                {label: "描述", name: "remarks", width:"200"},
+                {label: "状态", name: "enabled", width:"80", formatter : ns.view.datagrid.renderEnabled},
+                {
+                    label: '操作',formatter: function (val, node, data) {
+                    return ns.view.datagrid.renderOp([
+                        {
+                            title: "查看详情", onclick: function () {
+                            ns.view.showModal("$!basePath/system/senior/black/list/detail/" + data.id);
+                        }
+                        },
+                        {
+                            title: "编辑", onclick: function () {
+                            ns.view.showModal("$!basePath/system/senior/black/list/edit/" + data.id, {
+                                onHidden: function (dialog, obj) {
+                                    if (dialog.isEdited) {
+                                        dgBlackList.reload();
+                                    }
+                                }
+                            });
+                        }
+                        },
+                        {
+                            title: "删除", onclick: function () {
+                            doDeleteBlackList(data.id);
+                        }
+                        },
+                        {divider:true},
+                        {
+                            title: "启用", onclick: function () {
+                            doEnable(data.id);
+                        }
+                        },
+                        {
+                            title: "禁用", onclick: function () {
+                            doDisable(data.id);
+                        }
+                        }
+                    ]);
+                }
+                }
+            ],
+            rownumbers: true,
+            height: ns.view.datagrid.autoHeight(),
+            pager: "#dgBlackListPager",
+            sortname: "createTime",
+            sortorder: "desc"
+        });
+    });
+    function doAddBlackList() {
+        ns.view.showModal("$!basePath/system/senior/black/list/add", {
+            onHidden: function (dialog, obj) {
+                if (dialog.isSaved) {
+                    dgBlackList.reload();
+                }
+            }
+        });
+    }
+    function doDeleteBlackList(id) {
+        ns.tip.confirm("确定要删除此条数据吗？", function () {
+            ns.get("$!basePath/system/senior/black/list/delete/" + id, function (success, data) {
+                if (success) {
+                    ns.tip.toast.success("数据已删除");
+                    dgBlackList.reload();
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+            });
+        });
+    }
+    function doEnable(id){
+        ns.get("$!basePath/system/senior/black/list/enable/"+id, function(success, data){
+            if(success){
+                ns.tip.toast.success("已启用，生效请同步缓存");
+                dgBlackList.reload();
+            }else{
+                ns.tip.toast.error(data.message);
+            }
+        });
+    }
+    function doDisable(id){
+        ns.get("$!basePath/system/senior/black/list/disable/"+id, function(success, data){
+            if(success){
+                ns.tip.toast.success("已禁用，生效请同步缓存");
+                dgBlackList.reload();
+            }else{
+                ns.tip.toast.error(data.message);
+            }
+        });
+    }
+    function doSync(){
+        ns.get("$!basePath/system/senior/black/list/sync", function(success, data){
+           if(success){
+               ns.tip.toast.success("缓存已同步");
+           }else{
+               ns.tip.toast.error(data.message);
+           }
+        });
+    }
+</script>
+</body>
+</html>

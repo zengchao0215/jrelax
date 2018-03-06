@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <title>${system_admin_title}</title>
+    #required_css
+    <style>
+        .third-content>aside{
+            height: 100%;
+            position: relative;
+            display: table-cell;
+            vertical-align: top;
+            float: none;
+        }
+
+        .main-navigation a{
+            padding-left: 50px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="app $!layout">
+    <section class="layout">
+        <!-- 内容主体 -->
+        <section class="main-content">
+            <div class="content-wrap">
+                <div class="wrapper no-p">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="panel panel-white" style="border-color:#eeeeee;min-height: 500px;margin-bottom: 0;">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title text-center">
+                                        <div class="pull-left">
+                                            <a href="$!basePath/index" class="btn"><i class="icon-arrow-left"></i> 返回</a>
+                                        </div>
+                                        $!name
+                                    </h3>
+                                </div>
+                                <div class="panel-body third-content no-p">
+                                    #if($!list.size() > 0)
+                                    <div class="row">
+                                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-right: 0;border-right: 1px solid #eeeff8;">
+                                            #parse("_macro/sidebar-icon.html")
+                                        </div>
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="padding-left: 0;">
+                                            <iframe id="contentFrame" name="contentFrame" src="$!{basePath}$!res.url" frameborder="0" width="100%"></iframe>
+                                        </div>
+                                    </div>
+                                    #else
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <iframe id="contentFrame" name="contentFrame" src="$!{basePath}$!res.url" frameborder="0" width="100%"></iframe>
+                                        </div>
+                                    </div>
+                                    #end
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="exit-offscreen"></a>
+        </section>
+    </section>
+</div>
+#required_js
+<script>
+    $(function(){
+        var iframe = $("#contentFrame");
+
+        //计算iframe高度
+        function autoHeight() {
+            var height = $(document).height();
+            $(".panel").height(height -2);
+            iframe.height(height - 43);
+            $(".third-content .main-navigation").height(height - 43);
+        }
+
+        autoHeight();
+        window.onresize = autoHeight;
+
+        //更新样式
+        var sidebars = $(".third-content aside .nav a");
+        $.each(sidebars, function(i, n){
+            $(n).on("click", function(){
+                var sidebar = $(this);
+                sidebar.parents(".nav").find("li.active").removeClass("active");
+                if(sidebar.parent().find(".sub-menu").length === 0)
+                    sidebar.parent().addClass("active");
+                sidebar.parents(".nav").find("li[data-first-res].selected").removeClass("selected");
+                sidebar.parents("li[data-first-res]").addClass("selected");
+            })
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+    <style type="text/css">
+        .read a {
+            color: #ccc;
+        }
+
+        table > tbody > tr:first-child > td {
+            border-top: 0px !important;
+        }
+
+        .notify-cur {
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body>#loading
+
+
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <aside class="sidebar-250 canvas-right">
+                <div class="content-wrap no-p">
+                    <div class="wrapper">
+                        <nav role="navigation">
+                            <div class="no-padding">
+                                <ul class="nav nav-stacked">
+                                    <li class="disabled text-uppercase"><a href="javascript:;"><b>文件夹</b></a></li>
+                                    <li class="notify-catagory"><a class="bg-primary notify-cur" href="javascript:;"
+                                                                   onclick="change(1)">#if($!unreadCount>0)<span
+                                            class="badge pull-right bg-success">$!unreadCount</span>#end<i
+                                            class="ti-import mr5"></i>新通知</a></li>
+                                    <li class="notify-catagory"><a href="javascript:;" onclick="change(2)"><i
+                                            class="ti-timer mr5"></i>历史通知</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <div class="m15">
+                            <button class="btn btn-primary btn-block offscreen-right" onclick="readAll()"><i
+                                    class="ti-check-box"></i> 标记为已读
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <header class="header navbar clearfix bb pl0">
+                    <p class="navbar-text">新通知</p>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-default navbar-btn" onclick="change(1)"><i
+                                    class="ti-angle-left"></i></button>
+                            <button type="button" class="btn btn-sm btn-default navbar-btn" onclick="change(2)"><i
+                                    class="ti-angle-right"></i></button>
+                        </div>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table id="dgNotify"></table>
+                                <div id="dgNotifyPager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 页面组件脚本 -->
+<script src="$!basePath/framework/plugins/count-to/jquery.countTo.js"></script>
+
+<!-- 本页面脚本 -->
+<script type="text/javascript">
+    //导入js
+    ns.requireJS([
+        "/framework/js/form/checkbox.js",
+        "/framework/js/view/datagrid.js"]);
+    var dgNotify;
+    ns.ready(function () {
+        dgNotify = $("#dgNotify").jqGrid({
+            url: '$!basePath/system/notify/data',
+            colModel: [
+                {label: 'ID', name: 'id', key: true, hidden: true, align: "left"},
+                {label: '标题', name: 'title', width: 300},
+                {label: '内容', name: 'content', width: 300},
+                {label: '时间', name: 'timespan', width: 100},
+                {label: '发送者', name: 'createUser', width: 100}
+            ],
+            height: $(".main-content .wrapper").height() - ns.view.datagrid.offsetHeight,
+            pager: "#dgNotifyPager",
+            icheckbox: true,
+            multiselect: true,
+            multiboxonly : true,
+            postData: {type: 1}
+        });
+    });
+
+    function readAll() {
+        var ids = dgNotify.getSelectRows();
+        if(ids.length == 0){
+            return ns.tip.toast.warning("请选择要标记的通知");
+        }
+        $.each(ids, function (i, id) {
+            ns.__readNotify(id, this)
+        });
+        setTimeout(function(){
+            dgNotify.reload();
+        }, 1000);
+    }
+    function change(t) {
+        $(".notify-catagory a").attr("class", "");
+        if (t == 1) {
+            dgNotify.reload({type: 1});
+            $(".notify-catagory:first a").attr("class", "bg-primary notify-cur");
+            $(".notify-catagory:first a").blur();
+            $(".main-content .navbar-text").text("新通知");
+        } else if (t == 2) {
+            dgNotify.reload({type: 2});
+            $(".notify-catagory:last a").attr("class", "bg-primary notify-cur");
+            $(".notify-catagory:last a").blur();
+            $(".main-content .navbar-text").text("历史通知");
+        }
+    }
+</script>
+#loading_close
+</body>
+</html>

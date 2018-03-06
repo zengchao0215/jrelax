@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提示组件</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<body class="p10">
+	<div class="app">
+		<h3>单级菜单</h3>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<i class="ti-settings"></i> 点击展开 <span class="ti-angle-down"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="javascript:;">#i18n('system.common.view')</a></li>
+				<li><a href="javascript:;">#i18n('system.common.edit')</a></li>
+				<li><a href="javascript:;">#i18n('system.common.delete')</a></li>
+				<li class="divider"></li>
+				<li><a href="javascript:;">#i18n('system.common.enable')</a></li>
+				<li><a href="javascript:;">#i18n('system.common.disable')</a></li>
+			</ul>
+		</div>
+		<h3>多级菜单</h3>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<i class="ti-settings"></i> 点击展开 <span class="ti-angle-down"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="javascript:;">#i18n('system.common.view')</a></li>
+				<li><a href="javascript:;">#i18n('system.common.edit')</a></li>
+				<li><a href="javascript:;">#i18n('system.common.delete')</a></li>
+				<li class="divider"></li>
+				<li><a href="javascript:;">#i18n('system.common.enable')</a></li>
+				<li><a href="javascript:;">#i18n('system.common.disable')</a></li>
+				<li class="divider"></li>
+				<li class="dropdown-submenu"><a tabindex="-1" href="javascript:;">更多操作</a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:;">操作一</a></li>
+						<li><a href="javascript:;">操作二</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	#required_js
+	<script type="text/javascript">
+		
+	</script>
+</body>
+</html>

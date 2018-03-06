@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">富文本编辑器</h1>
+                <p class="lead">基于<a href="https://summernote.org/" target="_blank">Summernote</a>实现，需引入 <code>/framework/js/form/summernote.js</code></p>
+
+                <h2>基本实例</h2>
+                <p></p>
+                <div class="bs-example">
+                    <textarea name="content" id="content" class="form-control"></textarea>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;textarea name="content" id="content" class="form-control"&gt;&lt;/textarea&gt;
+
+                        //js初始化
+                        ns.requireJS("/framework/js/form/summernote.js");
+                        ns.ready(function(){
+                            $("#content").summernote();
+                        });
+                    </pre>
+                </figure>
+
+                <h2>获取/设置内容</h2>
+                <p></p>
+                <div class="bs-example">
+                    <button id="btnGet" class="btn btn-default">获取内容</button>
+                    <button id="btnSet" class="btn btn-default">设置内容</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        //获取内容
+                        $("#content").summernote("code")
+                        //设置内容
+                        $("#content").summernote("code", "<p style='color:red;'>我要发财啦~~~~~~~~~</p>");
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/form/summernote.js");
+    ns.ready(function(){
+        var editor = $("#content").summernote();
+
+        $("#btnGet").on("click", function(){
+            alert($("#content").summernote("code"));
+        });
+
+        $("#btnSet").on("click", function(){
+            $("#content").summernote("code", "<p style='color:red;'>我要发财啦~~~~~~~~~</p>");
+        });
+    });
+</script>
+</html>

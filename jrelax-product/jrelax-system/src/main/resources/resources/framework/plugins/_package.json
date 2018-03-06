@@ -1,0 +1,513 @@
+[
+  {
+    "name": "jquery.appear",
+    "version": "",
+    "files": "appear/*",
+    "url": "",
+    "descript": ""
+  },
+  {
+    "name": "bootstrap3-x-editable",
+    "version": "1.5.1",
+    "files": "bootstrap3-x-editable/**/*",
+    "url": "http://github.com/vitalets/x-editable",
+    "descript": "快捷编辑插件，实现对单个字段的快捷编辑"
+  },
+  {
+    "name": "bootstrap-colorpalette",
+    "version": "",
+    "files": "bootstrap-colorpalette/*",
+    "url": "",
+    "descript": "颜色选择器"
+  },
+  {
+    "name": "bootstrap-markdown",
+    "version": "2.7.0",
+    "files": "bootstrap-markdown/*",
+    "url": "http://github.com/toopay/bootstrap-markdown",
+    "descript": "markdown编辑器"
+  },
+  {
+    "name": "bootstrap-rating-input",
+    "version": "",
+    "files": "bootstrap-rating-input/*",
+    "url": "https://github.com/javiertoledo/bootstrap-rating-input",
+    "descript": "星级评价器"
+  },
+  {
+    "name": "bootstrap-tagsinput",
+    "version": "",
+    "files": "bootstrap-tagsinput/*",
+    "url": "https://github.com/bootstrap-tagsinput/bootstrap-tagsinput",
+    "descript": "Bootstrap Tags Input is a jQuery plugin providing a Twitter Bootstrap user interface for managing tags."
+  },
+  {
+    "name": "chartjs",
+    "version": "1.0.1-beta.4",
+    "files": "chartjs/*",
+    "url": "http://chartjs.org/",
+    "descript": "js图表插件"
+  },
+  {
+    "name": "chosen",
+    "version": "1.5.1",
+    "files": "chosen/*",
+    "url": "https://github.com/harvesthq/chosen",
+    "descript": "select下拉菜单"
+  },
+  {
+    "name": "colorpicker",
+    "version": "2.0",
+    "files": "colorpicker/*",
+    "url": "",
+    "descript": "颜色选择器"
+  },
+  {
+    "name": "count-to",
+    "version": "1.2.0",
+    "files": "count-to/*",
+    "url": "https://github.com/mhuggins/jquery-countTo/",
+    "descript": "将计数（或向下）在一个指定的速度到目标数量"
+  },
+  {
+    "name": "datatables",
+    "version": "1.10.0",
+    "files": "datatables/*",
+    "url": "http://datatables.net/",
+    "descript": "数据表格"
+  },
+  {
+    "name": "datepicker",
+    "version": "",
+    "files": "datepicker/*",
+    "url": "",
+    "descript": "日期选择控件"
+  },
+  {
+    "name": "daterangepicker",
+    "version": "",
+    "files": "daterangepicker/*",
+    "url": "http://www.dangrossman.info",
+    "descript": "日期范围选择控件"
+  },
+  {
+    "name": "datetimepicker",
+    "version": "",
+    "files": "datetimepicker/*",
+    "url": "http://www.malot.fr/bootstrap-datetimepicker",
+    "descript": "日期+时间选择控件"
+  },
+  {
+    "name": "dropzone",
+    "version": "",
+    "files": "dropzone/*",
+    "url": "http://www.dropzonejs.com/",
+    "descript": "拖放上传"
+  },
+  {
+    "name": "easy-pie-chart",
+    "version": "2.1.7",
+    "files": "easy-pie-chart/*",
+    "url": "https://github.com/rendro/easy-pie-chart/",
+    "descript": "EASY饼图数据统计Jquery插件"
+  },
+  {
+    "name": "enjoyhint",
+    "version": "2.1.7",
+    "files": "enjoyhint/*",
+    "url": "https://github.com/xbsoftware/enjoyhint",
+    "descript": "操作指引"
+  },
+  {
+    "name": "fancybox",
+    "version": "1.3.4",
+    "files": "fancybox/*",
+    "url": "http://fancybox.net",
+    "descript": "弹窗显示插件"
+  },
+  {
+    "name": "FlexPaper",
+    "version": "",
+    "files": "flexpaper/*",
+    "url": "http://flexpaper.devaldi.com",
+    "descript": "office等文档在浏览器中显示插件"
+  },
+  {
+    "name": "flot",
+    "version": "0.8.3",
+    "files": "flot/*",
+    "url": "http://www.flotcharts.org/",
+    "descript": "JS图表显示"
+  },
+  {
+    "name": "fuelux",
+    "version": "3.14.2",
+    "files": "fuelux/*",
+    "url": "http://www.bootcdn.cn/fuelux/",
+    "descript": "Fuel UX 扩展了 Bootstrap 提供额外的轻量级的 JavaScript 控制,易于安全、定制、更新和优化"
+  },
+  {
+    "name": "fullcalendar",
+    "version": "2.0.2",
+    "files": "fullcalendar/*",
+    "url": "http://arshaw.com/fullcalendar/",
+    "descript": "日历显示插件"
+  },
+  {
+    "name": "icheck",
+    "version": "1.0.2",
+    "files": "icheck/*",
+    "url": "http://git.io/arlzeA",
+    "descript": "checkbox插件"
+  },
+  {
+    "name": "imagesloaded",
+    "version": "3.1.4",
+    "files": "imagesloaded/*",
+    "url": "",
+    "descript": "图片延迟加载"
+  },
+  {
+    "name": "ion.rangeSlider",
+    "version": "2.1.4",
+    "files": "ion.rangeSlider/*",
+    "url": "https://github.com/IonDen/ion.rangeSlider",
+    "descript": "范围滑块插件"
+  },
+  {
+    "name": "isotope",
+    "version": "2.0.0",
+    "files": "isotope/*",
+    "url": "http://isotope.metafizzy.co",
+    "descript": "分类过滤插件"
+  },
+  {
+    "name": "jcrop",
+    "version": "",
+    "files": "jcrop/*",
+    "url": "http://deepliquid.com/content/Jcrop_Download.html",
+    "descript": "图像裁剪插件"
+  },
+  {
+    "name": "jstree",
+    "version": "3.1.1",
+    "files": "jstree/*",
+    "url": "http://www.jstree.com",
+    "descript": "js树"
+  },
+  {
+    "name": "jvectormap",
+    "version": "1.2.2",
+    "files": "jvectormap/*",
+    "url": "http://jvectormap.com/",
+    "descript": "地图显示"
+  },
+  {
+    "name": "medium",
+    "version": "",
+    "files": "medium/*",
+    "url": "https://yabwe.github.io/medium-editor/",
+    "descript": "MediumEditor 在线编辑器是对 Medium.com 的 WYSIWYG 编辑器的克隆版本"
+  },
+  {
+    "name": "morris",
+    "version": "0.5.1",
+    "files": "morris/*",
+    "url": "https://github.com/morrisjs/morris.js",
+    "descript": "Morris.js 是一个轻量级的 JS 库，使用 jQuery 和 Rapha&euml;l 来生成各种时序图。"
+  },
+  {
+    "name": "multiselect",
+    "version": "",
+    "files": "multiselect/*",
+    "url": "https://github.com/davidstutz/bootstrap-multiselect",
+    "descript": "多选下拉"
+  },
+  {
+    "name": "parsley",
+    "version": "2.0.2",
+    "files": "parsley/*",
+    "url": "http://parsleyjs.org/",
+    "descript": "jQuery表单验证"
+  },
+  {
+    "name": "printer",
+    "version": "2.4.0",
+    "files": "printer/*",
+    "url": "https://github.com/RitsC/PrintArea",
+    "descript": "网页打印"
+  },
+  {
+    "name": "responsive-tables",
+    "version": "",
+    "files": "responsive-tables/*",
+    "url": "http://elvery.net/demo/responsive-tables/",
+    "descript": "表格自适应"
+  },
+  {
+    "name": "select2",
+    "version": "3.5.1",
+    "files": "select2/*",
+    "url": "http://select2.github.io/",
+    "descript": "单选下拉菜单"
+  },
+  {
+    "name": "slider",
+    "version": "7.0.3",
+    "files": "slider/*",
+    "url": "https://github.com/seiyria/bootstrap-slider/",
+    "descript": "jQuery滑动条"
+  },
+  {
+    "name": "stepy",
+    "version": "",
+    "files": "stepy/*",
+    "url": "http://www.jquery-steps.com/",
+    "descript": "分步向导显示"
+  },
+  {
+    "name": "summernote",
+    "version": "0.8.1",
+    "files": "summernote/*",
+    "url": "http://summernote.org/",
+    "descript": "富文本编辑器"
+  },
+  {
+    "name": "superbox",
+    "version": "",
+    "files": "superbox/*",
+    "url": "",
+    "descript": "jQuery图片展示插件"
+  },
+  {
+    "name": "sweetalert",
+    "version": "1.0.0",
+    "files": "sweetalert/*",
+    "url": "https://github.com/t4t5/sweetalert",
+    "descript": "弹窗提示"
+  },
+  {
+    "name": "switchery",
+    "version": "0.7.0",
+    "files": "switchery/*",
+    "url": "https://github.com/abpetkov/switchery",
+    "descript": "iOS风格复选框"
+  },
+  {
+    "name": "syntax-highlighter",
+    "version": "2.1.382",
+    "files": "syntax-highlighter/*",
+    "url": "http://alexgorbatchev.com/",
+    "descript": "代码高亮"
+  },
+  {
+    "name": "table",
+    "version": "0.1",
+    "files": "table/*",
+    "url": "http://www.nethsoft.com/",
+    "descript": "单元格合并插件"
+  },
+  {
+    "name": "table-sortable",
+    "version": "0.6.0",
+    "files": "table-sortable/*",
+    "url": "http://jqueryui.com/sortable/",
+    "descript": "排序"
+  },
+  {
+    "name": "timepicker",
+    "version": "1.8.11",
+    "files": "timepicker/*",
+    "url": "http://jonthornton.github.com/jquery-timepicker/",
+    "descript": "时间选择"
+  },
+  {
+    "name": "toastr",
+    "version": "",
+    "files": "toastr/*",
+    "url": "http://codeseven.github.io/toastr/demo.html",
+    "descript": " Toast 提示的 jQuery 插件"
+  },
+  {
+    "name": "treetable",
+    "version": "3.2.0",
+    "files": "treetable/*",
+    "url": "http://ludo.cubicphuse.nl/jquery-treetable",
+    "descript": "树表格"
+  },
+  {
+    "name": "typeahead",
+    "version": "0.10.5",
+    "files": "typeahead/*",
+    "url": "https://github.com/twitter/typeahead.js",
+    "descript": "自动补全"
+  },
+  {
+    "name": "wbScrollTab",
+    "version": "1.0",
+    "files": "wbScrollTab/*",
+    "url": "http://www.web-delicious.com/jquery-plugins-demo/wdScrollTab/sample.htm",
+    "descript": "Tab选项卡"
+  },
+  {
+    "name": "wysiwyg",
+    "version": "",
+    "files": "wysiwyg/*",
+    "url": "https://github.com/mindmup/bootstrap-wysiwyg",
+    "descript": "WYSIWYG的富文本编辑器"
+  },
+  {
+    "name": "x-editable",
+    "version": "1.5.1",
+    "files": "x-editable/*",
+    "url": "http://vitalets.github.io/x-editable/",
+    "descript": "jQuery就地编辑库"
+  },
+  {
+    "name": "angular",
+    "version": "1.2.5",
+    "files": "angular.js",
+    "url": "http://angularjs.org",
+    "descript": "google angular.js"
+  },
+  {
+    "name": "boostrap.maxlength",
+    "version": "",
+    "files": "boostrap.maxlength.js",
+    "url": "",
+    "descript": "最大长度"
+  },
+  {
+    "name": "FastClick",
+    "version": "1.0.6",
+    "files": "fastclick.js",
+    "url": "",
+    "descript": "消除点击延时提高程序的运行效率"
+  },
+  {
+    "name": "GMaps",
+    "version": "0.4.13",
+    "files": "gmaps.js",
+    "url": "http://hpneo.github.com/gmaps/",
+    "descript": "GMap地图插件"
+  },
+  {
+    "name": "BlockUI",
+    "version": "2.66.0",
+    "files": "jquery.blockUI.js",
+    "url": "http://malsup.com/jquery/block/",
+    "descript": "页面上的任意元素添加遮层"
+  },
+  {
+    "name": "jquery.center",
+    "version": "1.0",
+    "files": "jquery.center.js",
+    "url": "",
+    "descript": "元素水平/垂直居中"
+  },
+  {
+    "name": "jquery.easing",
+    "version": "1.3",
+    "files": "jquery.easing.min.js",
+    "url": "http://gsgd.co.uk/sandbox/jquery/easing/",
+    "descript": "动画扩展"
+  },
+  {
+    "name": "jquery.form",
+    "version": "3.51.0",
+    "files": "jquery.form.js",
+    "url": "https://github.com/malsup/form",
+    "descript": "jQuery表单扩展"
+  },
+  {
+    "name": "jquery.maskedinput",
+    "version": "1.3.1",
+    "files": "jquery.maskedinput.min.js",
+    "url": "https://github.com/digitalBush/jquery.maskedinput",
+    "descript": "jQuery 多格式输入"
+  },
+  {
+    "name": "jquery.nestable",
+    "version": "2012",
+    "files": "jquery.nestable.js",
+    "url": "https://github.com/dbushell/Nestable",
+    "descript": "排序、排级插件"
+  },
+  {
+    "name": "jquery.pjax",
+    "version": "2012",
+    "files": "jquery.pjax.js",
+    "url": "https://github.com/defunkt/jquery-pjax",
+    "descript": "局部页面异步刷新"
+  },
+  {
+    "name": "jquery.placeholder",
+    "version": "2.0.7",
+    "files": "jquery.placeholder.js",
+    "url": "http://www.ijquery.cn/js/jquery.placeholder.min.js",
+    "descript": "让浏览器支持placeholder属性"
+  },
+  {
+    "name": "jquery.slimscroll",
+    "version": "1.3.3",
+    "files": "jquery.slimscroll.min.js",
+    "url": "https://github.com/rochal/jQuery-slimScroll",
+    "descript": "滚动条"
+  },
+  {
+    "name": "jquery.sortable",
+    "version": "",
+    "files": "jquery.sortable.js",
+    "url": "",
+    "descript": "拖曳排序"
+  },
+  {
+    "name": "jquery.sparkline",
+    "version": "2.1.2",
+    "files": "jquery.sparkline.js",
+    "url": "http://omnipotent.net/jquery.sparkline/",
+    "descript": "线状图插件"
+  },
+  {
+    "name": "jquery",
+    "version": "1.11.1",
+    "files": "jquery-1.11.1.min.js",
+    "url": "http://jquery.org",
+    "descript": "jQuery"
+  },
+  {
+    "name": "jquery-ui",
+    "version": "1.10.4",
+    "files": "jquery-ui.custom.min.js",
+    "url": "http://jqueryui.org",
+    "descript": "jQueryUI"
+  },
+  {
+    "name": "modernizr",
+    "version": "3.3.1",
+    "files": "modernizr.js",
+    "url": "https://modernizr.com/",
+    "descript": "检测浏览器的css3和HTML5的属性而生，从而通过CSS来解决兼容性问题"
+  },
+  {
+    "name": "moment",
+    "version": "2.7.0",
+    "files": "moment.js",
+    "url": "http://momentjs.cn/",
+    "descript": "JavaScript 日期处理类库"
+  },
+  {
+    "name": "raphael",
+    "version": "0.3.4",
+    "files": "raphael.min.js",
+    "url": "http://raphaeljs.com/",
+    "descript": "矢量图形库"
+  },
+  {
+    "name": "vue",
+    "version": "1.0.10",
+    "files": "vue.min.js",
+    "url": "http://cn.vuejs.org/",
+    "descript": "数据驱动的组件，为现代化的 Web 界面而生"
+  }
+]

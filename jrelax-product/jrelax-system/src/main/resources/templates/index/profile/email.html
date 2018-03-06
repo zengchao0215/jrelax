@@ -1,0 +1,105 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">关联邮箱</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-12">
+           	<form id="__uc_email_form" class="form-horizontal" role="form" method="post" action="$!basePath/profile/email/do">
+				<div class="form-group">
+					<label for="oldEmail" class="col-sm-2 control-label">邮箱类型</label>
+					<div class="col-sm-10">
+						<select name="mailType" class="form-control">
+                             <option value="pop" #if($!email.mailType == 'pop')selected="selected"#end>POP</option>
+							 <option value="imap" #if($!email.mailType == 'imap')selected="selected"#end>IMAP</option>
+                         </select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="oldEmail" class="col-sm-2 control-label">收件服务器</label>
+					<div class="col-sm-10">
+						<input type="text" name="mailHost" class="form-control" placeholder="收件服务器地址" value="$!email.mailHost">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="oldEmail" class="col-sm-2 control-label">端口</label>
+					<div class="col-sm-10">
+						<input type="text" name="mailPort" class="form-control" placeholder="端口" value="$!email.mailPort">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="oldEmail" class="col-sm-2 control-label">SSL</label>
+					<div class="col-sm-10">
+						<input type="checkbox" name="sslEnable" onchange="sslChange(this)" #if($!email.sslEnable==true)checked="checked"#end>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="oldEmail" class="col-sm-2 control-label">用户名</label>
+					<div class="col-sm-10">
+						 <input type="text" name="mailUser" class="form-control" placeholder="用户名"  value="$!email.mailUser" autocomplete=off>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="oldEmail" class="col-sm-2 control-label">密码</label>
+					<div class="col-sm-10">
+						 <input type="password" name="mailPass" class="form-control" placeholder="密码"  value="$!email.mailPass" autocomplete=off>
+					</div>
+				</div>
+			</form>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+	<div class="pull-left">
+		<button type="button" class="btn btn-primary" onclick="test(this)" data-loading-text="正在测试...">测试配置</button>
+	</div>
+	<button type="button" onclick="submitForm(this)" class="btn btn-primary" data-loading-text="正在提交...">确定</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+</div>
+<script src="$!basePath/framework/plugins/jquery.form.js"></script>
+<script type="text/javascript">
+	function submitForm(btn){
+		$('#__uc_email_form').ajaxSubmit({
+			beforeSubmit:function(){
+				$(btn).button("loading");
+			},
+			success : function(data, statusText, xhr, $form) {
+				if(data.success == true){
+					Toast.success("邮箱配置保存成功！");
+				}else{
+					Toast.error(data.message);
+				}
+				$(btn).button("reset");
+			}
+		});
+	}
+	function test(btn){
+		$(btn).button("loading");
+		$('#__uc_email_form').ajaxSubmit({
+			url:"$!basePath/profile/email/test",
+			success : function(data, statusText, xhr, $form) {
+				if(data.success == true){
+					Toast.success("配置可用！");
+				}else{
+					Toast.error(data.message);
+				}
+				$(btn).button("reset");
+			}
+		});
+	}
+	function sslChange(chk){
+		var type = $("#__uc_email_form select[name='mailType']").val();
+		var port = $("#__uc_email_form input[name='mailPort']");
+		if($(chk).is(":checked")){
+			if(type == "pop")
+				port.val(995);
+			else if(type == "imap")
+				port.val(993);
+		}else{
+			if(type == "pop")
+				port.val(110);
+			else if(type == "imap")
+				port.val(143);
+		}
+	}
+</script>

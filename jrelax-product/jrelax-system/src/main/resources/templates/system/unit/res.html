@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+
+
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="btn-group tool-button">
+                        <a class="btn btn-primary navbar-btn" href="$!basePath/system/unit"><i
+                                class="ti-angle-left"></i> 返回</a>
+                    </div>
+                    <!-- 右按钮区 -->
+                    <div class="btn-group pull-right">
+                        <button id="btnSave" class="btn btn-primary navbar-btn" data-loading-text="正在保存..."
+                                onclick="doSave()"><i class="ti-save"></i> 保存
+                        </button>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <section class="panel">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="panel">
+                                        <header class="panel-heading no-b">
+                                            <div class="h5"><b>管理菜单</b>
+                                                <div class="pull-right">
+                                                    <label for="selectAllBtn">全选：&nbsp;&nbsp;&nbsp;</label>
+                                                    <input type="checkbox" id="selectAllBtn" class="js-switch-blue"
+                                                           onChange="checkAll()"/>
+                                                </div>
+                                            </div>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div id="jsTreeMenu"></div>
+                                        </div>
+                                        <div class="overlay">
+                                            <i class="fa fa-refresh fa-spin"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 页面组件脚本 -->
+<script src="$!basePath/framework/plugins/count-to/jquery.countTo.js"></script>
+<script src="$!basePath/framework/plugins/switchery/switchery.js"></script>
+
+<!-- 本页面脚本 -->
+<script src="$!basePath/framework/js/form/form.js"></script>
+<script src="$!basePath/framework/js/view/toast.js"></script>
+<script src="$!basePath/framework/js/view/tree.js"></script>
+<script type="text/javascript">
+    function initTreeView() {
+        $("#jsTreeMenu").jstree({
+            plugins: ["wholerow", "checkbox", "contextmenu"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return node.id === "#" ? "$!basePath/system/unit/res/tree/$!currentUserUnitId" : "$!basePath/system/unit/res/tree/$!currentUserUnitId/" + node.id;
+                    }
+                }
+            }, checkbox: {
+                three_state: false
+            }, contextmenu : {
+                select_node : false,
+                items : function(node){
+                    return ns.view.tree.contextmenu.renderCheckItems(true);
+                }
+            }
+        }).bind("loaded.jstree", function () {
+            //立即加载树下所有节点
+            $("#jsTreeMenu").jstree("load_all");
+        }).on("changed.jstree", function (node, options) {
+            if (options.action == "select_node") {
+                var id = options.node.id;
+                //自动选中父节点
+                var tree = $("#jsTreeMenu").jstree(true);
+                tree.select_node(tree.get_parent(id));
+            }
+        }).bind("load_all.jstree", function () {
+            var data = $!data;
+            var tree = $("#jsTreeMenu");
+            $.each(data, function (i, n) {
+                tree.jstree(true).select_node(n);
+            });
+            tree.focus();
+
+            $(".overlay").remove();
+        });
+    }
+    $(function () {
+        //初始化菜单树
+        initTreeView();
+    });
+    function checkAll() {
+        var btnAll = $("#selectAllBtn");
+        var tree = $.jstree.reference("#jsTreeMenu");
+        if (btnAll[0].checked) {
+            tree.select_all();
+        } else {
+            tree.deselect_all();
+        }
+    }
+    function doSave() {
+        var id = "$!unit.id";
+        //获取所选菜单
+        var tree = $.jstree.reference("#jsTreeMenu");
+        var nodes = tree.get_selected();
+
+        //查询所选节点的所有父节点
+        for (var i = 0; i < nodes.length; i++) {
+            var node = nodes[i];
+
+            each(node, tree, nodes);
+        }
+        var btn = $("#btnSave");
+        btn.button("loading");
+        jQuery.post("$!basePath/system/unit/res/do", {id: id, resIds: nodes.toString()}, function (data) {
+            if (data.success == true) {
+                Toast.success("菜单分配成功！");
+                ns.back("$!basePath/system/unit", 1000);
+            } else {
+                Toast.error(data.message);
+            }
+            btn.button("reset");
+        });
+    }
+    function each(node, tree, nodes) {
+        var p = tree.get_parent(node);
+        if (p.length > 1) {
+            if (!isExists(p, nodes))
+                nodes.push(p);
+            each(p, tree, nodes);
+        }
+    }
+    function isExists(p, nodes) {
+        for (var i = 0; i < nodes.length; i++) {
+            if (p == nodes[i])
+                return true;
+        }
+        return false;
+    }
+</script>
+#loading_close
+</body>
+</html>

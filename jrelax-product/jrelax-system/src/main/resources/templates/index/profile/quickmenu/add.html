@@ -1,0 +1,49 @@
+<form id="quickMenuAddForm" class="parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/profile/quickmenu/add/do">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">新增快捷菜单</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">名称</label>
+                    <input type="text" class="form-control" name="name" data-parsley-required="true" placeholder="名称" maxlength="10">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">链接地址</label>
+                    <input type="text" class="form-control" name="url" data-parsley-required="true" placeholder="链接地址" maxlength="500">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" class="btn btn-primary" data-loading-text="正在保存...">确 定</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/form.js");
+    ns.requireJS("/framework/js/form/validator.js");
+    ns.ready(function (dialog) {
+        dialog.find("#quickMenuAddForm").ajaxForm({
+            beforeSubmit: function (arr, $form , options) {
+                $form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, $form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("已添加至快捷菜单！");
+                    ns.view.Dialog.close($form, {isSaved: true});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                $form.find("#ok").button("reset")
+            ;
+            }
+        });
+    });
+</script>

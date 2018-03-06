@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">Flot</h1>
+                <p class="lead">基于<code><a href="https://github.com/flot" target="_blank">flot</a></code>实现，需引入<code>/framework/js/view/charts.js</code></p>
+
+                <h2>基本实例</h2>
+                <div class="bs-example">
+                    <div id="container" style="min-width:800px;height:400px"></div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div id="container" style="min-width:800px;height:400px"&gt;&lt;/div&gt;
+
+                        ns.view.charts.flot.init("#container", [[[0, 0], [1, 1]]], {
+                            yaxis: {
+                                max: 1
+                            }
+                        });
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/view/charts.js");
+    ns.ready(function () {
+        ns.view.charts.flot.init("#container", [[[0, 0], [1, 1]]], {
+            yaxis: {
+                max: 1
+            }
+        });
+    });
+</script>
+</html>

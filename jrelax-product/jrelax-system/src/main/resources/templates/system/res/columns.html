@@ -1,0 +1,113 @@
+<form id="resColumnsForm" class="parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/system/res/columns/do">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">管理字段</h4>
+</div>
+<div class="modal-body">
+	<input type="hidden" name="resId" value="$!resId">
+	#if($!columnList.size()==0)
+	<div class="alert alert-warning">尚未配置字段</div>
+	#end
+	<div class="row">
+		<div class="col-xs-5">
+			<div class="form-group">
+				<label>编码</label>
+			</div>
+		</div>
+		<div class="col-xs-5">
+			<div class="form-group">
+				<label>名称</label>
+			</div>
+		</div>
+	</div>
+	<div class="row hide" id="template">
+		<div class="col-xs-5">
+			<div class="form-group">
+				<input type="text" name="code" class="form-control" disabled/>
+			</div>
+		</div>
+		<div class="col-xs-5">
+			<div class="form-group">
+				<input type="text" name="name" class="form-control" disabled/>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<button class="btn btn-default btn-sm" onclick="$(this).parents('.row').remove()"><i class="fa fa-close"></i></button>
+		</div>
+	</div>
+	#if($!columnList.size()==0)
+	<div class="row">
+		<div class="col-xs-5">
+			<div class="form-group">
+				<input type="text" name="code" class="form-control" data-parsley-required="true"/>
+			</div>
+		</div>
+		<div class="col-xs-5">
+			<div class="form-group">
+				<input type="text" name="name" class="form-control" data-parsley-required="true"/>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<button class="btn btn-default btn-sm" onclick="$(this).parents('.row').remove()"><i class="fa fa-close"></i></button>
+		</div>
+	</div>
+	#else
+	#foreach($column in $!columnList)
+	<div class="row">
+		<div class="col-xs-5">
+			<div class="form-group">
+				<input type="text" name="code" class="form-control" data-parsley-required="true" value="$!column.code"/>
+			</div>
+		</div>
+		<div class="col-xs-5">
+			<div class="form-group">
+				<input type="text" name="name" class="form-control" data-parsley-required="true" value="$!column.name"/>
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<button class="btn btn-default btn-sm" onclick="$(this).parents('.row').remove()"><i class="fa fa-close"></i></button>
+		</div>
+	</div>
+	#end
+	#end
+</div>
+<div class="modal-footer">
+	<div class="pull-left">
+		<button type="button" class="btn btn-default" onclick="addResColumns()">增加一行</button>
+	</div>
+    <button id="ok" type="submit" class="btn btn-primary" data-loading-text="正在保存...">确  定</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">取  消</button>
+</div>
+</form>
+<script src="$!basePath/framework/js/form/form.js"></script>
+<script src="$!basePath/framework/js/form/validator.js"></script>
+<script type="text/javascript">
+	ns.ready(function(){
+		var dialog = ns.view.Dialog.getCur("#resColumnsForm");
+
+		$("#resColumnsForm").ajaxForm({
+			beforeSubmit:function(arr, $form, options){
+				$form.find("#ok").button("loading");
+			},
+			success : function(data, statusText, xhr, $form) {
+				if(data.success == true){
+					ns.tip.toast.success("字段更新成功！");
+					var dialog = ns.view.Dialog.getCur($form);
+					dialog.isSaved = true;
+					dialog.close();
+				}else{
+					ns.tip.toast.error(data.message);
+				}
+				$form.find("#ok").button("reset");
+			}
+		});
+	});
+	function addResColumns(){
+		var tpl = $("#resColumnsForm #template").clone();
+
+		tpl.removeClass("hide").removeAttr("id");
+		tpl.find("input").removeAttr("disabled").attr("data-parsley-required", true);
+
+		$("#resColumnsForm .modal-body").append(tpl);
+	}
+</script>

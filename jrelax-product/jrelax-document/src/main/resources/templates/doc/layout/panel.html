@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">面板</h1>
+                <p class="lead">某些时候你可能需要将某些 DOM 内容放到一个盒子里。对于这种情况，可以试试面板组件。</p>
+
+                <h2>基本示例</h2>
+                <div class="bs-example">
+                    <div class="panel panel-default">
+                        <div class="panel-body">面板内容</div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;div class="panel panel-default"&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>带标题的面板</h2>
+                <div class="bs-example">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">标题</div>
+                        <div class="panel-body">面板内容</div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;div class="panel panel-default"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>带脚注的面板</h2>
+                <div class="bs-example">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">标题</div>
+                        <div class="panel-body">面板内容</div>
+                        <div class="panel-footer">底部</div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;div class="panel panel-default"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                        &lt;div class="panel-footer"&gt;底部&lt;/div&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>不同颜色的面板</h2>
+                <p>在不同的皮肤下，最终展现的颜色不一定相同，具体取决于每个皮肤的定义。</p>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;div class="panel panel-default"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-primary"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-success"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-info"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-warning"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-danger"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>顶部颜色风格面板</h2>
+                <p>在不同的皮肤下，最终展现的颜色不一定相同，具体取决于每个皮肤的定义。</p>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-default panel-border">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-primary panel-border">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-success panel-border">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-info panel-border">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-warning panel-border">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="panel panel-danger panel-border">
+                                <div class="panel-heading">标题</div>
+                                <div class="panel-body">面板内容</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;div class="panel panel-default panel-border"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-primary panel-border"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-success panel-border"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-info panel-border"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-warning panel-border"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="panel panel-danger panel-border"&gt;
+                        &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                        &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>加载状态的面板</h2>
+                <p>加载进度覆盖整个面板</p>
+                <div class="bs-example">
+                    <div id="panel-overlay" class="panel panel-default panel-border">
+                        <div class="panel-heading">标题</div>
+                        <div class="panel-body">面板内容</div>
+
+                        <div class="overlay">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-default" onclick="$('#panel-overlay .overlay').fadeOut()">关闭进度</button>
+                    <button class="btn btn-default" onclick="$('#panel-overlay .overlay').fadeIn()">显示进度</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;div id="panel-overlay" class="panel panel-default panel-border"&gt;
+                            &lt;div class="panel-heading"&gt;标题&lt;/div&gt;
+                            &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+    
+                            &lt;div class="overlay"&gt;
+                                &lt;i class="fa fa-refresh fa-spin"&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+    
+                        &lt;button class="btn btn-default" onclick="$('#panel-overlay .overlay').fadeOut()"&gt;关闭进度&lt;/button&gt;
+                        &lt;button class="btn btn-default" onclick="$('#panel-overlay .overlay').fadeIn()"&gt;显示进度&lt;/button&gt;
+                    </pre>
+                </figure>
+
+                <h2>面板+按钮</h2>
+                <p>面板右侧按钮</p>
+                <div class="bs-example">
+                    <div class="panel panel-default panel-border">
+                        <div class="panel-heading">
+                            标题
+                            <div class="pull-right">
+                                <button class="btn btn-icon-only"><i class="fa fa-plus"></i></button>
+                                <button class="btn btn-icon-only"><i class="fa fa-refresh"></i></button>
+                                <button class="btn btn-icon-only"><i class="fa fa-wechat"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">面板内容</div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;div class="panel panel-default panel-border"&gt;
+                            &lt;div class="panel-heading"&gt;
+                                标题
+                                &lt;div class="pull-right"&gt;
+                                    &lt;button class="btn btn-icon-only"&gt;&lt;i class="fa fa-plus"&gt;&lt;/i&gt;&lt;/button&gt;
+                                    &lt;button class="btn btn-icon-only"&gt;&lt;i class="fa fa-refresh"&gt;&lt;/i&gt;&lt;/button&gt;
+                                    &lt;button class="btn btn-icon-only"&gt;&lt;i class="fa fa-wechat"&gt;&lt;/i&gt;&lt;/button&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class="panel-body"&gt;面板内容&lt;/div&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

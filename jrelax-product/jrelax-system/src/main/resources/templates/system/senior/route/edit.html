@@ -1,0 +1,85 @@
+<form id="routeEditForm" class="parsley-form" data-parsley-validate role="form" method="post" action="$!basePath/system/senior/route/edit/do">
+    <input type="hidden" name="id" value="$!route.id"/>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">编辑</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">来源URL</label>
+                    <textarea class="form-control" name="sourceUrl" data-parsley-required="true" placeholder="来源URL">$!route.sourceUrl</textarea>
+                </div>
+                <div class="alert alert-warning">
+                    支持以下规则（按顺序匹配）：
+                    <ul>
+                        <li>绝对URL：/a/b.html</li>
+                        <li>模糊匹配：/a/*（匹配 /a/a,/a/b/c）</li>
+                        <li>正则表达式</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="control-label">转向URL</label>
+                    <textarea class="form-control" name="targetUrl" data-parsley-required="true" placeholder="须为明确的URL">$!route.targetUrl</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="form-group">
+                    <label class="control-label">显性转发</label>
+                    <input type="checkbox" class="js-switch-blue" name="redirect" #ifChecked($!route.redirect)>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="form-group">
+                    <label class="control-label">内部链接</label>
+                    <input type="checkbox" class="js-switch-blue" name="internal" #ifChecked($!route.internal)>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="form-group">
+                    <label class="control-label">启用</label>
+                    <input type="checkbox" class="js-switch-blue" name="enabled" #ifChecked($!route.enabled)>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="alert alert-warning">
+                    <ul>
+                        <li>显性转发：路由跳转时，地址栏地址是否发生变化为转向URL；开启为变化，关闭为不变化</li>
+                        <li>内部链接：开启则表示为系统内部链接，关闭则表示为系统外链接</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/form.js");
+    ns.requireJS("/framework/js/form/validator.js");
+    ns.ready(function (dialog) {
+        $("#routeEditForm").ajaxForm({
+            beforeSubmit: function (arr, $form, options) {
+                $form.find("#ok").button("loading");
+            },
+            success: function (data, statusText, xhr, $form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("更新成功！");
+                    ns.view.Dialog.close($form, {isEdited: true});
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+                $form.find("#ok").button("reset");
+            }
+        });
+    });
+</script>

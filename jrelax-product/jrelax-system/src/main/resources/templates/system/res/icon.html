@@ -1,0 +1,112 @@
+<style>
+	.tab-content{
+		font-size: 25px;
+		max-height: 700px;
+		overflow-y: auto !important;
+	}
+	.tab-content span{
+		width: 40px;
+		height: 35px;
+	}
+</style>
+#if($!error)
+<div class="modal-body pb25">
+	<div class="col-md-12 no-p">$!error</div>
+</div>
+#else
+<div class="modal-body no-p" id="_modal_icon_select">
+	<div class="col-md-12 no-p">
+		<div class="box-tab no-m">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#fontawesome" data-toggle="tab">Fontawesome</a></li>
+				<li><a href="#themify" data-toggle="tab">Themify</a></li>
+				<li><a href="#glyphicon" data-toggle="tab">Glyphicon</a></li>
+				<li><a href="#sli" data-toggle="tab">Simple Line Icons</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade active in" id="fontawesome">
+					#set($ch = '')
+					#foreach($!icon in $!fa)
+					#if(!$!icon.startsWith($ch) )
+					<div class="hr-line-dashed"></div>
+					#end
+					#set($ch = $icon.substring(0, 7))
+					<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+					#end
+				</div>
+				<div class="tab-pane fade" id="themify">
+					#set($ch = '')
+					#foreach($!icon in $!ti)
+					#if(!$!icon.startsWith($ch) )
+					<div class="hr-line-dashed"></div>
+					#end
+					#set($ch = $icon.substring(0, 4))
+					<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+					#end
+				</div>
+				<div class="tab-pane fade" id="glyphicon">
+					#set($ch = '')
+					#foreach($!icon in $!gly)
+					#if(!$!icon.startsWith($ch) )
+					<div class="hr-line-dashed"></div>
+					#end
+					#set($ch = $icon.substring(0, 21))
+					<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+					#end
+				</div>
+				<div class="tab-pane fade" id="sli">
+					#set($ch = '')
+					#foreach($!icon in $!sli)
+					#if(!$!icon.startsWith($ch) )
+					<div class="hr-line-dashed"></div>
+					#end
+					#set($ch = $icon.substring(0, 6))
+					<span class="$!icon p5" icon="$!icon" title="$!icon"></span>
+					#end
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<span id="currentIcon" class="pull-left mt5"><label class="text-danger">当前选择：</label><i></i>&nbsp;<span class="text"></span></span>
+	<button type="button" class="btn btn-primary mt5" onclick="doSelect()">确定</button>
+	<button id="btnIconCancel" type="button" class="btn btn-default mt5" data-dismiss="modal">取消</button>
+</div>
+<script type="text/javascript">
+	var dialog = ns.view.Dialog.getCur("#_modal_icon_select");
+	ns.ready(function(){
+	    var span = $(".tab-content span");
+        span.hover(function(){
+            $(this).addClass("bg-success");
+        }, function(){
+            if(!$(this).is(":checked"))
+                $(this).removeClass("bg-success");
+        });
+        span.bind("click", function(){
+            span.removeAttr("clicked");
+            span.removeClass("bg-success");
+            $(this).attr("clicked", "true");
+            $(this).addClass("bg-success");
+            display($(this).attr("icon"));
+        });
+        span.bind("dblclick", function(){
+            display($(this).attr("icon"));
+            doSelect();
+        });
+
+        function display(icon){
+            $("#currentIcon i").attr("class", icon);
+            $("#currentIcon .text").text(icon);
+        }
+	});
+	function doSelect(){
+		var icon = $("#currentIcon i").attr("class");
+		if(!icon){
+			ns.tip.toast.info("请选择一个图标！");
+		}else{
+			dialog.close({icon:icon});
+		}
+	}
+</script>
+#end

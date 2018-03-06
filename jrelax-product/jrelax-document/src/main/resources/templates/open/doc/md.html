@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>概述</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<div class="app">
+	<h2>注意事项</h2>
+	<ul>
+		<li>页面加载完成事件，建议使用 <code>ns.ready(function(){})</code></li>
+		<li>引入js，使用 <code>ns.requiredJS('path')</code> 路径可不带项目名</li>
+		<li>引入css，使用 <code>ns.requiredCSS('path')</code></li>
+		<li>使用组件方式一般在节点上配置 <code>date-***</code>，框架在依赖组件引入后，自动执行初始化</li>
+	</ul>
+
+
+	<h3>示例</h3>
+	<button class="btn" onclick="c1()">triggle</button>
+</div>
+<body class="p10">
+	#required_js
+	<script>
+		// 观察者模式
+		function MyObj(){
+			var _pool = {};
+			this.listen = function(key, fn){
+				var fns = _pool[key];
+				if(!fns) fns = new Array();
+				fns.push(fn);
+				_pool[key] = fns;
+			}
+			this.trigger = function(key){
+				var fns = _pool[key];
+				if(!fns) return;
+				for(var i=0;i<fns.length;i++)
+					fns[i]();
+			}
+		}
+		var obj = new MyObj();
+		obj.listen("ready", function(){
+			alert("A");
+		});
+		obj.listen("ready", function(){
+			alert("B");
+		});
+		function c1(){
+			obj.trigger("ready");
+		}
+
+		//单例模式
+		function sigleton(fn){
+
+		}
+	</script>
+</body>
+</html>

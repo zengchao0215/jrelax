@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提示组件</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<div class="app">
+	<h3>默认样式</h3>
+	<select id="example-getting-started" multiple="multiple">
+		<option value="cheese">Cheese</option>
+		<option value="tomatoes">Tomatoes</option>
+		<option value="mozarella">Mozzarella</option>
+		<option value="mushrooms">Mushrooms</option>
+		<option value="pepperoni">Pepperoni</option>
+		<option value="onions">Onions</option>
+	</select>
+	<h3>下拉选择 multiselect</h3>
+	<select id="example-getting-started2" class="multiselect" multiple="multiple">
+		<option value="cheese">Cheese</option>
+		<option value="tomatoes">Tomatoes</option>
+		<option value="mozarella">Mozzarella</option>
+		<option value="mushrooms">Mushrooms</option>
+		<option value="pepperoni">Pepperoni</option>
+		<option value="onions">Onions</option>
+	</select>
+	<h3>API详见：<a href="http://davidstutz.github.io/bootstrap-multiselect/" target="_blank"><code>http://davidstutz.github.io/bootstrap-multiselect/</code></a></h3>
+</div>
+<body class="p10">
+	#required_js
+	<script type="text/javascript">
+		ns.ready(function(){
+			ns.requireJS("/framework/js/form/multiselect.js")
+		});
+	</script>
+</body>
+</html>

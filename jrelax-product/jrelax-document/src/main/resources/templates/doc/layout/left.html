@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">左右布局</h1>
+
+                <p class="lead">介绍如何在框架中实现左右布局</p>
+                <h2>基于栅格系统</h2>
+                <p>基于Bootstrap的栅格系统实现不同比例的左右布局</p>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-4" style="height: 150px;">Left</div>
+                        <div class="col-lg-8" style="height: 150px;">Right</div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div class="row"&gt;
+                            &lt;div class="col-lg-4"&gt;Left&lt;/div&gt;
+                            &lt;div class="col-lg-8"&gt;Right&lt;/div&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

@@ -1,0 +1,218 @@
+<form id="userAddForm" role="form" class="form-horizontal parsley-form" data-parsley-validate action="$!basePath/system/user/add/do" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">新增用户</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group has-feedback">
+                    <label for="parentId" class="col-sm-2 control-label">所属机构</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input id="unitNames" type="text" class="form-control" value="$!unit.name" placeholder="点击右边选择按钮选择所属部门" disabled/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary" onclick="doSelectUnit()">
+                                    <i class="ti-plus"></i> 选择
+                                </button>
+                            </span>
+                        </div>
+                        <input type="hidden" name="unitIds" value="$!unit.id"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group" style="height:44px;">
+                    <label for="name" class="col-sm-2 control-label">角色(多选)</label>
+                    <div class="col-sm-8">
+                        <select disabled tabindex="2" name="roleIds" data-placeholder="选择机构后，选择角色" style="width:100%" multiple class="form-control chosen" data-parsley-required="true">
+                            #foreach($!role in $!roleList)
+                                <option value="$!role.id">$!role.name</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">用户名</label>
+
+                    <div class="col-sm-8">
+                        <input type="text" tabindex="3" class="form-control" name="userName" data-parsley-required="true" placeholder="登陆时使用的用户名" maxlength="10">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">姓名</label>
+
+                    <div class="col-sm-8">
+                        <input type="text" tabindex="4" class="form-control" name="realName" placeholder="真实姓名" maxlength="10">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">密码</label>
+
+                    <div class="col-sm-8">
+                        <input id="password" tabindex="5" type="password" class="form-control" name="password" data-parsley-required="true" placeholder="密码" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">密码确认</label>
+
+                    <div class="col-sm-8">
+                        <input type="password" tabindex="6" class="form-control" data-parsley-equalto="#password" data-parsley-required="true" name="eqPassword" placeholder="请再输入一次密码" maxlength="20">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="icon" class="col-sm-2 control-label">邮箱</label>
+
+                    <div class="col-sm-8">
+                        <input id="icon" type="text" tabindex="7" name="email" data-parsley-type="email" class="form-control" placeholder="电子邮箱地址 abc@nethsoft.com" maxlength="30">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="icon" class="col-sm-2 control-label">联系方式</label>
+
+                    <div class="col-sm-8">
+                        <input type="text" tabindex="8" name="mobile" class="form-control" placeholder="固定电话或手机号码" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="descript" class="col-sm-2 control-label">QQ</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="qq" tabindex="10" class="form-control" placeholder="QQ号码">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="descript" class="col-sm-2 control-label">页面风格</label>
+                    <div class="col-sm-8">
+                        <select tabindex="9" name="pageStyle" data-placeholder="选择页面风格" style="width:50%;" class="chosen">
+                            #foreach($!obj in $!themeMap.entrySet())
+                                <option value="$!obj.value">$!obj.key</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="enabled" class="col-sm-2 control-label">是否启用</label>
+                    <div class="col-sm-8 switcha">
+                        <div class="mr15">
+                            <input type="checkbox" name="enabled" class="js-switch-blue" checked="checked">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ok" type="submit" class="btn btn-primary btn-form-submit" data-loading-text="正在保存...">提 交</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    ns.requireJS(["/framework/plugins/switchery/switchery.js",
+        "/framework/js/form/form.js",
+        "/framework/js/view/toast.js",
+        "/framework/js/view/tree.js",
+        "/framework/js/form/select.js",
+        "/framework/js/form/validator.js",
+        "/framework/js/common/unit.js"
+    ]);
+    function doSelectUnit() {
+        ns.common.unit.select({
+            multi : true,
+            callback : function(units){
+                var names = [], ids = [];
+                for(var i=0;i<units.length;i++){
+                    names.push(units[i].name);
+                    ids.push(units[i].id);
+                }
+                $("#userAddForm #unitNames").val(names.toString());
+                $("#userAddForm input[name='unitIds']").val(ids.toString());
+
+                loadRoles(ids.toString());
+            }
+        });
+    }
+    //加载角色信息
+    function loadRoles(uid){
+        //根据获取的机构，获取角色列表
+        jQuery.post("$!basePath/system/user/unitrole/" + uid, {}, function (data) {
+            var roleSelect = $("#userAddForm select[name='roleIds']");
+            if (data.roles.length > 0) {
+                var html = "";
+                for (var i = 0; i < data.roles.length; i++) {
+                    var role = data.roles[i];
+                    html += "<option value='" + role.id + "'>"
+                            + role.name + "</option>";
+                }
+                roleSelect.html(html);
+            } else {
+                roleSelect.html("");
+                Toast.warning("当前机构无角色，请添加角色后再添加用户!");
+            }
+            roleSelect.removeAttr("disabled");
+            roleSelect.trigger("chosen:updated");
+            setTimeout(function () {
+                roleSelect.parent().find("input").focus();
+            }, 200);
+        });
+    }
+    ns.ready(function (dialog) {
+        dialog.find('#userAddForm').ajaxForm({
+            beforeSubmit: function (arr, $form , options) {
+                var roleIds = $("#userAddForm select[name='roleIds']").val();
+                if (!roleIds) {
+                    Toast.error("至少需要选择一个角色！");
+                    return false;
+                }
+                $form.find("button:submit").button("loading");
+            },
+            success: function (data, statusText, xhr, $form) {
+                if (data.success == true) {
+                    ns.tip.toast.success("用户增加成功！");
+                    dialog.close({isSaved:true});
+                } else {
+                    Toast.error(data.message);
+                }
+                $form.find("button:submit").button("reset");
+            }
+        });
+        #if($!unit)
+            loadRoles("$!unit.id");
+        #end
+    });
+</script>
+
+#loading_close
+</body>
+</html>

@@ -1,0 +1,55 @@
+<ul class="nav navbar-nav nav-menus">
+    <li></li>
+    #foreach($!first in $!_firstRes)
+        #if($!first.hasChildren() == false)
+            <li data-first-res onclick="__doHideMenu()">
+                <a href="$!{basePath}$!{first.url}" title="$!first.name" icon="$!first.icon"  #if($!{first.newWindow})target="_blank"#else data-tabs-link #end>
+                    <i class="$!first.icon"></i>
+                    <span>$!first.name</span>
+                </a>
+            </li>
+        #else
+            #if($!{first.newWindow})
+            <li data-first-res="$!first.code">
+                <a href="$!{first.url}" target="_blank" title="$!first.name">
+                    <i class="$!first.icon"></i>
+                    <span>$!first.name</span>
+                </a>
+            </li>
+            #else
+            <li data-first-res id="$!first.id" onclick="__doSwitchMenu(this)">
+                <a href="javascript:;" title="$!first.name">
+                    <i class="$!first.icon"></i>
+                    <span>$!first.name</span>
+                </a>
+            </li>
+            #end
+        #end
+    #end
+</ul>
+<script>
+    function __doHideMenu(){
+        $(".sidebar-second").hide();
+        var nav = $(".app>.header>.nav");
+        nav.find("li.selected").removeClass("selected");
+        //修正窗口
+        $(window).resize();
+    }
+    function __doSwitchMenu(el){
+        if($){
+            $(".sidebar-second").hide();
+            $(".sidebar-second[id='sidebar_first_"+el.id+"']").show();
+            var nav = $(".app>.header>.nav");
+            nav.find("li.selected").removeClass("selected");
+            $(el).addClass("selected");
+
+            //修正高度
+            var height = ns.lastDocumentHeight - ns.headerHeight;
+            $(".sidebar-second>.slimScrollDiv, .sidebar-second>.slimScrollDiv>.main-navigation").height(height);
+            //修正窗口
+            $(window).resize();
+        }else{
+            alert("系统尚未加载完成");
+        }
+    }
+</script>

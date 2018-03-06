@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">进度提示</h1>
+                <p class="lead">用于一些比较费时间的操作时，友好的等待提示</p>
+
+                <div class="bs-example">
+                    <button class="btn btn-default" type="button" onclick="t(1)">弹窗式</button>
+                    <button class="btn btn-default" type="button" onclick="t(2)">图标式</button>
+                    <button class="btn btn-default" type="button" onclick="t(3)">顶部进度条式</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                    &lt;button class="btn btn-default" type="button" onclick="ns.showProgressbar('正在加载...');"&gt;弹窗式&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.showLoading()"&gt;图标式&lt;/button&gt;
+                    &lt;button class="btn btn-default" type="button" onclick="ns.showLoadingbar()"&gt;顶部进度条式&lt;/button&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    function t(a){
+        if(a == 1){
+            var bar = ns.showProgressbar('正在加载...');
+            setTimeout(function(){
+                bar.close();
+            }, 2000);
+        }else if(a == 2){
+            ns.showLoading()
+        }else if(a == 3){
+            ns.showLoadingbar()
+        }
+    }
+</script>
+</html>

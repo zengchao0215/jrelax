@@ -1,0 +1,161 @@
+<!-- 国际化 -->
+#macro(i18n $code)$springMacroRequestContext.getMessage($code)#end
+<!-- 字符串截取 -->
+#macro(substring $value $len)
+	#if($value.length()<=$len)
+		$value
+	#else
+		$value.substring(0,$len)...
+	#end
+#end
+#macro (pager $formId)
+#set($hash = $!pageBean.hashCode())
+	#if($!pageBean.totalCount > 0)
+	<div class="pull-left mt20 text-muted">
+		第$!pageBean.page/$!pageBean.pageCount页，每页显示$!pageBean.rows条，共$!pageBean.totalCount条数据
+	</div>
+	<div class="pull-right">
+		<ul id="__pageControl_$!hash" class="pagination">
+			<li #if($!pageBean.isFirstPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isFirstPage())onclick="pager_${hash}.jumpPage(1)"#end>首页</a></li>
+			<li #if($!pageBean.isFirstPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isFirstPage())onclick="pager_${hash}.prevPage()"#end>上一页</a></li>
+			#if($!pageBean.pageCount > 0)
+			#set($visableCount = 5)
+			#if($!pageBean.pageCount <= $visableCount)
+			#foreach($page in [1..$!pageBean.pageCount])
+			<li class="offscreen-right #if($page == $!pageBean.page)active#end"><a href="javascript:;" #if($page != $!pageBean.page)onclick="pager_${hash}.jumpPage($!page)"#end>$!page</a></li>
+			#end
+			#else
+			#set($middle = $visableCount / 2)
+			#foreach($temp in [1..$visableCount])
+			#if($!pageBean.page <= $middle)
+			#set($page = $temp)
+			#elseif($!pageBean.page + $middle > $pageBean.pageCount)
+			#set($page = $pageBean.pageCount - $visableCount + $temp)
+			#else
+			#set($page = $!pageBean.page - $middle + $temp - 1)
+			#end
+			<li class="offscreen-right #if($page == $!pageBean.page)active#end"><a href="javascript:;" #if($page != $!pageBean.page)onclick="pager_${hash}.jumpPage($!page)"#end>$!page</a></li>
+			#end
+			#end
+			#end
+			<li #if($!pageBean.isEndPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isEndPage())onclick="pager_${hash}.nextPage()"#end>下一页</a></li>
+			<li #if($!pageBean.isEndPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isEndPage())onclick="pager_${hash}.jumpPage($!pageBean.pageCount)"#end>尾页</a></li>
+		</ul>
+	</div>
+	<input type="hidden" name="page" value="$!pageBean.page"/>
+	<script type="text/javascript">
+		var pager_$hash;
+		if(typeof(ns) == "undefined"){
+			window.onload = function(){
+				ns.requireJS("/framework/js/view/pager.js");
+				pager_$hash = new ns.view.pager($!pageBean.pageCount, $!pageBean.page, "$!formId", "$!hash");
+			}
+		}else{
+			ns.ready(function(){
+				ns.requireJS("/framework/js/view/pager.js");
+				pager_$hash = new ns.view.pager($!pageBean.pageCount, $!pageBean.page, "$!formId", "$!hash");
+			});
+		}
+	</script>
+	#end
+#end
+#macro (pager_ajax $formId)
+#if($!pageBean.totalCount > 0)
+#set($hash = $!pageBean.hashCode())
+<div id="__pager_$!hash">
+	<div class="pull-left mt20 text-muted">
+		第$!pageBean.page/$!pageBean.pageCount页，每页显示$!pageBean.rows条，共$!pageBean.totalCount条数据
+	</div>
+	<div class="pull-right">
+		<ul id="__pageControl_$!hash" class="pagination">
+			<li #if($!pageBean.isFirstPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isFirstPage())onclick="pager_${hash}.jumpPage(1)"#end>首页</a></li>
+			<li #if($!pageBean.isFirstPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isFirstPage())onclick="pager_${hash}.prevPage()"#end>上一页</a></li>
+			#if($!pageBean.pageCount > 0)
+			#set($visableCount = 5)
+			#if($!pageBean.pageCount <= $visableCount)
+			#foreach($page in [1..$!pageBean.pageCount])
+			<li class="offscreen-right #if($page == $!pageBean.page)active#end"><a href="javascript:;" #if($page != $!pageBean.page)onclick="pager_${hash}.jumpPage($!page)"#end>$!page</a></li>
+			#end
+			#else
+			#set($middle = $visableCount / 2)
+			#foreach($temp in [1..$visableCount])
+			#if($!pageBean.page <= $middle)
+			#set($page = $temp)
+			#elseif($!pageBean.page + $middle > $pageBean.pageCount)
+			#set($page = $pageBean.pageCount - $visableCount + $temp)
+			#else
+			#set($page = $!pageBean.page - $middle + $temp - 1)
+			#end
+			<li class="offscreen-right #if($page == $!pageBean.page)active#end"><a href="javascript:;" #if($page != $!pageBean.page)onclick="pager_${hash}.jumpPage($!page)"#end>$!page</a></li>
+			#end
+			#end
+			#end
+			<li #if($!pageBean.isEndPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isEndPage())onclick="pager_${hash}.nextPage()"#end>下一页</a></li>
+			<li #if($!pageBean.isEndPage())class="disabled"#end><a href="javascript:;" #if(!$!pageBean.isEndPage())onclick="pager_${hash}.jumpPage($!pageBean.pageCount)"#end>尾页</a></li>
+		</ul>
+	</div>
+	<input type="hidden" name="page" value="$!pageBean.page"/>
+</div>
+<script type="text/javascript">
+	var pager_$hash;
+	if(typeof(ns) == "undefined"){
+		window.onload = function(){
+			ns.requireJS("/framework/js/view/pager.ajax.js");
+			pager_$hash = new ns.view.pager_ajax($!pageBean.pageCount, $!pageBean.page, "$!formId", "$!hash");
+		}
+	}else{
+		ns.ready(function(){
+			ns.requireJS("/framework/js/view/pager.ajax.js");
+			pager_$hash = new ns.view.pager_ajax($!pageBean.pageCount, $!pageBean.page, "$!formId", "$!hash");
+		});
+	}
+</script>
+	#end
+#end
+#macro (loading)
+<div class="gallery-loader" style="background-color:transparent;"><div class="loader"></div></div>
+#end
+#macro (loading_close)
+<script>
+	try{
+		$(".gallery-loader").remove();
+	}catch(e){}
+</script>
+#end
+#macro (required_css)
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<meta name="renderer" content="webkit">
+<link rel="shortcut icon" href="$!system_logo">
+<link rel="stylesheet" href="$!resPath/framework/bootstrap/css/bootstrap.min.css" type='text/css' media='screen'>
+<link rel="stylesheet" href="$!resPath/framework/css/font-awesome.css" type='text/css' media='screen'>
+<link rel="stylesheet" href="$!resPath/framework/css/themify-icons.css" type='text/css' media='screen'>
+<link rel="stylesheet" href="$!resPath/framework/css/simple-line-icons.css" type='text/css' media='screen'>
+<link rel="stylesheet" href="$!resPath/framework/css/animate.min.css" type='text/css' media='screen'>
+<link rel="stylesheet" href="$!resPath/framework/css/main.css" type='text/css' media='screen'>
+<link rel="stylesheet" href="$!resPath/framework/css/skins/$!{theme}.css" id="skin" type='text/css' media='screen'>
+#end
+#macro (required_js)
+<input type="hidden" id="__basePath" value="$!basePath" />
+<!-- 必需脚本 -->
+<!-- load modernizer -->
+<script src="$!resPath/framework/plugins/modernizr.js"></script>
+<script src="$!resPath/framework/plugins/jquery-1.11.1.min.js"></script>
+<script src="$!resPath/framework/bootstrap/js/bootstrap.js"></script>
+<script src="$!resPath/framework/plugins/jquery.slimscroll.min.js"></script>
+<script src="$!resPath/framework/plugins/vue.min.js"></script>
+<script src="$!resPath/framework/js/main.js"></script>
+<script src="$!resPath/framework/js/view/theme.js"></script>
+<script src="$!resPath/framework/js/view/tip.js"></script>
+<script src="$!resPath/framework/js/view/toast.js"></script>
+#end
+#macro (header_index)
+#parse("_macro/header.html")
+#end
+#macro (header)#end
+#macro (sidebar_index)
+#parse("_macro/sidebar.html")
+#end
+#macro (sidebar)#end
+#macro (copyright)
+#parse("_macro/copyright.html")
+#end

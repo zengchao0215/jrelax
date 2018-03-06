@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean id="coreConfigPreferences" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <!-- 指定数据库配置文件路径 -->
+        <property name="locations">
+            <list>
+                <value>classpath:core-config.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 对所有的实体类进行扫描，完成Bean的创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.jrelax">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+    <!-- 启动Spring MVC的注解功能 完成请求和注解POJO的映射 -->
+    <bean class="com.jrelax.core.web.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <!-- 输出纯文本 -->
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <!-- 输出JSON -->
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="objectMapper">
+                        <bean class="com.jrelax.core.web.converter.JSONObjectMapper"/>
+                    </property>
+                    <!-- 定义支持的RequestHeader中Accept类型 -->
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>application/json;charset=UTF-8</value>
+                            <value>text/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <!-- 输出XML -->
+                <bean class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter">
+                    <!-- 定义支持的RequestHeader中Accept类型 -->
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/xml;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+            </list>
+        </property>
+        <property name="customArgumentResolvers">
+            <list>
+                <bean class="com.jrelax.core.web.resolver.BeanArgumentResolver"/>
+                <bean class="com.jrelax.core.web.resolver.ListArgumentResolver"/>
+                <bean class="com.jrelax.core.web.resolver.ListMapArgumentResolver"/>
+                <bean class="com.jrelax.core.web.resolver.JsonArgumentResolver"/>
+            </list>
+        </property>
+        <!-- 定义全局属性编辑器 -->
+        <property name="webBindingInitializer">
+            <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                <!-- 定义ConversionService -->
+                <property name="conversionService" ref="conversionService"/>
+                <!-- 定义Bean验证 -->
+                <property name="validator" ref="validator"/>
+            </bean>
+        </property>
+        <property name="prefixReturnValueHandlers">
+            <list>
+                <bean class="com.jrelax.core.web.handler.JSONMethodReturnValueHandler"/>
+                <bean class="com.jrelax.core.web.handler.ExportReturnValueHandler"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <bean class="com.jrelax.web.support.filter.UserInterceptor"/>
+                <bean class="com.jrelax.web.support.filter.AdminInterceptor"/>
+                <bean class="com.jrelax.web.support.filter.PrivilegeInterceptor"/>
+                <bean class="com.jrelax.web.support.filter.URLInterceptor"/>
+                <bean class="com.jrelax.web.support.filter.SQLInterceptor"/>
+                <bean class="com.jrelax.web.support.filter.ParamInitInterceptor"/>
+            </list>
+        </property>
+    </bean>
+    <!-- ConversionService -->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.jrelax.core.web.converter.StringToBigDecimalConverter"/>
+                <bean class="com.jrelax.core.web.converter.StringToDateConverter"/>
+            </set>
+        </property>
+    </bean>
+    <!-- 启用表单验证 -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+    <!-- 静态资源的访问 -->
+    <mvc:resources mapping="/framework/**" location="classpath:/resources/framework/"/>
+    <mvc:resources mapping="/app/**" location="classpath:/resources/application/"/>
+    <mvc:resources mapping="${resources.upload}/**" location="${resources.upload.path}"/>
+
+    <context:annotation-config/>
+    <!-- 开启AOP监听 只对当前配置文件有效 -->
+    <aop:aspectj-autoproxy expose-proxy="true" proxy-target-class="true"/>
+
+    <!-- 集成Velocity -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="resourceLoaderPath" value="${velocity.resourceLoaderPath}"/>
+        <property name="preferFileSystemAccess" value="false"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">${velocity.input.encoding}</prop>
+                <prop key="output.encoding">${velocity.output.encoding}</prop>
+                <prop key="foreach.count">${velocity.foreach.count}</prop>
+                <prop key="directive.foreach.counter.initial.value">
+                    ${velocity.directive.foreach.counter.initial.value}
+                </prop>
+                <prop key="velocimacro.library">${velocity.macro.library}</prop>
+                <prop key="spring.resource.loader.cache">${velocity.cache}</prop>
+                <prop key="spring.resource.loader.modificationCheckInterval">${velocity.modificationCheckInterval}</prop>
+                <prop key="spring.resource.loader.class">com.jrelax.core.web.velocity.VelocityResourceLoader</prop>
+                <prop key="userdirective">
+                    com.jrelax.core.web.velocity.IFAuthButtonDirective,
+                    com.jrelax.core.web.velocity.IFAuthColumnDirective,
+                    com.jrelax.core.web.velocity.IFAuthResourceDirective,
+                    com.jrelax.core.web.velocity.IFCheckedDirective,
+                    com.jrelax.core.web.velocity.IFSelectedDirective,
+                    com.jrelax.core.web.velocity.IFDisabledDirective
+                </prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="velocityEngine" ref="velocityEngine"/>
+    </bean>
+    <bean id="viewResolver" class="com.jrelax.core.web.resolver.MultiViewResolver">
+        <property name="defaultViewResolver" ref="velocityViewResolver"/>
+        <property name="viewResolverMap">
+            <map>
+                <entry key=".jsp" value-ref="internalResourceViewResolver"/>
+                <entry key=".html" value-ref="velocityViewResolver"/>
+            </map>
+        </property>
+    </bean>
+    <!-- Velocity -->
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="${velocity.cache}"/>
+        <property name="suffix" value="${velocity.suffix}"/>
+        <property name="contentType" value="${velocity.contentType}"/>
+        <!--Velocity绑定表单 -->
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="dateToolAttribute" value="dateTool"/>
+        <property name="numberToolAttribute" value="numberTool"/>
+    </bean>
+    <!-- Jsp -->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="cache" value="${jsp.cache}"/>
+        <property name="prefix" value="${jsp.resourceLoaderPath}"/>
+        <property name="contentType" value="${jsp.contentType}"/>
+    </bean>
+    <!-- 国际化 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>lang/messages</value>
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+    </mvc:interceptors>
+    <bean id="localeResolver" class="com.jrelax.core.web.resolver.LocaleResolver"/>
+    <!-- 处理异常 -->
+    <bean class="com.jrelax.web.support.resolver.ExceptionResolver"/>
+    <!-- 支持上传文件 50M -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="UTF-8" p:maxUploadSize="52428800" p:uploadTempDir="/resources/upload/temp"/>
+    <!-- WebSocket -->
+    <!--<bean id="systemWebSocketHandler" class="com.jrelax.web.websocket.SystemWebSocketHandler"/>-->
+    <!--<websocket:handlers>-->
+    <!--<websocket:mapping path="/ws" handler="systemWebSocketHandler"/>-->
+    <!--<websocket:handshake-interceptors>-->
+    <!--<bean class="com.jrelax.web.websocket.WebSocketHandshakeInterceptor"/>-->
+    <!--</websocket:handshake-interceptors>-->
+    <!--</websocket:handlers>-->
+</beans>

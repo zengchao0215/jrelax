@@ -1,0 +1,189 @@
+<link rel="stylesheet" href="$!basePath/framework/css/ext/timeline.css">
+<div class="modal-body no-p">
+   	<section class="panel panel-primary no-b">
+		<div class="panel-body bg-primary" style="padding-top: 50px;">
+			<a href="javascript:;" class="show text-center">
+				#if($!user.headImage)
+				<img src="$!{uploadPath}$!user.headImage?$!range" class="avatar avatar-lg img-circle" alt="">
+				#else
+				<img src="$!basePath/framework/img/avatar.jpg" class="avatar avatar-lg img-circle" alt="">
+				#end
+			</a>
+			<div class="show mt15 mb15 text-center">
+				<div class="h5"><b>$!realName</b></div>
+				<p class="show">$!unitName，$!roleNames</p>
+			</div>
+		</div>
+		<div class="nav-tabs-custom mt5" style="box-shadow: 0 0 0;">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#info" data-toggle="tab"><i class="fa fa-user"></i> 基本信息</a></li>
+				<li><a href="#pwd" data-toggle="tab"><i class="fa fa-lock"></i> 修改密码</a></li>
+				<li><a href="#setting" data-toggle="tab"><i class="fa fa-cogs"></i> 个性化设置</a></li>
+				<li><a href="#signin" data-toggle="tab"><i class="fa fa-sign-in"></i> 登陆日志</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade active in" id="info">
+					<div class="list-group">
+		            	<a href="javascript:;" class="list-group-item brt0" title="联系方式">
+		                    <i class="fa fa-phone mr10"></i>$!user.mobile
+		                </a>
+		                <a href="javascript:;" class="list-group-item" title="电子邮箱">
+		                    <i class="ti-email mr10"></i>$!user.email
+		                </a>
+		                <a href="javascript:;" class="list-group-item" title="QQ">
+		                    <i class="fa fa-qq mr10"></i>$!user.qq
+		                </a>
+		                <a href="javascript:;" class="list-group-item" title="页面风格">
+		                    <i class="ti-palette mr10"></i>$!user.pageStyle
+		                </a>
+		                <a href="javascript:;" class="list-group-item" title="注册时间">
+		                    <i class="ti-time mr10"></i>$!user.createTime
+		                </a>
+		            </div>
+				</div>
+				<div class="tab-pane fade" id="pwd">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">原密码</label>
+						<div class="col-sm-10">
+							<input type="password" name="oldPassword" class="form-control" id="oldPassword" placeholder="输入原密码" autofocus>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="newPassword" class="col-sm-2 control-label">新密码</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="输入新密码">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="newPasswordConfirm" class="col-sm-2 control-label">新密码确认</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" name="newPasswordConfirm" id="newPasswordConfirm" placeholder="再输入一次新密码">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="button" class="btn btn-default" onclick="__doUpdatePwd()">确  定</button>
+						</div>
+					</div>
+					<script type="text/javascript">
+						function __doUpdatePwd(){
+							var pwd1 = $("#pwd input[name='oldPassword']").val();
+							var pwd2 = $("#pwd input[name='newPassword']").val();
+							var pwd3 = $("#pwd input[name='newPasswordConfirm']").val();
+							if(pwd1.length == 0)
+								return alert("请输入原密码！");
+							if(pwd2.length == 0)
+								return alert("请输入新密码！");
+							if(pwd2 != pwd3)
+								return alert("两次输入的新密码不相同！");
+							jQuery.post("$!basePath/profile/pwd",{oldPwd:pwd1,newPwd:pwd2},function(data){
+								if(data.success == true){
+									Toast.success("密码修改成功！");
+								}else{
+									Toast.error(data.message);
+								}
+							});
+						}
+					</script>
+				</form>
+				</div>
+				<div class="tab-pane fade" id="setting">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户头像</label>
+							<div class="col-sm-10">
+								#if($!user.headImage)
+								<a class="btn btn-default" href="javascript:;" onclick="doUploadHeadImage()"><i class="fa fa-photo"></i> 更改头像</a>
+								#else
+								<a class="btn btn-default" href="javascript:;" onclick="doUploadHeadImage()"><i class="fa fa-photo"></i> 上传头像</a>
+								#end
+							</div>
+						</div>
+##						<!--<div class="form-group hide">-->
+##							<!--<label class="col-sm-2 control-label">面部识别</label>-->
+##							<!--<div class="col-sm-10">-->
+##								<!--#if($!user.headImage)-->
+##								<!--<img src="$!basePath/face/$!user.headImage?$!range" width="60"/>-->
+##								<!--<a class="btn btn-default" href="javascript:;" onclick="ns.view.showModal('$!basePath/uc/himage')">更改图片</a>-->
+##								<!--#else-->
+##								<!--<a class="btn btn-default" href="javascript:;" onclick="ns.view.showModal('$!basePath/uc/himage')">上传图片</a>-->
+##								<!--#end-->
+##							<!--</div>-->
+##						<!--</div>-->
+						<div class="form-group">
+							<label class="col-sm-2 control-label">关联邮箱</label>
+							<div class="col-sm-10">
+								<a class="btn btn-default" href="javascript:;" onclick="ns.view.showModal('$!basePath/profile/email')"><i class="fa fa-envelope"></i> #if($!mailUser)$!mailUser#else配置#end</a>
+							</div>
+						</div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">快捷菜单</label>
+                            <div class="col-sm-10">
+                                <a class="btn btn-default" href="javascript:;" onclick="ns.view.showModal('$!basePath/profile/quickmenu')"><i class="fa fa-navicon"></i> 管理快捷菜单</a>
+                            </div>
+                        </div>
+					</form>
+				</div>
+				<div class="pl10 pr10 tab-pane fade" id="signin" style="max-height: 400px; overflow: auto;">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="col-md-4 pd-l-lg"><span class="pd-l-sm"></span>时间</th>
+								<th class="col-md-2">描述</th>
+								<th class="col-md-3">IP</th>
+								<th class="col-md-3">浏览器</th>
+							</tr>
+						</thead>
+						<tbody>
+							#foreach($!log in $!logs)
+							<tr>
+								<td><span class="pd-l-sm"></span>$dateTool.format("yyyy-MM-dd HH:mm", $!log.time)</td>
+								<td>$!log.module</td>
+								<td>$!log.ip</td>
+								<td>$!log.browser</td>
+							</tr>
+							#end
+						</tbody>
+					</table>
+					<div class="hr-line-dashed"></div>
+					<div class="timeline">
+						#foreach($!log in $!logs)
+						<div class="timeline-panel">
+							<section class="panel">
+								<div class="timeline-date">$!log.time</div>
+								<div class="panel-body">
+									<b>描述：$!log.module</b>
+									<p>IP：$!log.ip</p>
+									<p>浏览器：$!log.browser</p>
+								</div>
+							</section>
+						</div>
+						#end
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">关  闭</button>
+</div>
+<script>
+    function doUploadHeadImage(){
+        ns.requireJS("/framework/js/form/uploader.js");
+        ns.form.uploader.open({
+			filter:"image",
+            success : function(path){
+                jQuery.post("$!basePath/profile/head/upload",{path:path},function(data){
+                    if(data.success == true){
+                        Toast.success("头像上传成功！");
+                        setTimeout(function(){window.location.reload();},1000);
+                    }else{
+                        alert("头像上传失败！");
+                    }
+                });
+			}
+        });
+    }
+</script>

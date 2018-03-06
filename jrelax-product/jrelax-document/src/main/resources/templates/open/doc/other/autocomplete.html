@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    
+    <title>${system_admin_title}</title>
+    <link rel="stylesheet" href="$!basePath/framework/plugins/typeahead/typeahead.js-bootstrap.css">
+    #required_css
+</head>
+<body>#loading
+    <div class="app $!layout">
+        <section class="layout">
+            <!-- 内容主体 -->
+            <section class="main-content no-b">
+                <div class="content-wrap">
+                   	<div class="wrapper">
+                   		<div class="row mb15">
+                   			<div class="col-lg-4">
+                   				
+                   			</div>
+                   			<div class="col-lg-4 text-center">
+                   				<input id="k_1" type="text" class="form-control" data-url="$!basePath/open/doc/autocomplete/data" data-parsley-required="true" data-parsley-required2="true">
+								<input type="text" id="k_v">
+                   			</div>
+                   		</div>
+						<div class="row hide">
+							<table>
+								<tr>
+									<td>
+										<input id="t_1" type="text" class="form-control typeahead" data-url="$!basePath/open/doc/autocomplete/data">
+									</td>
+									<td>
+										<input name="t_2" type="text" class="form-control">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input id="o_1" type="text" class="form-control typeahead" data-url="$!basePath/open/doc/autocomplete/data">
+									</td>
+									<td>
+										<input name="t_2" type="text" class="form-control">
+									</td>
+								</tr>
+							</table>
+						</div>
+                   		<div class="row">
+                   			<div class="col-lg-12 text-center">
+                   				<h4>必须按以下顺序引入依赖文件</h4><br/>
+                   				<code>
+                   					&lt;script type="text/javascript" src="$!basePath/framework/js/form/typeahead.js"&gt;&lt;/script&gt;<br/>
+                   				</code>
+                   				<h4>前台调用说明</h4>
+                   				在需要自动补全的input上加上样式 <code>typeahead</code> 并配置远程地址<code>data-url</code> <br/>
+                   				如 <code>&lt;input type="text" class="form-control typeahead" data-url="$!basePath/open/doc/autocomplete/data"&gt;</code>
+                   				<h4>后台数据提供</h4>
+                   				关键字名称为：<code>query</code><br/>
+                   				返回类似于 <code>[{value:'a', value:'ab'}]</code> 的json集合
+                   				
+                   				<h4>事件绑定说明</h4>
+                   				选中后事件
+                   				$(".typeahead").bind("typeahead:selected", function(obj,data,name){
+                   						//获取后台返回数据，直接用data.后台返回的key名即可获得对应的值
+                   						alert(data.value);
+                   						alert(data.id);//如返回json集合中有id键时
+                   				});
+                   			</div>
+                   		</div>
+                	</div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </div>
+    #required_js
+
+    <!-- 页面组件脚本 -->
+    <script type="text/javascript" src="$!basePath/framework/plugins/typeahead/typeahead.bundle.js"></script>
+    
+    <!-- 本页面脚本 -->
+    <script type="text/javascript" src="$!basePath/framework/js/form/typeahead.js"></script>
+    <script type="text/javascript">
+//		$(".typeahead").bind("typeahead:selected", function(obj,data,name){
+//			//获取后台返回数据，直接用data.后台返回的key名即可获得对应的值
+//			var tr = $(obj.target).parents("tr");
+//
+//			tr.find("input[name='t_2']").val(data.value);
+//		});
+		ns.ready(function(){
+			ns.form.typeahead.init($("#k_1"), {
+				idField : "value",
+				idEl : $("#k_v")
+			});
+		});
+    </script>
+    
+#loading_close</body>
+</html>

@@ -1,0 +1,46 @@
+<div class="modal-body no-p">
+	<div class="row">
+		<div class="col-xs-12">
+			<section class="panel panel-primary no-b">
+	            <header class="panel-heading clearfix">
+	            	#if($!parentUnit)
+	            	<div class="pull-right">隶属于：$!parentUnit</div>
+	            	#end
+	                <div class="overflow-hidden">
+	                    <a href="javascript:;" class="h4 show no-m pt5">$!unit.name</a>
+	                    <small>$!unit.address</small>
+	                </div>
+	            </header>
+	            <div class="list-group">
+                    <a href="javascript:;" class="list-group-item" title="#i18n('system.sys.unit.contact')">
+                        <i class="ti-user mr10 text-muted"></i>负责人：$!unit.leader.realName
+                    </a>
+	            	<a href="javascript:;" class="list-group-item" title="#i18n('system.sys.unit.contact')">
+	                    <i class="ti-user mr10 text-muted"></i>联系人：$!unit.contact
+	                </a>
+	                <a href="javascript:;" class="list-group-item" title="#i18n('system.sys.unit.phone')">
+	                    <i class="ti-mobile mr10 text-muted"></i>联系电话：$!unit.mobile
+	                </a>
+	                <a href="mailto:$!unit.email" class="list-group-item" title="电子邮件">
+	                    <i class="ti-email mr10 text-muted"></i>电子邮件：$!unit.email
+	                </a>
+	                <a href="$!unit.web" target="_blank" class="list-group-item" title="网址">
+	                    <i class="ti-world mr10 text-muted"></i>网址：$!unit.web
+	                </a>
+	                <a href="javascript:;" class="list-group-item" title="当前状态">
+	                    <i class="ti-heart mr10 text-muted"></i>状态：#if($!unit.enabled)#i18n('system.common.enable')#else <span>#i18n('system.common.disable')</span>#end</i>
+	                </a>
+	                <a href="javascript:;" class="list-group-item" title="系统组织">
+	                    <i class="ti-lock mr10 text-muted"></i>#if($!unit.system) 系统组织 #else 非系统组织#end</i>
+	                </a>
+	                <a href="javascript:;" class="list-group-item" title="创建时间">
+	                    <i class="ti-time mr10 text-muted"></i>创建时间：$!unit.createTime
+	                </a>
+	            </div>
+	        </section>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-primary btn-block" data-dismiss="modal">知道了</button>
+</div>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    <link rel="stylesheet" href="$!basePath/framework/plugins/daterangepicker/daterangepicker-bs3.css">
+    #required_css
+    <style>
+        .charts canvas{
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <section class="main-content">
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <!--图表显示-->
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <div class="panel">
+                                    <div class="panel-heading">7天日志记录数</div>
+                                    <div class="panel-body charts">
+                                        <canvas id="chartCounter" height="300" style="width: 100%"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="panel">
+                                    <div class="panel-heading">系统模块访问比例</div>
+                                    <div class="panel-body charts">
+                                        <canvas id="chartModule" height="300" style="width: 100%"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="panel">
+                                    <div class="panel-heading">客户端设备比例</div>
+                                    <div class="panel-body charts">
+                                        <canvas id="chartPlatform" height="300" style="width: 100%"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <!--搜索条件-->
+                        <form id="searchForm" role="form">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <label for="reservationtime">日志时间</label>
+                                    <input type="text" name="timeRange" id="reservationtime" class="form-control" value="$!defaultTime">
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label for="level">日志等级</label>
+                                        <select name="level" class="form-control select">
+                                            <option value="" selected>全部</option>
+                                            <option value="1">Info</option>
+                                            <option value="2">Debug</option>
+                                            <option value="3">Error</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label for="module">功能模块</label>
+                                        <input name="module" type="text" class="form-control" placeholder="按功能模块模糊查询">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label for="content">日志内容</label>
+                                        <input name="content" type="text" class="form-control" placeholder="按日志内容模糊查询">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group search-form-btn">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 查询</button>
+                                        <button type="button" class="btn btn-default" onclick="showAll()"><i class="fa fa-undo"></i>重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 table-responsive">
+                                <table id="dgLog"></table>
+                                <div id="dgLogPager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+<div id="sb-info" class="sidebar-panel from-right">
+    <div class="sidebar-panel-container shadow">
+        <header class="sidebar-panel-header">
+            <h4>日志详情</h4>
+            <a href="javascript:$('#sb-info').click();" class="sidebar-panel-close text-center"><i
+                    class="ti-close"></i> </a>
+        </header>
+        <div class="sidebar-panel-content">
+            <form role="form">
+                <div class="form-group">
+                    <label for="content">事项</label>
+                    <p style="word-break: break-all;"></p>
+                </div>
+                <div class="form-group">
+                    <label for="time">时间</label>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="createUser">操作人</label>
+                    <p></p>
+                </div>
+                <div class="form-group">
+                    <label for="ip">IP地址</label>
+                    <p></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+#required_js
+
+<!-- 页面组件脚本 -->
+<!-- 日期间隔选择插件 -->
+<script src="$!basePath/framework/plugins/moment.js"></script>
+<script src="$!basePath/framework/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="$!basePath/framework/js/form/date.js"></script>
+<script src="$!basePath/framework/plugins/charts/chartjs/Chart.min.js"></script>
+<!-- 日期间隔选择插件 END -->
+
+<!-- 本页面脚本 -->
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/checkbox.js",
+        "/framework/js/form/select.js",
+        "/framework/js/view/datagrid.js",
+        "/framework/js/form/search.form.js"]);
+    var dgLog;
+    function initDataGrid() {
+        dgLog = $("#dgLog").jqGrid({
+            url: '$!basePath/system/log/data',
+            colModel: [
+                {label: 'ID', name: 'id', key: true, hidden: true, align: "left"},
+                {label: '功能模块', name: 'module', width: 100},
+                {label: '事项', name: 'content', width: 280},
+                {
+                    label: '日志等级', name: 'level', width: 50, formatter: function (val) {
+                    if (val == 1)
+                        return "<span class='label label-info'>Info</span>";
+                    else if (val == 2)
+                        return "<span class='label label-default'>Debug</span>";
+                    else if (val == 3)
+                        return "<span class='label label-danger'>Error</span>";
+                    else return "未知";
+                }
+                },
+                {label: '时间', name: 'time', width: 100},
+                {label: '操作人', name: 'user', width: 50},
+                {
+                    label: 'IP', name: 'ip', width: 50, formatter: function (val) {
+                    return "<a class='text-primary text-underline' href=\"http://ip.cn/index.php?ip=" + val + "\" target=\"_blank\">" + val + "</a>";
+                }
+                },
+                {label: '来源', name: 'source', width: 50}
+            ],
+            height: 600,
+            pager: "#dgLogPager",
+            searchForm: "#searchForm",
+            sortname: "time",
+            sortorder: "desc",
+            onSelectRow: function (id) {
+                var data = dgLog.getRowData(id);
+                if (data.content.length > 100)//超过长度显示明细
+                    showInfo(data);
+            }
+        });
+    }
+    function doSearch() {
+        var timeRange = $("#reservationtime").val();
+        dgLog.reload({timeRange: timeRange});
+    }
+    function showAll() {
+        dgLog.reload({timeRange: ""});
+    }
+
+    function showInfo(data) {
+        $("#sb-info p:eq(0)").text(data.content);
+        $("#sb-info p:eq(1)").text(data.time);
+        $("#sb-info p:eq(2)").text(data.userName);
+        $("#sb-info p:eq(3)").text(ns.String.html_decode(data.ip));
+        ns.view.showSidebarStatic("#sb-info");
+    }
+
+    function initCharts(){
+        ns.post("$!basePath/system/log/charts",{},function(success, data){
+            if(success){
+                var counterMap = data.counter;
+                var moduleMap = data.module;
+                var platformMap = data.platform;
+
+                initCharts_counter(counterMap);
+                initCharts_module(moduleMap);
+                initCharts_platform(platformMap);
+            }else{
+                $(".charts").html("图表加载失败！");
+            }
+        });
+    }
+
+    function initCharts_counter(dataMap){
+        var labels = [];
+        var data = [];
+        $.each(dataMap, function(i,n){
+            labels.push(n["logTime"]);
+            data.push(n["totals"]);
+        });
+        labels.reverse();
+        data.reverse();
+
+        var dataset = {
+            labels : labels,
+            datasets : [{
+                label: "近七日数据",
+                data : data,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)"
+            }]
+        }
+        new Chart($("#chartCounter")[0], {
+            type : "line",
+            data: dataset,
+            options : {
+                legend : {
+                    display : false
+                }
+            }
+        });
+    }
+
+    function initCharts_module(dataMap){
+        var labels = [];
+        var data = [];
+        $.each(dataMap, function(i,n){
+            labels.push(n["module"]);
+            data.push(n["totals"]);
+        });
+
+        var dataset = {
+            labels : labels,
+            datasets : [{
+                label: "系统模块",
+                data : data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1,
+            }]
+        }
+        new Chart($("#chartModule")[0], {
+            type : "bar",
+            data: dataset,
+            options : {
+                legend : {
+                    display : false
+                }
+            }
+        });
+    }
+
+    function initCharts_platform(dataMap){
+        var labels = [];
+        var data = [];
+        $.each(dataMap, function(i,n){
+            labels.push(n["platform"]);
+            data.push(n["totals"]);
+        });
+
+        var dataset = {
+            labels : labels,
+            datasets : [{
+                label: "客户端平台",
+                data : data,
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#6FCDCD",
+                    "#FFCE56",
+                    "#AF7CAD",
+                    "#BC8500",
+                    "#FF8E72",
+                    "#FF8E71"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#6FCDCD",
+                    "#FFCE56",
+                    "#AF7CAD",
+                    "#BC8500",
+                    "#FF8E72",
+                    "#FF8E71"
+                ]
+            }]
+        }
+        new Chart($("#chartPlatform")[0], {
+            type : "pie",
+            data: dataset,
+            options : {
+                legend : {
+                    position : 'bottom'
+                }
+            }
+        });
+    }
+
+    ns.ready(function () {
+        initDataGrid();
+        initCharts();
+        $("#reservationtime").daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 1,
+            timePicker12Hour: false,
+            format: "YYYY-MM-DD HH:mm:ss"
+        });
+    });
+</script>
+
+#loading_close
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提示组件</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+#required_css
+</head>
+
+<div class="app">
+	<h3>快捷编辑</h3>
+
+	<a data-type="text" data-title="输入新值" data-pk="100" data-placement="right" class="xeditable-realname">点我！点我！</a>
+</div>
+<body class="p10">
+	#required_js
+	<script type="text/javascript">
+		ns.ready(function(){
+			ns.requireJS("/framework/js/form/editable.js");
+
+			//初始化
+			$(".xeditable-realname").editable({//邮箱快捷编辑
+				url: "$!basePath/system/user/edit/email"
+			});
+		});
+	</script>
+</body>
+</html>

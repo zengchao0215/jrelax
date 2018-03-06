@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="toolbar">
+                        <button class="btn btn-primary toolbar-item" id="btnAddScheduler"><i class="fa fa-plus"></i> 新增</button>
+                    </div>
+                    <div class="pull-right toolbar">
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <table id="dgScheduler"></table>
+                                <div id="dgSchedulerPager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+<script type="text/javascript">
+    ns.requireJS([
+        "/framework/js/form/checkbox.js",
+        "/framework/js/view/datagrid.js"]);
+    ns.ready(function () {
+        var dgScheduler = $("#dgScheduler").jqGrid({
+            url: '$!basePath/system/scheduler/data',
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "任务名称", name: "name", width: 100},
+                {label: "执行时间", name: "cron", width: 80},
+                {label: "执行类", name: "jobClass", width: 200},
+                {label: "执行结果", name: "lastResult", width: 80},
+                {label: "执行时间", name: "lastExecTime", width: 80},
+                {label: "耗时", name: "lastRunTimes", width: 50},
+                {
+                    label: "状态", name: "enabled", width: 50, formatter: function (val,row, data) {
+                        if(val === false) return "<span class='text-danger'>禁用</span>";
+                        if(data.status == 2) return "<span class='text-warning'>暂停</span>";
+                        else return "<span class='text-success'>运行中</span>";
+                    }
+                },
+                {label: "备注", name: "remarks", width: 100},
+                {
+                    label: '操作', width: 80, formatter: function (val, node, data) {
+                        return ns.view.datagrid.renderOp([
+                            {
+                                title: "查看日志", onclick: function () {
+                                    ns.view.showModal("$!basePath/system/scheduler/log/" + data.id);
+                                }
+                            },
+                            {
+                                title: "编辑", onclick: function () {
+                                    doEditScheduler(data.id);
+                                }
+                            },
+                            {
+                                title: "删除", onclick: function () {
+                                    doDeleteScheduler(data.id);
+                                }
+                            },
+                            {divider: true},
+                            {
+                                title: "暂停", onclick: function () {
+                                    doPauseScheduler(data.id);
+                                }
+                            },
+                            {
+                                title: "恢复", onclick: function () {
+                                    doResumeScheduler(data.id);
+                                }
+                            },
+                        ]);
+                    }
+                }
+            ],
+            rownumbers: true,
+            height: $(".main-content .wrapper").height() - ns.view.datagrid.offsetHeight,
+            pager: "#dgSchedulerPager",
+            multiselect: true,
+            multiboxonly: true,
+            icheckbox: true
+        });
+
+        //新增
+        $("#btnAddScheduler").on("click", function () {
+            ns.view.showModal("$!basePath/system/scheduler/add", {
+                onHidden: function (dialog, obj) {
+                    if (dialog.ok) {
+                        dgScheduler.reload();
+                    }
+                }
+            });
+        });
+
+        //修改
+        function doEditScheduler(id) {
+            ns.view.showModal("$!basePath/system/scheduler/edit/" + id, {
+                onHidden: function (dialog, obj) {
+                    if (dialog.ok) {
+                        dgScheduler.reload();
+                    }
+                }
+            });
+        }
+
+        //删除
+        function doDeleteScheduler(id) {
+            ns.tip.confirm("确定要删除此定时任务吗？", function () {
+                var bar = ns.view.showProgressbar("正在删除...");
+                ns.get("$!basePath/system/scheduler/delete/" + id, function (success, data) {
+                    if (success) {
+                        ns.tip.toast.success("任务已删除");
+                        dgScheduler.reload();
+                    } else {
+                        ns.tip.toast.error(data.message);
+                    }
+
+                    bar.close();
+                });
+            });
+        }
+
+        //暂停
+        function doPauseScheduler(id) {
+            ns.tip.confirm("确定要暂停此任务吗？", function () {
+                var bar = ns.view.showProgressbar("正在暂停...");
+                ns.get("$!basePath/system/scheduler/pause/" + id, function (success, data) {
+                    if (success) {
+                        ns.tip.toast.success("任务已暂停");
+                        dgScheduler.reload();
+                    } else {
+                        ns.tip.toast.error(data.message);
+                    }
+
+                    bar.close();
+                });
+            });
+        }
+
+        //恢复
+        function doResumeScheduler(id) {
+            ns.tip.confirm("确定要恢复此任务吗？", function () {
+                var bar = ns.view.showProgressbar("正在恢复...");
+                ns.get("$!basePath/system/scheduler/resume/" + id, function (success, data) {
+                    if (success) {
+                        ns.tip.toast.success("任务已恢复");
+                        dgScheduler.reload();
+                    } else {
+                        ns.tip.toast.error(data.message);
+                    }
+
+                    bar.close();
+                });
+            });
+        }
+    });
+</script>
+</body>
+</html>

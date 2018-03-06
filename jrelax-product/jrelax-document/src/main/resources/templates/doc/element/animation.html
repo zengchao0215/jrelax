@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">动画</h1>
+                <p class="lead">框架中的动画主要分为：jQuery动画、animate.css动画</p>
+
+                <h2>jQuery动画</h2>
+                <div class="bs-example">
+                    <div id="jqBox" class="box box-primary">
+                        <div class="box-body">
+                            比特币自2009年诞生起，市值一度从1分钱上涨到8000元，作为具有技术创新的ICO币，比特币让人为之疯狂。但同时也屡屡遭受质疑，被认为是“庞氏骗局”，是个随时可破灭的“泡沫”，认为总有一天政府会对它全面禁止。据统计，从2011年以来比特币至少被宣布死亡129次。
+
+                            天下熙熙皆为利来，天下攘攘皆为利往。金融科技创新，比特币存在的暴利每一个人有目共睹，而它所涉及的风险却又让每一个人诅咒它快点死。虽说风险与收益成正比例，但涉嫌违法也只能是潇洒挥手说拜拜。
+
+                            同样是金融科技创新，与比特币的野蛮疯长不同，阿里巴巴走上的却是另一条顺风顺水的道路。
+                        </div>
+                    </div>
+
+                    <button class="btn btn-default" onclick="jq_fadeIn()">淡入</button>
+                    <button class="btn btn-default" onclick="jq_fadeOut()">淡出</button>
+                    <button class="btn btn-default" onclick="jq_slideDown()">下滑</button>
+                    <button class="btn btn-default" onclick="jq_slideUp()">上滑</button>
+                    <button class="btn btn-default" onclick="jq_custom()">自定义动画</button>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        var target = $("#jqBox");
+
+                        target.fadeIn();//淡入
+                        target.fadeOut();//淡出
+                        target.slideDown();//下滑
+                        target.slideUp();//上滑
+                        target.animate({//自定义动画
+                            width: 300,
+                            height: 300
+                        });
+                    </pre>
+                </figure>
+
+                <h2>animate.css动画</h2>
+                <div class="bs-example">
+                    <div style="text-align: center;">
+                        <div id="animationSandbox" style="width: 400px;">
+                            <div class="box box-primary" >
+                                <div class="box-body">
+                                    <H1>Animate</H1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form>
+                        <select class="input input--dropdown js--animations form-control" style="width: 150px;display: inline-block;">
+                            <optgroup label="Attention Seekers">
+                                <option value="bounce">bounce</option>
+                                <option value="flash">flash</option>
+                                <option value="pulse">pulse</option>
+                                <option value="rubberBand">rubberBand</option>
+                                <option value="shake">shake</option>
+                                <option value="swing">swing</option>
+                                <option value="tada">tada</option>
+                                <option value="wobble">wobble</option>
+                                <option value="jello">jello</option>
+                            </optgroup>
+
+                            <optgroup label="Bouncing Entrances">
+                                <option value="bounceIn">bounceIn</option>
+                                <option value="bounceInDown">bounceInDown</option>
+                                <option value="bounceInLeft">bounceInLeft</option>
+                                <option value="bounceInRight">bounceInRight</option>
+                                <option value="bounceInUp">bounceInUp</option>
+                            </optgroup>
+
+                            <optgroup label="Bouncing Exits">
+                                <option value="bounceOut">bounceOut</option>
+                                <option value="bounceOutDown">bounceOutDown</option>
+                                <option value="bounceOutLeft">bounceOutLeft</option>
+                                <option value="bounceOutRight">bounceOutRight</option>
+                                <option value="bounceOutUp">bounceOutUp</option>
+                            </optgroup>
+
+                            <optgroup label="Fading Entrances">
+                                <option value="fadeIn">fadeIn</option>
+                                <option value="fadeInDown">fadeInDown</option>
+                                <option value="fadeInDownBig">fadeInDownBig</option>
+                                <option value="fadeInLeft">fadeInLeft</option>
+                                <option value="fadeInLeftBig">fadeInLeftBig</option>
+                                <option value="fadeInRight">fadeInRight</option>
+                                <option value="fadeInRightBig">fadeInRightBig</option>
+                                <option value="fadeInUp">fadeInUp</option>
+                                <option value="fadeInUpBig">fadeInUpBig</option>
+                            </optgroup>
+
+                            <optgroup label="Fading Exits">
+                                <option value="fadeOut">fadeOut</option>
+                                <option value="fadeOutDown">fadeOutDown</option>
+                                <option value="fadeOutDownBig">fadeOutDownBig</option>
+                                <option value="fadeOutLeft">fadeOutLeft</option>
+                                <option value="fadeOutLeftBig">fadeOutLeftBig</option>
+                                <option value="fadeOutRight">fadeOutRight</option>
+                                <option value="fadeOutRightBig">fadeOutRightBig</option>
+                                <option value="fadeOutUp">fadeOutUp</option>
+                                <option value="fadeOutUpBig">fadeOutUpBig</option>
+                            </optgroup>
+
+                            <optgroup label="Flippers">
+                                <option value="flip">flip</option>
+                                <option value="flipInX">flipInX</option>
+                                <option value="flipInY">flipInY</option>
+                                <option value="flipOutX">flipOutX</option>
+                                <option value="flipOutY">flipOutY</option>
+                            </optgroup>
+
+                            <optgroup label="Lightspeed">
+                                <option value="lightSpeedIn">lightSpeedIn</option>
+                                <option value="lightSpeedOut">lightSpeedOut</option>
+                            </optgroup>
+
+                            <optgroup label="Rotating Entrances">
+                                <option value="rotateIn">rotateIn</option>
+                                <option value="rotateInDownLeft">rotateInDownLeft</option>
+                                <option value="rotateInDownRight">rotateInDownRight</option>
+                                <option value="rotateInUpLeft">rotateInUpLeft</option>
+                                <option value="rotateInUpRight">rotateInUpRight</option>
+                            </optgroup>
+
+                            <optgroup label="Rotating Exits">
+                                <option value="rotateOut">rotateOut</option>
+                                <option value="rotateOutDownLeft">rotateOutDownLeft</option>
+                                <option value="rotateOutDownRight">rotateOutDownRight</option>
+                                <option value="rotateOutUpLeft">rotateOutUpLeft</option>
+                                <option value="rotateOutUpRight">rotateOutUpRight</option>
+                            </optgroup>
+
+                            <optgroup label="Sliding Entrances">
+                                <option value="slideInUp">slideInUp</option>
+                                <option value="slideInDown">slideInDown</option>
+                                <option value="slideInLeft">slideInLeft</option>
+                                <option value="slideInRight">slideInRight</option>
+
+                            </optgroup>
+                            <optgroup label="Sliding Exits">
+                                <option value="slideOutUp">slideOutUp</option>
+                                <option value="slideOutDown">slideOutDown</option>
+                                <option value="slideOutLeft">slideOutLeft</option>
+                                <option value="slideOutRight">slideOutRight</option>
+
+                            </optgroup>
+
+                            <optgroup label="Zoom Entrances">
+                                <option value="zoomIn">zoomIn</option>
+                                <option value="zoomInDown">zoomInDown</option>
+                                <option value="zoomInLeft">zoomInLeft</option>
+                                <option value="zoomInRight">zoomInRight</option>
+                                <option value="zoomInUp">zoomInUp</option>
+                            </optgroup>
+
+                            <optgroup label="Zoom Exits">
+                                <option value="zoomOut">zoomOut</option>
+                                <option value="zoomOutDown">zoomOutDown</option>
+                                <option value="zoomOutLeft">zoomOutLeft</option>
+                                <option value="zoomOutRight">zoomOutRight</option>
+                                <option value="zoomOutUp">zoomOutUp</option>
+                            </optgroup>
+
+                            <optgroup label="Specials">
+                                <option value="hinge">hinge</option>
+                                <option value="jackInTheBox">jackInTheBox</option>
+                                <option value="rollIn">rollIn</option>
+                                <option value="rollOut">rollOut</option>
+                            </optgroup>
+                        </select>
+
+                        <button type="button" class="btn btn-default js--triggerAnimation">Animate it</button>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                      <!--通过添加动画样式来实现动画-->
+                        <div class="bounce animated">bounce动画</div>
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    var target = $("#jqBox");
+    function jq_fadeIn(){
+        target.fadeIn();
+    }
+    function jq_fadeOut(){
+        target.fadeOut();
+    }
+    function jq_slideDown(){
+        target.slideDown();
+    }
+    function jq_slideUp(){
+        target.slideUp();
+    }
+    function jq_custom(){
+        target.animate({
+            width: 300,
+            height: 300
+        })
+    }
+
+    function testAnim(x) {
+        $('#animationSandbox').removeClass().addClass(x + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $(this).removeClass();
+        });
+    };
+
+    $(document).ready(function(){
+        $('.js--triggerAnimation').click(function(e){
+            e.preventDefault();
+            var anim = $('.js--animations').val();
+            testAnim(anim);
+        });
+
+        $('.js--animations').change(function(){
+            var anim = $(this).val();
+            testAnim(anim);
+        });
+    });
+</script>
+</html>

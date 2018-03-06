@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">综合布局</h1>
+                <p class="lead">使用上面介绍的集中布局方式，对常用的业务场景进行布局</p>
+
+                <h2>两个表单并列</h2>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">邮箱</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" placeholder="邮箱地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" placeholder="密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> 记住我
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default">登 录</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">邮箱</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" placeholder="邮箱地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" placeholder="密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> 记住我
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default">登 录</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                    &lt;div class="row"&gt;
+                        &lt;div class="col-lg-6"&gt;
+                            &lt;form class="form-horizontal"&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;label class="col-sm-2 control-label"&gt;邮箱&lt;/label&gt;
+                                    &lt;div class="col-sm-10"&gt;
+                                        &lt;input type="email" class="form-control" placeholder="邮箱地址"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;label class="col-sm-2 control-label"&gt;密码&lt;/label&gt;
+                                    &lt;div class="col-sm-10"&gt;
+                                        &lt;input type="password" class="form-control" placeholder="密码"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;div class="col-sm-offset-2 col-sm-10"&gt;
+                                        &lt;div class="checkbox"&gt;
+                                            &lt;label&gt;
+                                                &lt;input type="checkbox"&gt; 记住我
+                                            &lt;/label&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;div class="col-sm-offset-2 col-sm-10"&gt;
+                                        &lt;button type="submit" class="btn btn-default"&gt;登 录&lt;/button&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                        &lt;div class="col-lg-6"&gt;
+                            &lt;form class="form-horizontal"&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;label class="col-sm-2 control-label"&gt;邮箱&lt;/label&gt;
+                                    &lt;div class="col-sm-10"&gt;
+                                        &lt;input type="email" class="form-control" placeholder="邮箱地址"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;label class="col-sm-2 control-label"&gt;密码&lt;/label&gt;
+                                    &lt;div class="col-sm-10"&gt;
+                                        &lt;input type="password" class="form-control" placeholder="密码"&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;div class="col-sm-offset-2 col-sm-10"&gt;
+                                        &lt;div class="checkbox"&gt;
+                                            &lt;label&gt;
+                                                &lt;input type="checkbox"&gt; 记住我
+                                            &lt;/label&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class="form-group"&gt;
+                                    &lt;div class="col-sm-offset-2 col-sm-10"&gt;
+                                        &lt;button type="submit" class="btn btn-default"&gt;登 录&lt;/button&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/form&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>面板+表单</h2>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">搜索条件</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <form id="searchForm" class="form-horizontal">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">项目1</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" placeholder="项目1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">项目2</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" placeholder="项目2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">项目3</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" placeholder="项目3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">项目4</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" placeholder="项目4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">项目5</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" placeholder="项目5">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-default">搜索</button>
+                                                    <button type="reset" class="btn btn-default">重置</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                        &lt;div class="panel panel-default"&gt;
+                            &lt;div class="panel-heading"&gt;
+                                &lt;h3 class="panel-title"&gt;搜索条件&lt;/h3&gt;
+                            &lt;/div&gt;
+                            &lt;div class="panel-body"&gt;
+                                &lt;form id="searchForm" class="form-horizontal"&gt;
+                                    &lt;div class="col-lg-4"&gt;
+                                        &lt;div class="form-group"&gt;
+                                            &lt;label class="col-sm-4 control-label"&gt;项目1&lt;/label&gt;
+                                            &lt;div class="col-sm-8"&gt;
+                                                &lt;input type="text" class="form-control" placeholder="项目1"&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="col-lg-4"&gt;
+                                        &lt;div class="form-group"&gt;
+                                            &lt;label class="col-sm-4 control-label"&gt;项目2&lt;/label&gt;
+                                            &lt;div class="col-sm-8"&gt;
+                                                &lt;input type="text" class="form-control" placeholder="项目2"&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="col-lg-4"&gt;
+                                        &lt;div class="form-group"&gt;
+                                            &lt;label class="col-sm-4 control-label"&gt;项目3&lt;/label&gt;
+                                            &lt;div class="col-sm-8"&gt;
+                                                &lt;input type="text" class="form-control" placeholder="项目3"&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="col-lg-4"&gt;
+                                        &lt;div class="form-group"&gt;
+                                            &lt;label class="col-sm-4 control-label"&gt;项目4&lt;/label&gt;
+                                            &lt;div class="col-sm-8"&gt;
+                                                &lt;input type="text" class="form-control" placeholder="项目4"&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="col-lg-4"&gt;
+                                        &lt;div class="form-group"&gt;
+                                            &lt;label class="col-sm-4 control-label"&gt;项目5&lt;/label&gt;
+                                            &lt;div class="col-sm-8"&gt;
+                                                &lt;input type="text" class="form-control" placeholder="项目5"&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="col-lg-4"&gt;
+                                        &lt;div class="form-group"&gt;
+                                            &lt;div class="col-sm-offset-2 col-sm-10"&gt;
+                                                &lt;button type="submit" class="btn btn-default"&gt;搜索&lt;/button&gt;
+                                                &lt;button type="reset" class="btn btn-default"&gt;重置&lt;/button&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/form&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+
+                <h2>Box</h2>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="box box-default">
+                                <div class="box-heading">
+                                    <h3 class="box-title">Removable</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-box-trigger="collapse"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-box-tool" data-box-trigger="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <div class="box-body">
+                                    Box 内容
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script type="text/javascript" src="$!basePath/framework/js/form/search.form.js"></script>
+<script>
+    ns.ready(function(){
+        $("#searchForm").searchForm({
+            onSearch:function(){
+                alert(1);
+            }
+        })
+    });
+</script>
+</html>

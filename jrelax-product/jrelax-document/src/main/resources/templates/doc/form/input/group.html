@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">输入框组</h1>
+                <p class="lead">基于Bootstrap实现输入框组，即输入框和按钮、复选框、图标等组合显示</p>
+
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label>左侧</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">$</div>
+                                    <input type="text" class="form-control" placeholder="Amount">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label>右侧</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Amount">
+                                    <div class="input-group-addon">.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label>前后</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">$</div>
+                                    <input type="text" class="form-control" placeholder="Amount">
+                                    <div class="input-group-addon">.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;!--左侧--&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;div class="input-group"&gt;
+                                &lt;div class="input-group-addon"&gt;$&lt;/div&gt;
+                                &lt;input type="text" class="form-control" placeholder="Amount"&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;!--右侧--&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;div class="input-group"&gt;
+                                &lt;input type="text" class="form-control" placeholder="Amount"&gt;
+                                &lt;div class="input-group-addon"&gt;.00&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;!--前后--&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;div class="input-group"&gt;
+                                &lt;div class="input-group-addon"&gt;$&lt;/div&gt;
+                                &lt;input type="text" class="form-control" placeholder="Amount"&gt;
+                                &lt;div class="input-group-addon"&gt;.00&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    </pre>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+</html>

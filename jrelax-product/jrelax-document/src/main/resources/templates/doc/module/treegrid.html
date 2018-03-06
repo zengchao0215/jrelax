@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">树形表格</h1>
+                <p class="lead">基于<code>jQuery.treegrid</code>。需引入：<code>/framework/js/view/treetable.js</code></p>
+
+                <h2>基本实例</h2>
+                <p>基于HTML实现的树形表格，通过<code>tr</code>中设置<code>data-tt-id</code>和<code>data-tt-parent</code>属性来组织树形结构</p>
+                <div class="bs-example">
+                    <table id="exampleTable" class="table">
+                        <tr>
+                            <th>名称</th>
+                            <th>性别</th>
+                        </tr>
+                        <tr data-tt-id="1">
+                            <td>张三</td>
+                            <td>男</td>
+                        </tr>
+                        <tr data-tt-id="1-1" data-tt-parent-id="1">
+                            <td>李四</td>
+                            <td>男</td>
+                        </tr>
+                        <tr data-tt-id="2">
+                            <td>王婷婷</td>
+                            <td>女</td>
+                        </tr>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;table id="exampleTable" class="table"&gt;
+                            &lt;tr&gt;
+                                &lt;th&gt;名称&lt;/th&gt;
+                                &lt;th&gt;性别&lt;/th&gt;
+                            &lt;/tr&gt;
+                            &lt;tr data-tt-id="1"&gt;
+                                &lt;td&gt;张三&lt;/td&gt;
+                                &lt;td&gt;男&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr data-tt-id="1-1" data-tt-parent-id="1"&gt;
+                                &lt;td&gt;李四&lt;/td&gt;
+                                &lt;td&gt;男&lt;/td&gt;
+                            &lt;/tr&gt;
+                            &lt;tr data-tt-id="2"&gt;
+                                &lt;td&gt;王婷婷&lt;/td&gt;
+                                &lt;td&gt;女&lt;/td&gt;
+                            &lt;/tr&gt;
+                        &lt;/table&gt;
+                    </pre>
+                    <pre class="brush: javascript">
+                        //初始化
+                        $("#exampleTable").treetable({
+                            expandable: true//显示展开、收起按钮
+                        });
+                    </pre>
+                </figure>
+
+                <h2>远程加载</h2>
+                <p>基于<code>onNodeExpand</code>事件和<code>data-tt-branch</code>实现</p>
+                <div class="bs-example">
+                    <table id="exampleTable2" class="table">
+                        <tr>
+                            <th>名称</th>
+                            <th>性别</th>
+                        </tr>
+                        <tr data-tt-id="1" data-tt-branch="true">
+                            <td>张三</td>
+                            <td>男</td>
+                        </tr>
+                    </table>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;table id="exampleTable2" class="table"&gt;
+                            &lt;tr&gt;
+                                &lt;th&gt;名称&lt;/th&gt;
+                                &lt;th&gt;性别&lt;/th&gt;
+                            &lt;/tr&gt;
+                            &lt;tr data-tt-id="1" data-tt-branch="true"&gt;
+                                &lt;td&gt;张三&lt;/td&gt;
+                                &lt;td&gt;男&lt;/td&gt;
+                            &lt;/tr&gt;
+                        &lt;/table&gt;
+                    </pre>
+                    <pre class="brush: javascript">
+                        var treetable2 = $("#exampleTable2").treetable({
+                            expandable: true,
+                            onNodeExpand: function () {
+                                var node = this;
+                                ns.view.treetable.loading(treetable2, node);
+
+                                $.get("$!basePath/doc/module-treetable-node1?id=" + node.id, {}, function (data) {
+                                    treetable2.treetable("unloadBranch", node);
+
+                                    treetable2.treetable("loadBranch", node, data);
+                                });
+                            }
+                        });
+                    </pre>
+                </figure>
+
+                <h2>参数</h2>
+                <div class="table-responsive">
+                    <h3>TR参数</h3>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>data-tt-id</td>
+                            <td>string</td>
+                            <td>唯一标识，不可重复</td>
+                        </tr>
+                        <tr>
+                            <td>data-tt-parent-id</td>
+                            <td>string</td>
+                            <td>上级节点ID</td>
+                        </tr>
+                        <tr>
+                            <td>data-tt-branch</td>
+                            <td>bool</td>
+                            <td>是否有子节点</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>配置参数</h3>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>nodeIdAttr</td>
+                            <td>string</td>
+                            <td>tr节点上的id属性名。 配置值风格为驼峰式，使用时大写字母变更为小写，前方加入<code>-</code></td>
+                            <td>ttId</td>
+                        </tr>
+                        <tr>
+                            <td>parentIdAttr</td>
+                            <td>string</td>
+                            <td>tr节点上的parent-id属性名。</td>
+                            <td>ttParentId</td>
+                        </tr>
+                        <tr>
+                            <td>branchAttr</td>
+                            <td>string</td>
+                            <td>强制定义为有子节点的属性名。</td>
+                            <td>ttBranch</td>
+                        </tr>
+                        <tr>
+                            <td>clickableNodeNames</td>
+                            <td>bool</td>
+                            <td>点击节点名称展开</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>column</td>
+                            <td>integer</td>
+                            <td>第几列显示展示展开按钮</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>columnElType</td>
+                            <td>string</td>
+                            <td>节点元素EL表达式</td>
+                            <td>td</td>
+                        </tr>
+                        <tr>
+                            <td>expandable</td>
+                            <td>bool</td>
+                            <td>是否允许展开</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td>expanderTemplate</td>
+                            <td>string</td>
+                            <td>模板</td>
+                            <td>&lt;a href="#"&gt;&nbsp;&lt;/a&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>indent</td>
+                            <td>integer</td>
+                            <td>下一级缩进像素值</td>
+                            <td>19</td>
+                        </tr>
+                        <tr>
+                            <td>indenterTemplate</td>
+                            <td>bool</td>
+                            <td>点击节点名称展开</td>
+                            <td>&lt;span class="indenter"&gt;&lt;/span&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>initialState</td>
+                            <td>string</td>
+                            <td>默认状态(展开/收起)。 可选项： <code>expanded</code> 和 <code>collapsed</code></td>
+                            <td>collapsed</td>
+                        </tr>
+                        <tr>
+                            <td>stringCollapse</td>
+                            <td>string</td>
+                            <td></td>
+                            <td>Collapse</td>
+                        </tr>
+                        <tr>
+                            <td>stringExpand</td>
+                            <td>string</td>
+                            <td></td>
+                            <td>Expand</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>方法</h2>
+                <blockquote>
+                    <p>调用方式：<code>$("EL").treetable("方法名", 参数)</code></p>
+                </blockquote>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>参数</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>collapseAll</td>
+                            <td></td>
+                            <td>收起所有节点</td>
+                        </tr>
+                        <tr>
+                            <td>collapseNode</td>
+                            <td>id</td>
+                            <td>收起节点</td>
+                        </tr>
+                        <tr>
+                            <td>expandAll</td>
+                            <td></td>
+                            <td>展开所有节点</td>
+                        </tr>
+                        <tr>
+                            <td>expandNode</td>
+                            <td>id</td>
+                            <td>展开节点</td>
+                        </tr>
+                        <tr>
+                            <td>loadBranch</td>
+                            <td>node, rows（tr）</td>
+                            <td>追加子节点</td>
+                        </tr>
+                        <tr>
+                            <td>move</td>
+                            <td>id，新父级id</td>
+                            <td>移动节点</td>
+                        </tr>
+                        <tr>
+                            <td>node</td>
+                            <td>id</td>
+                            <td>获取Node对象</td>
+                        </tr>
+                        <tr>
+                            <td>removeNode</td>
+                            <td>id</td>
+                            <td>删除节点</td>
+                        </tr>
+                        <tr>
+                            <td>reveal</td>
+                            <td>id</td>
+                            <td>显示节点</td>
+                        </tr>
+                        <tr>
+                            <td>sortBranch</td>
+                            <td>node，columnOrFunction[可选]</td>
+                            <td>节点排序</td>
+                        </tr>
+                        <tr>
+                            <td>unloadBranch</td>
+                            <td>node</td>
+                            <td>删除节点下的所有子节点</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>事件</h2>
+                <blockquote>
+                    <p>
+                        在初始化时，在参数中添加事件。如：<br>
+                        <code>$('el').treetable({事件名:function(){})</code>
+                    </p>
+                </blockquote>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>参数</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody>
+                        <tr>
+                            <td>onInitialized</td>
+                            <td></td>
+                            <td>初始化完成后</td>
+                        </tr>
+                        <tr>
+                            <td>onNodeCollapse</td>
+                            <td></td>
+                            <td>节点收起时</td>
+                        </tr>
+                        <tr>
+                            <td>onNodeExpand</td>
+                            <td></td>
+                            <td>节点展开时</td>
+                        </tr>
+                        <tr>
+                            <td>onNodeInitialized</td>
+                            <td></td>
+                            <td>节点初始化完成后</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS([
+        "/framework/js/view/treetable.js",
+        "/framework/js/view/datagrid.js"
+    ]);
+
+    ns.ready(function () {
+        $("#exampleTable").treetable({
+            expandable: true
+        });
+
+        var treetable2 = $("#exampleTable2").treetable({
+            expandable: true,
+            onNodeExpand: function () {
+                var node = this;
+                ns.view.treetable.loading(treetable2, node);
+
+                $.get("$!basePath/doc/module-treetable-node1?id=" + node.id, {}, function (data) {
+                    treetable2.treetable("unloadBranch", node);
+
+                    treetable2.treetable("loadBranch", node, data);
+                });
+            }
+        });
+    });
+</script>
+</html>

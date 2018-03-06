@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">输入格式化</h1>
+                <p class="lead">对文本框的输入进行格式化，需引入 <code>/framework/js/form/form-mask.js</code></p>
+
+                <h2>使用示例</h2>
+                <div class="bs-example">
+                    <form action="">
+                        <div class="form-group">
+                            <label>日期</label>
+                            <input name="date" type="text" class="form-control" data-mask="9999-[9]9-[9]9" placeholder="年-月-日">
+                        </div>
+                        <div class="form-group">
+                            <label>手机号码</label>
+                            <input type="text" class="form-control" data-mask="+86 99999999999" placeholder="+86 99999999999">
+                        </div>
+                        <div class="form-group">
+                            <label>固定电话</label>
+                            <input type="text" class="form-control" data-mask="9{1,4}-99999999" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label>百分比</label>
+                            <input name="rate" type="text" class="form-control" data-mask="9{0,2}%" placeholder="百分比">
+                        </div>
+                        <div class="form-group">
+                            <label>金额</label>
+                            <input name="rate" type="text" class="form-control" data-mask-alias="currency" placeholder="金额">
+                        </div>
+                    </form>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: javascript">
+                    &lt;form action=""&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label&gt;日期&lt;/label&gt;
+                            &lt;input name="date" type="text" class="form-control" data-mask="9999-[9]9-[9]9" placeholder="年-月-日"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label&gt;手机号码&lt;/label&gt;
+                            &lt;input type="text" class="form-control" data-mask="+86 99999999999" placeholder="+86 99999999999"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label&gt;固定电话&lt;/label&gt;
+                            &lt;input type="text" class="form-control" data-mask="9{1,4}-99999999" placeholder=""&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label&gt;百分比&lt;/label&gt;
+                            &lt;input name="rate" type="text" class="form-control" data-mask="9{0,2}%" placeholder="百分比"&gt;
+                        &lt;/div&gt;
+                        &lt;div class="form-group"&gt;
+                            &lt;label&gt;金额&lt;/label&gt;
+                            &lt;input name="rate" type="text" class="form-control" data-mask-alias="currency" placeholder="金额"&gt;
+                        &lt;/div&gt;
+                        &lt;button class="btn btn-default"&gt;Submit&lt;/button&gt;
+                    &lt;/form&gt;
+                    </pre>
+                </figure>
+
+                <h2>参数</h2>
+                <p>使用<code>data-mask</code>、<code>data-mask-alias</code>、<code>data-mask-regex</code>设置参数</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>描述</th>
+                            <th>默认值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>mask</td>
+                            <td>string</td>
+                            <td>
+                                采用通配符的方式对输入的格式进行限定，通配符包含：
+                                <ul>
+                                    <li>9 数字</li>
+                                    <li>a 字母</li>
+                                    <li>* 任意字符</li>
+                                </ul>
+                                <p>
+                                    如：年份格式为 <code>yyyy年MM月dd日</code>，对应的mask应为：<code>9999年99月99日</code>
+                                </p>
+                                <p>
+                                    使用<code>{次数}</code>或者<code>{start,end}</code>来进行动态数量控制，如 <code>9{1,4}</code> 表示1~4个数字
+                                    使用[9]来表示可选字符，如 <code>999[9]</code> 表示可以输入 三个数字或者4个数字
+                                </p>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>alias</td>
+                            <td>string</td>
+                            <td>
+                                对常用的mask进行封装，可以快捷使用：包含：
+                                <ul>
+                                    <li>currency 金额</li>
+                                    <li>decimal 浮点数</li>
+                                    <li>integer 整数</li>
+                                </ul>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>regex</td>
+                            <td>string</td>
+                            <td>正则表达式</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS("/framework/js/form/form-mask.js");
+</script>
+</html>

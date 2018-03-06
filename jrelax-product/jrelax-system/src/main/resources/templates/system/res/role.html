@@ -1,0 +1,74 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">管理角色</h4>
+</div>
+<div class="modal-body">
+    <input type="hidden" name="id" value="$!group.id">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table id="dgResRole"></table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="pull-left">
+        <button id="add" type="button" class="btn btn-primary" data-loading-text="正在添加..."><i class="fa fa-plus"></i> 加入新角色</button>
+        <button id="remove" type="button" class="btn btn-danger" data-loading-text="正在移除..."><i class="fa fa-close"></i> 移除选中角色</button>
+    </div>
+    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+</div>
+<script type="text/javascript">
+    ns.requireJS("/framework/js/form/checkbox.js");
+    ns.requireJS("/framework/js/view/datagrid.js");
+    ns.requireJS("/framework/js/common/role.js");
+    ns.ready(function (dialog) {
+        var dgResRole = dialog.find("#dgResRole").jqGrid({
+            url: '$!basePath/system/res/role/data',
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "角色名", name: "name", width: 100},
+                {label: "描述", name: "descript", width: 100}
+            ],
+            autowidth: false,
+            width: dialog.find("modal-body").width(),
+            height: 300,
+            pagerpos: "center",
+            multiselect: true,
+            icheckbox: true,
+            postData: {id: "$!id"}
+        });
+
+        dialog.find("#add").on("click", function () {
+            ns.common.role.selectByUnit({
+                multi: true,
+                callback: function (data) {
+                    var roleIds = [];
+                    $.each(data, function (i, role) {
+                        roleIds.push(role.id);
+                    });
+                    dialog.find("#add").button("loading");
+                    ns.post("$!basePath/system/res/role/add", {id: "$!id", roleIds: roleIds.toString()}, function (success, data) {
+                        if (success) {
+                            ns.tip.toast.success("角色已添加！");
+                            dgResRole.reload();
+                        }
+                        dialog.find("#add").button("reset");
+                    })
+                }
+            })
+        });
+        dialog.find("#remove").on("click", function () {
+            ns.confirm("确认移除此角色吗？", function () {
+                var roleIds = dgResRole.getSelectRows();
+                dialog.find("#remove").button("loading");
+                ns.post("$!basePath/system/res/role/remove", {id: "$!id", roleIds: roleIds.toString()}, function (success, data) {
+                    if (success) {
+                        ns.tip.toast.success("角色已移除！");
+                        dgResRole.reload();
+                    }
+                    dialog.find("#remove").button("reset");
+                });
+            });
+        });
+    });
+</script>

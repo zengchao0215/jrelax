@@ -1,0 +1,56 @@
+<div class="modal-body no-p">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <section class="panel panel-primary no-b">
+                <header class="panel-heading clearfix">
+                    <div class="overflow-hidden">
+                        <a href="javascript:;" class="h4 show no-m pt5"><i class="icon"></i> 路由规则详情</a>
+                        <small>ID - $!route.id</small>
+                    </div>
+                </header>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td>来源URL</td>
+                        <td>$!route.sourceUrl</td>
+                    </tr>
+                    <tr>
+                        <td>转向URL</td>
+                        <td>$!route.targetUrl</td>
+                    </tr>
+                    <tr>
+                        <td>是否重定向</td>
+                        <td>
+                            #if($!route.redirect) 是
+                            #else 否 #end
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>内部链接</td>
+                        <td>
+                            #if($!route.internal) 是
+                            #else 否 #end
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>是否启用</td>
+                        <td>
+                            #if($!route.enabled) 启用
+                            #else 禁用 #end
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>创建人</td>
+                        <td>$!route.createUser</td>
+                    </tr>
+                    <tr>
+                        <td>创建时间</td>
+                        <td>$!route.createTime</td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">知道了</button>
+</div>

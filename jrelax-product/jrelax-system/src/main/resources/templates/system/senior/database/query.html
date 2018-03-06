@@ -1,0 +1,30 @@
+#if(!$!error)
+#if($!update)
+<div class="alert alert-info">
+$!count 行受影响。
+</div>
+#else
+<table id="queryResultTable" class="table table-bordered table-striped table-condensed no-m">
+    <thead>
+        <tr>
+        	#foreach($!col in $!cols)
+            <th>$!col</th>
+            #end
+        </tr>
+    </thead>
+    <tbody>
+    	#foreach($!list in $!values)
+    	<tr>
+    		#foreach($!val in $!list)
+            <td title="$!val">#if($!val.length()>30)$!val.substring(0,30)#else$!val#end</td>
+            #end
+    	</tr>
+    	#end
+    </tbody>
+</table>
+#end
+#else
+<div class="alert alert-danger">
+$!error
+</div>
+#end

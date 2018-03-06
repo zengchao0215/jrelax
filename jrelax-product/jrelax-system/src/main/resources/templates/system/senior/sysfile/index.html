@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>#loading
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <!-- 内容主体 -->
+        <section class="container">
+            <!-- 机构  -->
+            <aside class="sidebar-250 canvas-right">
+                <header class="header navbar clearfix-default pl0 pr0">
+                    <p class="navbar-text"><i class="fa fa-sitemap mr5"></i> 文件目录</p>
+                </header>
+                <div class="content-wrap no-p">
+                    <div class="wrapper">
+                        <div id="folderTree"></div>
+                    </div>
+                </div>
+            </aside>
+            <section class="main-content">
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="btn-group tool-button">
+                        <button id="prev" type="button" class="btn btn-primary navbar-btn" disabled="disabled"><i
+                                class="ti-angle-left"></i></button>
+                        <button id="home" type="button" class="btn btn-primary navbar-btn" onclick="root()"><i
+                                class="ti-home"></i></button>
+                        <button id="reload" type="button" class="btn btn-primary navbar-btn" onclick="load(path)"><i
+                                class="ti-reload"></i></button>
+                        <!-- <button type="button" class="btn btn-success navbar-btn"><i class="ti-plus"></i> 创建文件夹</button> -->
+                    </div>
+                    <div class="pull-right navbar-btn">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" title="上传目录" onclick="load('/resources/upload')"><i class="fa fa-cloud-upload"></i></button>
+                            <button type="button" class="btn btn-default" title="框架资源目录" onclick="load('/resources/framework')"><i class="fa fa-cube"></i></button>
+                            <button type="button" class="btn btn-default" title="代码目录" onclick="load('/WEB-INF/classes')"><i class="fa fa-code"></i></button>
+                            <button type="button" class="btn btn-default" title="Web代码目录" onclick="load('/WEB-INF/classes/com/jrelax/web')"><i class="fa fa-file-code-o"></i></button>
+                            <button type="button" class="btn btn-default" title="模板目录" onclick="load('/WEB-INF/tpl')"><i class="fa fa-file-o"></i></button>
+                            <button type="button" class="btn btn-default" title="Jar目录" onclick="load('/WEB-INF/lib')"><i class="fa fa-file-zip-o"></i></button>
+                        </div>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <ol id="nav" class="breadcrumb no-m" style="background-color: transparent;">
+                                    <li><i class="ti-home"></i> <a href="javascript:;" onclick="root()">根目录</a></li>
+                                </ol>
+                                <table id="fileTable" class="table no-m">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-md-6 pd-l-lg">
+                                            <span class="pd-l-sm"></span>文件名
+                                        </th>
+                                        <th class="col-md-1">大小</th>
+                                        <th class="col-md-4 offscreen-right">最后修改时间</th>
+                                        <th class="col-md-1">#i18n('system.common.op')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    #foreach($!obj in $!list)
+                                    <tr>
+                                        <td style="word-break: break-all;"><i class="$!obj.icon mr5"></i>
+                                            #if($!obj.type==1)
+                                            <a href="javascript:;" onclick="edit('$!obj.path')">$!obj.name</a>
+                                            #else
+                                            <a href="javascript:;" onclick="load('$!obj.path')">$!obj.name</a>
+                                            #end
+                                        </td>
+                                        <td>$!obj.size</td>
+                                        <td class="offscreen-right">$!obj.modifyTime</td>
+                                        <td>
+                                            #if($!obj.type==1)
+                                            <a href="javascript:;" title="编辑" onclick="edit('$!obj.path')"><i
+                                                    class="fa fa-pencil mr10"></i></a>
+                                            #end
+                                        </td>
+                                    </tr>
+                                    #end
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 本页面脚本 -->
+<script type="text/javascript">
+    var path = "";//当前路径
+    //编辑文件
+    function edit(_path) {
+        window.open("$!basePath/system/senior/sysfile/edit?path=" + _path);
+    }
+
+    function load(_path) {
+        var table = $("#fileTable");
+        path = _path;
+        table.find("tbody").html("<tr><td colspan='4'><center>正在加载...</center></td></tr>");
+        $.post("$!basePath/system/senior/sysfile/folder", {path: path}, function (data) {
+            if (data.success === true) {
+                if (data.data.length === 0) {
+                    table.find("tbody").html("<tr><td colspan='4'><center>此文件夹是空的</center></td></tr>");
+                } else {
+                    table.find("tbody").html("");
+                    for (var i = 0; i < data.data.length; i++) {
+                        var file = data.data[i];
+                        var html = "<tr>";
+                        html += "<td style=\"word-break: break-all;\"><i class=\"" + file.icon + " mr5\"></i>";
+                        if (file.type === 1)//文件
+                            html += "&nbsp;<a href=\"javascript:;\" onclick=\"edit('" + file.path + "')\">" + file.name + "</a></td>";
+                        else
+                            html += "&nbsp;<a href=\"javascript:;\" onclick=\"load('" + file.path + "')\">" + file.name + "</a></td>";
+                        html += "<td>" + file.size + "</td>";
+                        html += "<td class=\"offscreen-right\">" + file.modifyTime + "</td>";
+                        html += "<td>";
+                        if (file.type === 1) {//文件
+                            html += "<a href=\"javascript:;\" title=\"编辑\" onclick=\"edit('" + file.path + "')\"><i class=\"fa fa-pencil mr10\"></i></a>";
+                        }
+                        html += "</td>";
+                        html += "</tr>";
+
+                        table.find("tbody").append(html);
+                    }
+                }
+                initNav();
+                window.location.hash = path;
+            } else {
+                alert("加载失败,请稍后重试！");
+            }
+        });
+    }
+
+    function initNav() {
+        //初始化返回上一级按钮
+        if (this.path.length == 0) {
+            var btnPrev = $("#prev");
+            btnPrev.attr("disabled", "disabled");
+            btnPrev.unbind("click");
+        } else {
+            var btnPrev = $("#prev");
+            btnPrev.removeAttr("disabled");
+            btnPrev.unbind("click");
+            btnPrev.bind("click", function () {
+                prev();
+            });
+        }
+        //初始化导航
+        var nav = "<li><i class=\"ti-home\"></i> <a href=\"javascript:;\" onclick=\"root()\">根目录</a></li>";
+        if (this.path.length > 0 && this.path !== "/") {
+            var folders = path.split("/");
+            for (var i = 0; i < folders.length - 1; i++) {
+                var cPath = "";
+                for (var j = 0; j <= i; j++) {
+                    cPath += "/" + folders[j];
+                }
+                cPath = cPath.substring(1);
+                if(folders[i].length > 0)
+                    nav += "<li><a href=\"javascript:;\" onclick=\"load('" + cPath + "')\">" + folders[i] + "</a></li>";
+            }
+            nav += "<li class=\"active\">" + folders[folders.length - 1] + "</li>";
+        }
+        $("#nav").html(nav);
+    }
+
+    //返回上级目录
+    function prev() {
+        var idx = path.lastIndexOf("/");
+        if (idx == -1)
+            path = "";
+        else
+            path = path.substring(0, idx);
+        load(path);
+    }
+
+    //返回更目录
+    function root() {
+        if (path.length > 0) {
+            load("/");
+        }
+    }
+
+    $(function () {
+        var hash = window.location.hash;
+        if (hash.length > 0) {
+            load(hash.substring(1));
+        }
+        //监听hash
+        window.onhashchange = function () {
+            hash = window.location.hash;
+            if (hash.length > 0) {
+                load(hash.substring(1));
+            } else {
+                root();
+            }
+        }
+    });
+
+    ns.requireJS("/framework/js/view/tree.js");
+    ns.ready(function () {
+        $("#folderTree").jstree({
+            plugins: ["wholerow"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return node.id === "#" ? "$!basePath/system/senior/sysfile/tree" : "$!basePath/system/senior/sysfile/tree?path=" + node.id;
+                    }
+                },
+                multiple: false
+            }
+        }).on("select_node.jstree", function (node, selected) {
+            var id = selected.selected[0];
+            load(id);
+        });
+    });
+</script>
+#loading_close
+</body>
+</html>

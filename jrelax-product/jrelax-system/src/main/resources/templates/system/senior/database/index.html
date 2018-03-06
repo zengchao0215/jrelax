@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+    <style>
+        #result table {
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>#loading
+
+
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <aside class="sidebar-250 canvas-right">
+                <header class="header navbar clearfix bb pl0 pr0">
+                    <p class="navbar-text"><i class="ti-window mr5"></i> 数据库表</p>
+                </header>
+                <div class="content-wrap no-p">
+                    <div class="wrapper no-scroll">
+                        <div class="m5">
+                            <div id="jsTreeTable"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="btn-group tool-button">
+                        <button id="btnExecute" class="btn btn-primary navbar-btn" onclick="execute()"
+                                data-loading-text="正在执行..."><i class="ti-control-play"></i> 执行
+                        </button>
+                    </div>
+                    <!-- 右按钮区 -->
+                    <div class="btn-group pull-right pt5">
+                        <label>数据库切换：</label>
+                        <select name="switchDS" data-placeholder="切换数据源" class="form-control chosen"
+                                style="width:200px;"
+                                onchange="switchDS(this.value)">
+                            #foreach($!ds in $!dataSources)
+                            <option value="$!ds" #if($!ds==$!cds)selected="selected"#end>$!ds</option>
+                            #end
+                        </select>
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h4>SQL编辑器</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <textarea id="sql" class="form-control" style="min-height:200px;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="panel-heading"><h4>SQL执行结果</h4></div>
+                                    <div id="result" class="panel-body">
+                                        <div class="alert alert-warning">在SQL编辑器中输入SQL，点击执行按钮查看结果</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+
+<!-- 本页面脚本 -->
+<script src="$!basePath/framework/js/view/toast.js"></script>
+<script src="$!basePath/framework/js/view/tree.js"></script>
+<script src="$!basePath/framework/js/form/select.js"></script>
+
+<script type="text/javascript">
+    var currentId;
+    function initTreeView() {
+        $("#jsTreeTable").jstree({
+            plugins: ["wholerow", "contextmenu"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return "$!basePath/system/senior/database/table";
+                    }
+                },
+                multiple: false
+            }, "contextmenu": {
+                "items": {
+                    "create": {
+                        "label": "复制表名",
+                        "action": function (obj) {
+                            if (currentId) {
+                                $("#sql").val($("#sql").val() + currentId);
+                            }
+                        },
+                        "icon": "fa fa-copy"
+                    },
+                    "viewData": {
+                        "label": "查看数据",
+                        "action": function (obj) {
+                            if (currentId) {
+                                execute("select * from " + currentId);
+                            }
+                        },
+                        "icon": "fa fa-th"
+                    }
+                }
+            }
+        }).on("select_node.jstree", function (node, selected) {
+            var id = selected.selected;
+            currentId = id;
+            /* ns.showLoading();
+             jQuery.post("$!basePath/system/datadict/item/"+id,{},function(data){
+             $("#dataDictTable tbody").html(data);
+             $("#dataDictItemForm input[name='id']").val(id);
+             ns.closeLoading();
+             }); */
+        }).on("loaded.jstree", function (node, jstree) {
+            var id = $(node.target).find("li:first").attr("id");
+            jstree.instance.select_node(id);
+        });
+    }
+    function execute(sql) {
+        var sql = sql || $("#sql").val();
+        if (jQuery.trim(sql).length == 0) {
+            Toast.warning("请输入sql语句后再点击执行");
+            return;
+        }
+        var btn = $("#btnExecute");
+        btn.button("loading");
+        jQuery.post("$!basePath/system/senior/database/query", {sql: sql}, function (data) {
+            $("#result").html(data);
+            btn.button("reset");
+        });
+    }
+    function switchDS(ds) {
+        window.location.href = "$!basePath/system/senior/database/switch/" + ds;
+    }
+    $(function () {
+        initTreeView();
+    });
+</script>
+
+#loading_close
+</body>
+</html>

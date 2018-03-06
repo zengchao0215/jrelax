@@ -1,0 +1,52 @@
+<!-- 引入jquery.form -->
+<script src="$!basePath/framework/plugins/jquery.form.js"></script>
+<form id="uploadForm" role="form" action="$!basePath/common/upload/do" method="post" enctype="multipart/form-data">
+    <div class="modal-header no-b">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title"><i class="fa fa-cloud-upload"></i> <span>上传文件</span></h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <input name="file" type="file" class="form-control hide" multiple="multiple">
+            <div class="input-group">
+                <input id="filepath" class="form-control" type="text" placeholder="" disabled="disabled">
+                <span class="input-group-btn" tabindex="0">
+			      <label class="btn btn-default ">
+			        <span class="fa fa-folder-open"></span>
+			        <span class="buttonText">选择文件...</span>
+		          </label>
+		        </span>
+            </div>
+        </div>
+        <div class="form-group" style="display: none;">
+            <div class="panel" style="border: 2px dashed #e3e6f3;">
+                <div class="panel-body text-center" id="dropArea">
+                    <h3 class="text-muted">将文件拖拽到此区域</h3>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="display:none;">
+            <label for="filename">文件名（可选）</label>
+            <input id="filename" type="text" name="filename" class="form-control"/>
+        </div>
+        <div class="form-group" style="display:none;">
+            <label for="savePath">存放路径（可选）</label>
+            <input id="savePath" type="text" name="savePath" class="form-control"/>
+        </div>
+        <div style="display: none;">
+            <div class="progress progress-striped active mb5">
+                <div class="progress-bar progress-bar-info done" style="width: 1%">
+                    <div><span id="cur">0kb</span>/<span id="total">0kb</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-left">
+            <button id="btnSelect" type="button" class="btn btn-default" style="display: none;"><i class="fa fa-folder-open-o"></i> 文件浏览器</button>
+        </div>
+        <button id="ok" type="submit" class="btn btn-primary" data-loading-text="正在上传...">立即上传</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消上传</button>
+    </div>
+</form>

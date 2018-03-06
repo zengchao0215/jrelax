@@ -1,0 +1,148 @@
+{
+  "master":[
+    {
+      "file": "main.js",
+      "dependents": "jquery",
+      "descript": "框架主函数、ns定义、组件集成"
+    },
+    {
+      "file": "offscreen.js",
+      "dependents": "jquery",
+      "descript": "移动端菜单展开/收缩"
+    },
+    {
+      "file": "json2.js",
+      "dependents": "",
+      "descript": "让浏览器支持JSON对象及其方法的使用"
+    }
+  ],
+  "form": [
+    {
+      "file": "checkbox.js",
+      "dependents": "icheck",
+      "descript": "美化checkbox"
+    },
+    {
+      "file": "date.js",
+      "dependents": "datepicker",
+      "descript": "日期"
+    },
+    {
+      "file": "datetime.js",
+      "dependents": "datetimepicker",
+      "descript": "日期+时间"
+    },
+    {
+      "file": "editable.js",
+      "dependents": "x-editable",
+      "descript": "就地编辑"
+    },
+    {
+      "file": "form.js",
+      "dependents": "switcher",
+      "descript": "iOS风格复选框"
+    },
+    {
+      "file": "form-mask.js",
+      "dependents": "jquery.inputmask",
+      "descript": "格式化输入"
+    },
+    {
+      "file": "markdown.js",
+      "dependents": "bootstrap-markdown",
+      "descript": "markdown富文本编辑器"
+    },
+    {
+      "file": "select.js",
+      "dependents": "chosen",
+      "descript": "单选下拉框"
+    },
+    {
+      "file": "multiselect.js",
+      "dependents": "multiselect",
+      "descript": "多选下拉框"
+    },
+    {
+      "file": "summernote.js",
+      "dependents": "summernote",
+      "descript": "富文本编辑器"
+    },
+    {
+      "file": "time.js",
+      "dependents": "timerpicker",
+      "descript": "时间选择器"
+    },
+    {
+      "file": "typeahead.js",
+      "dependents": "typeahead",
+      "descript": "自动补全"
+    },
+    {
+      "file": "uploader.js",
+      "dependents": "",
+      "descript": "文件上传"
+    },
+    {
+      "file": "validator.js",
+      "dependents": "parsley",
+      "descript": "表单验证"
+    },
+    {
+      "file": "combotree.js",
+      "dependents": "jstree",
+      "descript": "下拉树"
+    },
+    {
+      "file": "combogrid.js",
+      "dependents": "jqgrid",
+      "descript": "下拉表格"
+    },
+    {
+      "file": "selection.js",
+      "dependents": "dialog.js",
+      "descript": "双向选择器"
+    }
+  ],
+  "view":[
+    {
+      "file": "accordion.js",
+      "dependents": "",
+      "descript": "抽屉菜单"
+    },
+    {
+      "file": "filebrowser.js",
+      "dependents": "",
+      "descript": "文件浏览/选择器"
+    },
+    {
+      "file": "sortable.js",
+      "dependents": "",
+      "descript": "表格排序（未启用）"
+    },
+    {
+      "file": "theme.js",
+      "dependents": "jquery",
+      "descript": "皮肤切换"
+    },
+    {
+      "file": "tip.js",
+      "dependents": "bootstrap",
+      "descript": "bootstrap tooltip"
+    },
+    {
+      "file": "toast.js",
+      "dependents": "toast",
+      "descript": "toast 风格提示框"
+    },
+    {
+      "file": "tree.js",
+      "dependents": "jstree",
+      "descript": "树"
+    },
+    {
+      "file": "treetable.js",
+      "dependents": "treetable",
+      "descript": "树表格"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+    #required_css
+    <link rel="stylesheet" href="$!basePath/app/docs.css">
+</head>
+<body>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-12" role="main">
+            <div class="bs-docs-section">
+                <h1 class="page-header">日期时间选择</h1>
+                <p class="lead">基于DatetimePicker，需引入<code>/framework/js/form/datetime.js</code></p>
+
+                <h2>使用示例</h2>
+                <div class="bs-example">
+                    <div class="row">
+                        <div class="col-lg-1">日期选择</div>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control datetime" />
+                        </div>
+                    </div>
+                </div>
+                <figure class="highlight">
+                    <pre class="brush: html">
+                        &lt;input type="text" class="form-control datetime" /&gt;
+                    </pre>
+                </figure>
+                <h2>参数</h2>
+                <p>参数配置方式同日期选择</p>
+                详见：<a href="https://github.com/smalot/bootstrap-datetimepicker" target="_blank">这里</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+#required_js
+<script type="text/javascript" src="$!basePath/app/docs.js"></script>
+<script>
+    ns.requireJS([
+        "/framework/js/form/datetime.js"
+    ]);
+</script>
+</html>

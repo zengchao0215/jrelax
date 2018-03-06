@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <title>${system_admin_title}</title>
+    #required_css
+</head>
+
+<body>
+<div class="app $!layout">
+    <!-- 头部菜单 -->
+    #header
+    <section class="layout">
+        <!-- 菜单 -->
+        #sidebar
+        <section class="container">
+            <!-- 机构  -->
+            <aside class="sidebar-250 canvas-right">
+                <header class="header navbar clearfix pl0 pr0">
+                    <p class="navbar-text"><i class="fa fa-sitemap mr5"></i> 组织结构</p>
+                </header>
+                <div class="content-wrap no-p">
+                    <div class="wrapper">
+                        <div id="jsTreeUnit"></div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 内容主体 -->
+            <section class="main-content">
+                <!-- 主体操作栏 -->
+                <header class="header navbar">
+                    <!-- 左按钮区 -->
+                    <div class="toolbar">
+                        #ifAuthButton("btnAdd")
+                        <a class="btn btn-primary toolbar-item" onclick="doAddGroup()"><i class="fa fa-plus"></i> 新增用户组</a>
+                        #end
+                    </div>
+                    <div class="pull-right toolbar">
+                    </div>
+                </header>
+                <div class="content-wrap">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <table id="dgGroup"></table>
+                                <div id="dgGroupPager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="exit-offscreen"></a>
+            </section>
+        </section>
+    </section>
+</div>
+#required_js
+<script type="text/javascript">
+    //导入js
+    ns.requireJS([
+        "/framework/js/form/checkbox.js",
+        "/framework/js/view/tree.js",
+        "/framework/js/view/datagrid.js",
+        "/framework/js/form/search.form.js"]);
+    var dgGroup, currentUnitId;
+    ns.ready(function () {
+        $("#jsTreeUnit").jstree({
+            plugins: ["wholerow"],
+            core: {
+                data: {
+                    url: function (node) {
+                        return node.id === "#" ? "$!basePath/system/unit/tree?parent=true" : "$!basePath/system/unit/tree/" + node.id
+                    }
+                },
+                multiple: false
+            }
+        }).on("select_node.jstree", function (node, selected) {
+            currentUnitId = selected.selected[0];
+            dgGroup.setGridParam({
+                datatype: "json",
+                postData: {unitId: currentUnitId}
+            }).trigger("reloadGrid");
+        }).on("loaded.jstree", function (node, jstree) {
+            var id = ns.data.sessionStorage.get("sys_user_tree_id");
+            if (!id)
+                id = $(node.target).find("li:first").attr("id");
+            if (id)
+                jstree.instance.select_node(id);
+        });
+        dgGroup = $("#dgGroup").jqGrid({
+            url: '$!basePath/system/group/data',
+            datatype: "local",
+            colModel: [
+                {label: "ID", name: "id", key: true, hidden: true},
+                {label: "名称", name: "name", width: 100},
+                {label: "描述", name: "descript", width: 200},
+                {label: "创建人", name: "createUser"},
+                {label: "创建时间", name: "createTime"},
+                {
+                    label: '操作', width: 50, formatter: function (val, node, data) {
+                    return ns.view.datagrid.renderOp([
+                        #ifAuthButton("btnView")
+                        {
+                            title: "查看详情", onclick: function () {
+                            ns.view.showModal("$!basePath/system/group/detail/" + data.id);
+                        }
+                        },
+                        #end
+                        #ifAuthButton("btnEdit")
+                        {
+                            title: "编辑", onclick: function () {
+                            ns.view.showModal("$!basePath/system/group/edit/" + data.id, {
+                                onHidden: function (dialog, obj) {
+                                    if (dialog.isEdited) {
+                                        dgGroup.reload();
+                                    }
+                                }
+                            });
+                        }
+                        },
+                        #end
+                        #ifAuthButton("btnRemove")
+                        {
+                            title: "删除", onclick: function () {
+                            doDeleteGroup(data.id);
+                        }
+                        },
+                        #end
+                        {divider:true},
+                        {
+                            title: "授权", onclick: function () {
+                            ns.view.showModal("$!basePath/system/group/role/" + data.id, {size : "modal-lg"});
+                        }
+                        },
+                        {
+                            title: "管理用户", onclick: function () {
+                            ns.view.showModal("$!basePath/system/group/user/" + data.id, {size : "modal-lg"});
+                        }
+                        }
+                    ]);
+                }
+                }
+            ],
+            height: $(".main-content .wrapper").height() - ns.view.datagrid.offsetHeight,
+            pager: "#dgGroupPager",
+            multiselect: true,
+            multiboxonly: true,
+            icheckbox: true
+        });
+    });
+    function doAddGroup() {
+        ns.view.showModal("$!basePath/system/group/add?pid=" + currentUnitId, {
+            onHidden: function (dialog, obj) {
+                if (dialog.isSaved) {
+                    dgGroup.reload();
+                }
+            }
+        });
+    }
+    function doDeleteGroup(id) {
+        ns.tip.confirm("确定要删除此用户组吗？", function () {
+            var bar = ns.view.showProgressbar("正在删除...");
+            ns.get("$!basePath/system/group/delete/" + id, function (success, data) {
+                if (success) {
+                    ns.tip.toast.success("用户组已删除");
+                    dgGroup.reload();
+                } else {
+                    ns.tip.toast.error(data.message);
+                }
+
+                bar.close();
+            });
+        });
+    }
+</script>
+</body>
+</html>

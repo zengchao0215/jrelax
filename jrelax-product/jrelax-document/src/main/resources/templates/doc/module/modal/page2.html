@@ -1,0 +1,20 @@
+<div class="modal-header">
+    标题
+</div>
+<div class="modal-body">
+    Hello, World!
+    <p></p>
+</div>
+<div class="modal-footer">
+    <button id="btnClose" class="btn btn-default" data-dismiss="modal">点击此处关闭窗口并传参</button>
+</div>
+<script>
+    ns.ready(function (dialog) {
+        if(dialog.params){
+            dialog.find("p").text(dialog.params);
+        }
+        $("#btnClose").on("click", function () {
+            dialog.close({msg: "关闭啦"});
+        });
+    });
+</script>
